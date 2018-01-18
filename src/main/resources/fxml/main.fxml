@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.homeacc.controler.MainControler">
+   <children>
+      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Income">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0">
+                     <children>
+                        <Button fx:id="btnAddCategory" layoutX="323.0" layoutY="29.0" mnemonicParsing="false" onAction="#addCategory" prefHeight="25.0" prefWidth="100.0" text="Add" textAlignment="CENTER" />
+                        <TextField fx:id="txtAddCategory" layoutX="151.0" layoutY="29.0" />
+                        <Label layoutX="46.0" layoutY="33.0" text="Create category" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
