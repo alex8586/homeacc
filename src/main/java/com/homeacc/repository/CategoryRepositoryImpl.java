@@ -24,7 +24,6 @@ public class CategoryRepositoryImpl implements CategoryRepository{
 	public void save(Category category) {
 		System.out.println("== in repository save " + category.getName());
 		Session session = sessionFactory.getCurrentSession();
-		session.persist(category);
-		session.flush();
+		session.save(category);
 	}
 }
