@@ -1,4 +1,4 @@
-package com.homeacc.repository;
+package com.homeacc.repository.impl;
 
 
 import org.hibernate.Session;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.homeacc.entity.Category;
+import com.homeacc.repository.CategoryRepository;
 
 @Component
 @Transactional
