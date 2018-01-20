@@ -3,6 +3,8 @@ package com.homeacc.main;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.homeacc.appconst.AppConst;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,7 +25,7 @@ public class Main extends Application {
 
 		FXMLLoader loader = ctx.getBean(SpringFXMLLoader.class).getLoader("/fxml/main.fxml");
 		Parent root = loader.load();
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, AppConst.APP_WIDTH, AppConst.APP_HEIGHT);
         primaryStage.setTitle("Home bookkeeping");
         primaryStage.setScene(scene);
         primaryStage.show();
