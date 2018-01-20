@@ -2,7 +2,7 @@ package com.homeacc.repository;
 
 import com.homeacc.entity.Users;
 
-public interface UsersRepository {
+public interface UserRepository {
 
 	void save(Users user);
 }

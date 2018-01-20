@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.homeacc.entity.Users;
-import com.homeacc.repository.UsersRepository;
+import com.homeacc.repository.UserRepository;
 
 @Component
 @Transactional
-public class UsersRepositoryImpl implements UsersRepository {
+public class UserRepositoryImpl implements UserRepository {
 
 	@Autowired
 	private SessionFactory sessionFactory;

@@ -3,10 +3,8 @@ package com.homeacc.controler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.homeacc.entity.Category;
-import com.homeacc.entity.Users;
-import com.homeacc.repository.CategoryRepository;
-import com.homeacc.repository.UsersRepository;
+import com.homeacc.service.CategoryService;
+import com.homeacc.service.UserService;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -20,21 +18,15 @@ public class MainControler {
 	private TextField txtAddUser;
 
 	@Autowired
-	private CategoryRepository categoryRepository;
+	private CategoryService categoryService;
 	@Autowired
-	private UsersRepository usersRepository;
+	private UserService userService;
 
 	public void addCategory() {
-		String txt = txtAddCategory.getText();
-		Category category = new Category();
-		category.setName(txt);
-		categoryRepository.save(category);
+		categoryService.save(txtAddCategory.getText());
 	}
 
 	public void addUser() {
-		String txt = txtAddUser.getText();
-		Users user= new Users();
-		user.setName(txt);
-		usersRepository.save(user);
+		userService.save(txtAddUser.getText());
 	}
 }
