@@ -20,6 +20,12 @@
                         <Button fx:id="btnAddUser" layoutX="323.0" layoutY="87.0" mnemonicParsing="false" onAction="#addUser" prefHeight="25.0" prefWidth="100.0" text="Add" textAlignment="CENTER" />
                         <Label layoutX="46.0" layoutY="91.0" text="Create user" />
                         <TextField fx:id="txtAddUser" layoutX="151.0" layoutY="87.0" />
+                        <Label layoutX="50.0" layoutY="132.0" text="Create income" />
+                        <Button fx:id="btnSaveIncome" layoutX="460.0" layoutY="203.0" mnemonicParsing="false" onAction="#saveIncome" prefHeight="25.0" prefWidth="100.0" text="Add" />
+                        <ChoiceBox fx:id="cbxUser" layoutX="25.0" layoutY="161.0" prefHeight="25.0" prefWidth="120.0" />
+                        <ChoiceBox fx:id="cbxCategory" layoutX="157.0" layoutY="161.0" prefHeight="25.0" prefWidth="120.0" />
+                        <DatePicker fx:id="incomeDate" layoutX="286.0" layoutY="161.0" prefHeight="25.0" prefWidth="120.0" />
+                        <TextField fx:id="txtIncomeAmount" layoutX="431.0" layoutY="161.0" prefHeight="25.0" prefWidth="126.0" />
                      </children>
                   </AnchorPane>
             </content>
