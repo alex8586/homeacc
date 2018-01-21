@@ -26,6 +26,15 @@
                         <ChoiceBox fx:id="cbxCategory" layoutX="157.0" layoutY="161.0" prefHeight="25.0" prefWidth="120.0" />
                         <DatePicker fx:id="incomeDate" layoutX="286.0" layoutY="161.0" prefHeight="25.0" prefWidth="120.0" />
                         <TextField fx:id="txtIncomeAmount" layoutX="431.0" layoutY="161.0" prefHeight="25.0" prefWidth="126.0" />
+                        <TableView fx:id="tvIncome" layoutX="25.0" layoutY="241.0" prefHeight="119.0" prefWidth="530.0">
+                          <columns>
+                            <TableColumn fx:id="tcId" prefWidth="50.0" text="id" />
+                            <TableColumn fx:id="tcUser" prefWidth="140.0" text="user" />
+                              <TableColumn fx:id="tcCategory" prefWidth="140.0" text="category" />
+                              <TableColumn fx:id="tcDate" prefWidth="100.0" text="date" />
+                              <TableColumn fx:id="tcAmount" prefWidth="100.0" text="amount" />
+                          </columns>
+                        </TableView>
                      </children>
                   </AnchorPane>
             </content>

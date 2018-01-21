@@ -1,10 +1,12 @@
 package com.homeacc.controler;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.homeacc.dto.IncomeDTO;
 import com.homeacc.entity.Category;
 import com.homeacc.entity.Users;
 import com.homeacc.service.CategoryService;
@@ -16,7 +18,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 
 @Component
@@ -36,6 +41,19 @@ public class MainControler {
 	@FXML
 	private TextField txtIncomeAmount;
 
+	@FXML
+	private TableView<IncomeDTO> tvIncome;
+	@FXML
+	private TableColumn<IncomeDTO, Long> tcId;
+	@FXML
+	private TableColumn<IncomeDTO, String> tcUser;
+	@FXML
+	private TableColumn<IncomeDTO, String> tcCategory;
+	@FXML
+	private TableColumn<IncomeDTO, Date> tcDate;
+	@FXML
+	private TableColumn<IncomeDTO, Long> tcAmount;
+
 	@Autowired
 	private CategoryService categoryService;
 	@Autowired
@@ -45,11 +63,13 @@ public class MainControler {
 
 	private ObservableList<Users> userList = FXCollections.observableArrayList();
 	private ObservableList<Category> categoryList = FXCollections.observableArrayList();
+	private ObservableList<IncomeDTO> incomeList = FXCollections.observableArrayList();
 
 	@FXML
     public void initialize() {
 		loadUserComboBox();
 		loadCategoryComboBox();
+		loadIncomeTable();
     }
 
 	private void loadUserComboBox() {
@@ -86,6 +106,16 @@ public class MainControler {
 		cbxCategory.setConverter(converter);
 	}
 
+	private void loadIncomeTable() {
+		tcId.setCellValueFactory(new PropertyValueFactory<IncomeDTO, Long>("id"));
+        tcUser.setCellValueFactory(new PropertyValueFactory<IncomeDTO, String>("userName"));
+        tcCategory.setCellValueFactory(new PropertyValueFactory<IncomeDTO, String>("categoryName"));
+        tcDate.setCellValueFactory(new PropertyValueFactory<IncomeDTO, Date>("created"));
+        tcAmount.setCellValueFactory(new PropertyValueFactory<IncomeDTO, Long>("amount"));
+        incomeList.addAll(incomeService.getAll());
+        tvIncome.setItems(incomeList);
+	}
+
 	public void addCategory() {
 		categoryService.save(txtAddCategory.getText());
 		loadCategoryComboBox();
@@ -102,5 +132,6 @@ public class MainControler {
 		LocalDate date =  incomeDate.getValue();
 		String amount = txtIncomeAmount.getText();
 		incomeService.save(userName, categoryName, date, amount);
+		loadIncomeTable();
 	}
 }
