@@ -1,5 +1,6 @@
 package com.homeacc.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -26,12 +27,12 @@ public class Income implements java.io.Serializable {
 	private Users users;
 	private Category category;
 	private Date created;
-	private long amount;
+	private BigDecimal amount;
 
 	public Income() {
 	}
 
-	public Income(long id, Users users, Category category, Date created, long amount) {
+	public Income(long id, Users users, Category category, Date created, BigDecimal amount) {
 		this.id = id;
 		this.users = users;
 		this.category = category;
@@ -81,14 +82,15 @@ public class Income implements java.io.Serializable {
 		this.created = created;
 	}
 
-	@Column(name = "AMOUNT", nullable = false, precision = 15, scale = 0)
-	public long getAmount() {
+	@Column(name = "AMOUNT", nullable = false, precision = 15)
+	public BigDecimal getAmount() {
 		return this.amount;
 	}
 
-	public void setAmount(long amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
+
 
 }
 
