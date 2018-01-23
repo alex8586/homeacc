@@ -1,5 +1,6 @@
 package com.homeacc.dto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class IncomeDTO {
@@ -8,7 +9,7 @@ public class IncomeDTO {
 	private String userName;
 	private String categoryName;
 	private Date created;
-	private long amount;
+	private BigDecimal amount;
 
 	public long getId() {
 		return id;
@@ -34,10 +35,10 @@ public class IncomeDTO {
 	public void setCreated(Date created) {
 		this.created = created;
 	}
-	public long getAmount() {
+	public BigDecimal getAmount() {
 		return amount;
 	}
-	public void setAmount(long amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 

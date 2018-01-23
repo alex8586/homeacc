@@ -1,5 +1,6 @@
 package com.homeacc.service.impl;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -37,14 +38,13 @@ public class IncomeServiceImpl implements IncomeService {
 	public void save(String userName, String categoryName, LocalDate date, String amount) {
 		Users user = userRepository.getByName(userName);
 		Category category = categoryRepository.getByName(categoryName);
-
 		Date created = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
 		Income income = new Income();
 		income.setUsers(user);
 		income.setCategory(category);
 		income.setCreated(created);
-		income.setAmount(Long.parseLong(amount));
+		income.setAmount(new BigDecimal(amount));
 		incomeRepository.save(income);
 	}
 

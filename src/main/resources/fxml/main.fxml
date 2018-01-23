@@ -35,6 +35,7 @@
                               <TableColumn fx:id="tcAmount" prefWidth="100.0" text="amount" />
                           </columns>
                         </TableView>
+                        <Label fx:id="createIncomeError" layoutX="157.0" layoutY="132.0" />
                      </children>
                   </AnchorPane>
             </content>

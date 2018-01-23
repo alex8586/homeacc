@@ -21,8 +21,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("bean.xml");
 
-		ctx.getBean(SpringFXMLLoader.class);
-
 		FXMLLoader loader = ctx.getBean(SpringFXMLLoader.class).getLoader("/fxml/main.fxml");
 		Parent root = loader.load();
         Scene scene = new Scene(root, AppConst.APP_WIDTH, AppConst.APP_HEIGHT);

@@ -82,7 +82,7 @@ public class Income implements java.io.Serializable {
 		this.created = created;
 	}
 
-	@Column(name = "AMOUNT", nullable = false, precision = 15)
+	@Column(name = "AMOUNT", nullable = false, precision = 15, scale = 2)
 	public BigDecimal getAmount() {
 		return this.amount;
 	}
