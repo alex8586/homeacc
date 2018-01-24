@@ -53,10 +53,6 @@ public class IncomeServiceImpl implements IncomeService {
 	public ObservableList<IncomeDTO> getAll() {
 		ObservableList<IncomeDTO> incomes = FXCollections.observableArrayList();
 		List<Income> list = incomeRepository.getAll();
-
-		for(Income i : list) {
-			System.out.println(i.getAmount());
-		}
 		incomes.addAll(Mapper.mapIncomeListToDtoList(list));
 		return incomes;
 	}

@@ -23,7 +23,6 @@ public class Mapper {
 		dto.setCategoryName(income.getCategory().getName());
 		dto.setCreated(income.getCreated());
 		dto.setAmount(income.getAmount());
-		System.out.println(dto.toString());
 		return dto;
 	}
 }
