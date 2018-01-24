@@ -29,7 +29,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.StringConverter;
 
 @Component
-public class MainControler {
+public class IncomeControler {
 
 	@FXML
 	private TextField txtAddCategory;
