@@ -1,5 +1,6 @@
 package com.homeacc.controler;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
@@ -18,6 +19,7 @@ import com.homeacc.validation.IncomeValidator;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -26,6 +28,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
 
 @Component
@@ -62,6 +65,8 @@ public class IncomeControler {
 	private Label createIncomeError;
 
 	@Autowired
+	private EditIncomeControler editIncomeControler;
+	@Autowired
 	private CategoryService categoryService;
 	@Autowired
 	private UserService userService;
@@ -77,6 +82,7 @@ public class IncomeControler {
 		loadUserComboBox();
 		loadCategoryComboBox();
 		loadIncomeTable();
+		handleEventForEditIncomeModalWindow();
     }
 
 	private void loadUserComboBox() {
@@ -113,7 +119,7 @@ public class IncomeControler {
 		cbxCategory.setConverter(converter);
 	}
 
-	private void loadIncomeTable() {
+	public void loadIncomeTable() {
 		incomeList.clear();
 		tcId.setCellValueFactory(new PropertyValueFactory<IncomeDTO, Long>("id"));
         tcUser.setCellValueFactory(new PropertyValueFactory<IncomeDTO, String>("userName"));
@@ -122,6 +128,22 @@ public class IncomeControler {
         tcAmount.setCellValueFactory(new PropertyValueFactory<IncomeDTO, BigDecimal>("amount"));
         incomeList.addAll(incomeService.getAll());
         tvIncome.setItems(incomeList);
+	}
+
+	private void handleEventForEditIncomeModalWindow(){
+		tvIncome.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                        IncomeDTO income = tvIncome.getSelectionModel().getSelectedItem();
+                        try {
+							editIncomeControler.openModal(income, userList, categoryList);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+                }
+            }
+        });
 	}
 
 	public void addCategory() {
@@ -147,7 +169,7 @@ public class IncomeControler {
 			String categoryName = cbxCategory.getSelectionModel().getSelectedItem().getName();
 			LocalDate date = incomeDate.getValue();
 			String amount = txtIncomeAmount.getText();
-			incomeService.save(userName, categoryName, date, amount);
+			incomeService.saveOrUpdate(null,userName, categoryName, date, amount);
 			loadIncomeTable();
 			clearErrors();
 		} catch (EmptyFieldsException e) {

@@ -26,6 +26,13 @@ public class IncomeRepositoryImpl implements IncomeRepository {
 		session.save(income);
 	}
 
+	@Override
+	public void update(Income income) {
+		Session session = sessionFactory.getCurrentSession();
+		session.update(income);
+
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Income> getAll() {
@@ -41,4 +48,5 @@ public class IncomeRepositoryImpl implements IncomeRepository {
 		criteria.add(Restrictions.eq("id", id));
 		return (Income) criteria.uniqueResult();
 	}
+
 }

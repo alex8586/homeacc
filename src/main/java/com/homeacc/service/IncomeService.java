@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 
 public interface IncomeService {
 
-	void save(String userName, String categoryName, LocalDate created, String amount);
+	void saveOrUpdate(Long id, String userName, String categoryName, LocalDate created, String amount);
 
 	ObservableList<IncomeDTO> getAll();
 }

@@ -2,8 +2,6 @@ package com.homeacc.service.impl;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +17,7 @@ import com.homeacc.repository.CategoryRepository;
 import com.homeacc.repository.IncomeRepository;
 import com.homeacc.repository.UserRepository;
 import com.homeacc.service.IncomeService;
+import com.homeacc.utils.DateUtils;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,17 +34,25 @@ public class IncomeServiceImpl implements IncomeService {
 
 	@Override
 	@Transactional
-	public void save(String userName, String categoryName, LocalDate date, String amount) {
+	public void saveOrUpdate(Long id,String userName, String categoryName, LocalDate date, String amount) {
+		Income income = getIncome(id, userName, categoryName, date, amount);
+		if (id == null) {
+			incomeRepository.save(income);
+		} else {
+			incomeRepository.update(income);
+		}
+	}
+
+	private Income getIncome(Long id,String userName, String categoryName, LocalDate date, String amount) {
 		Users user = userRepository.getByName(userName);
 		Category category = categoryRepository.getByName(categoryName);
-		Date created = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-		Income income = new Income();
+		Income income = id == null ? new Income() : incomeRepository.getById(id);
 		income.setUsers(user);
 		income.setCategory(category);
-		income.setCreated(created);
+		income.setCreated(DateUtils.localDateToDate(date));
 		income.setAmount(new BigDecimal(amount));
-		incomeRepository.save(income);
+		return income;
 	}
 
 	@Override

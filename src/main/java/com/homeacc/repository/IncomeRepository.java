@@ -8,7 +8,10 @@ public interface IncomeRepository {
 
 	void save(Income income);
 
+	void update(Income income);
+
 	List<Income> getAll();
 
 	Income getById(long id);
+
 }
