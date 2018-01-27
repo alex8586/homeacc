@@ -33,6 +33,12 @@ public class IncomeRepositoryImpl implements IncomeRepository {
 
 	}
 
+	@Override
+	public void delete(Income income) {
+		Session session = sessionFactory.getCurrentSession();
+		session.delete(income);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Income> getAll() {

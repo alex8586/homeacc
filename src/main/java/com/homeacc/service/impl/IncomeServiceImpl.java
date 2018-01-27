@@ -57,6 +57,13 @@ public class IncomeServiceImpl implements IncomeService {
 
 	@Override
 	@Transactional
+	public void deleteIncome(Long id) {
+		Income income = incomeRepository.getById(id);
+		incomeRepository.delete(income);
+	}
+
+	@Override
+	@Transactional
 	public ObservableList<IncomeDTO> getAll() {
 		ObservableList<IncomeDTO> incomes = FXCollections.observableArrayList();
 		List<Income> list = incomeRepository.getAll();

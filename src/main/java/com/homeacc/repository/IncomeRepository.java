@@ -10,6 +10,8 @@ public interface IncomeRepository {
 
 	void update(Income income);
 
+	void delete(Income income);
+
 	List<Income> getAll();
 
 	Income getById(long id);

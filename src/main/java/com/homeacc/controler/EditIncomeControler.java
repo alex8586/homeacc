@@ -1,6 +1,7 @@
 package com.homeacc.controler;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -42,6 +46,8 @@ public class EditIncomeControler {
 
 	@FXML
 	private Button btnCancel;
+	@FXML
+	private Button bntDelete;
 
 	@FXML
 	private Label editIncomeError;
@@ -139,6 +145,23 @@ public class EditIncomeControler {
 		} catch (EmptyFieldsException e) {
 			editIncomeError.setText(e.getMessage());
 			editIncomeError.setStyle("-fx-text-fill: red");
+		}
+	}
+
+	@FXML
+	public void deleteIncome() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Delete record");
+		alert.setHeaderText(null);
+		alert.setContentText("Are you sure delete this record ?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK){
+		    incomeService.deleteIncome(incomeId);
+		    incomeControler.loadIncomeTable();
+		    closeWindow();
+		} else {
+		    alert.close();
 		}
 	}
 
