@@ -8,19 +8,45 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.homeacc.controler.MainControler">
    <children>
-      <TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-            <Tab text="Outcome">
-                <content>
-                    <fx:include fx:id="tabExpenditure" source="expenditure.fxml" />
-                </content>
-            </Tab>
-          <Tab text="Income">
-                <content>
-                    <fx:include fx:id="tabIncome" source="income.fxml" />
-                </content>
-          </Tab>
-        </tabs>
-      </TabPane>
+      <VBox prefHeight="600.0" prefWidth="800.0">
+         <children>
+            <AnchorPane prefHeight="70.0" prefWidth="800.0">
+               <children>
+                  <HBox prefHeight="70.0" prefWidth="800.0">
+                     <children>
+                        <AnchorPane prefHeight="70.0" prefWidth="100.0">
+                           <children>
+                              <Button mnemonicParsing="false" prefHeight="70.0" prefWidth="100.0" text="Categories" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="70.0" prefWidth="100.0">
+                           <children>
+                              <Button mnemonicParsing="false" prefHeight="70.0" prefWidth="100.0" text="Users" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="530.0" prefWidth="800.0">
+               <children>
+                  <TabPane prefHeight="530.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                        <Tab text="Outcome">
+                            <content>
+                                <fx:include fx:id="tabExpenditure" source="expenditure.fxml" />
+                            </content>
+                        </Tab>
+                      <Tab text="Income">
+                            <content>
+                                <fx:include fx:id="tabIncome" source="income.fxml" />
+                            </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
