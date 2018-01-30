@@ -6,8 +6,12 @@ import javafx.collections.ObservableList;
 
 public interface CategoryService {
 
-	void save(String categoryName);
+	void createCategory(String categoryName);
 
 	ObservableList<Category> getAll();
+
+	Category getByName(String categoryName);
+
+	Category updateCategory(Category category);
 
 }

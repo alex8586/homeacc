@@ -12,13 +12,6 @@
          <children>
             <AnchorPane prefHeight="50.0" prefWidth="800.0">
                <children>
-                    <Label layoutX="32.0" layoutY="17.0" text="Create category" />
-                    <TextField fx:id="txtAddCategory" layoutX="149.0" layoutY="13.0" />
-                    <Button fx:id="btnAddCategory" layoutX="321.0" layoutY="13.0" mnemonicParsing="false" onAction="#addCategory" prefHeight="25.0" prefWidth="100.0" text="Add" textAlignment="CENTER" />
-               </children>
-            </AnchorPane>
-            <AnchorPane prefHeight="50.0" prefWidth="800.0">
-               <children>
                     <Label layoutX="32.0" layoutY="17.0" text="Create user" />
                     <TextField fx:id="txtAddUser" layoutX="149.0" layoutY="13.0" />
                     <Button fx:id="btnAddUser" layoutX="323.0" layoutY="13.0" mnemonicParsing="false" onAction="#addUser" prefHeight="25.0" prefWidth="100.0" text="Add" textAlignment="CENTER" />
@@ -35,9 +28,9 @@
                     <Button fx:id="btnSaveIncome" layoutX="586.0" layoutY="38.0" mnemonicParsing="false" onAction="#saveIncome" prefHeight="25.0" prefWidth="100.0" text="Add" />
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="360.0" prefWidth="800.0">
+            <AnchorPane prefHeight="410.0" prefWidth="800.0">
                <children>
-                    <TableView fx:id="tvIncome" layoutX="20.0" layoutY="21.0" prefHeight="300.0" prefWidth="760.0">
+                    <TableView fx:id="tvIncome" layoutX="20.0" layoutY="21.0" prefHeight="350.0" prefWidth="760.0">
                       <columns>
                         <TableColumn fx:id="tcId" prefWidth="59.0" text="id" />
                         <TableColumn fx:id="tcUser" prefWidth="240.0" text="user" />

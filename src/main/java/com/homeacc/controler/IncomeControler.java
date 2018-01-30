@@ -8,6 +8,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.homeacc.appconst.AppConst;
 import com.homeacc.dto.IncomeDTO;
 import com.homeacc.entity.Category;
 import com.homeacc.entity.Users;
@@ -34,8 +35,6 @@ import javafx.util.StringConverter;
 @Component
 public class IncomeControler {
 
-	@FXML
-	private TextField txtAddCategory;
 	@FXML
 	private TextField txtAddUser;
 
@@ -102,7 +101,7 @@ public class IncomeControler {
 		cbxUser.setConverter(converter);
 	}
 
-	private void loadCategoryComboBox() {
+	public void loadCategoryComboBox() {
 		categoryList = categoryService.getAll();
 		cbxCategory.setItems(categoryList);
 		StringConverter<Category> converter = new StringConverter<Category>() {
@@ -146,12 +145,6 @@ public class IncomeControler {
         });
 	}
 
-	public void addCategory() {
-		categoryService.save(txtAddCategory.getText());
-		loadCategoryComboBox();
-		clearErrors();
-	}
-
 	public void addUser() {
 		userService.save(txtAddUser.getText());
 		loadUserComboBox();
@@ -174,7 +167,7 @@ public class IncomeControler {
 			clearErrors();
 		} catch (EmptyFieldsException e) {
 			createIncomeError.setText(e.getMessage());
-			createIncomeError.setStyle("-fx-text-fill: red");
+			createIncomeError.setStyle(AppConst.TEXT_RED);
 		}
 	}
 

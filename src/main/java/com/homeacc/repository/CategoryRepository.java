@@ -11,4 +11,6 @@ public interface CategoryRepository {
 	List<Category> getAll();
 
 	Category getByName(String name);
+
+	void update(Category category);
 }

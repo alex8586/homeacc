@@ -26,6 +26,12 @@ public class CategoryRepositoryImpl implements CategoryRepository{
 		session.save(category);
 	}
 
+	@Override
+	public void update(Category category) {
+		Session session = sessionFactory.getCurrentSession();
+		session.update(category);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Category> getAll() {
