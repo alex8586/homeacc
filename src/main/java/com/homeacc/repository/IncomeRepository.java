@@ -16,4 +16,6 @@ public interface IncomeRepository {
 
 	Income getById(long id);
 
+	void deleteWithCategory(long categoryId);
+
 }

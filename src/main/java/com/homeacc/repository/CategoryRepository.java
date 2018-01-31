@@ -13,4 +13,6 @@ public interface CategoryRepository {
 	Category getByName(String name);
 
 	void update(Category category);
+
+	void delete(Category category);
 }

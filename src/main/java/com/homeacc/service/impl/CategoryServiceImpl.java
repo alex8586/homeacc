@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import com.homeacc.entity.Category;
 import com.homeacc.exception.EntityExistException;
 import com.homeacc.repository.CategoryRepository;
+import com.homeacc.repository.IncomeRepository;
 import com.homeacc.service.CategoryService;
 
 import javafx.collections.FXCollections;
@@ -16,6 +17,8 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
+	@Autowired
+	private IncomeRepository incomeRepository;
 
 	@Override
 	public void createCategory(String categoryName) {
@@ -32,6 +35,12 @@ public class CategoryServiceImpl implements CategoryService {
 	public Category updateCategory(Category category) {
 		categoryRepository.update(category);
 		return categoryRepository.getByName(category.getName());
+	}
+
+	@Override
+	public void deleteCategory(Category category) {
+		incomeRepository.deleteWithCategory(category.getId());
+		categoryRepository.delete(category);
 	}
 
 	@Override

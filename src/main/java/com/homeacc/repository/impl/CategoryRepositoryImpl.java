@@ -41,6 +41,12 @@ public class CategoryRepositoryImpl implements CategoryRepository{
 	}
 
 	@Override
+	public void delete(Category category) {
+		Session session = sessionFactory.getCurrentSession();
+		session.delete(category);
+	}
+
+	@Override
 	public Category getByName(String name) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(Category.class);

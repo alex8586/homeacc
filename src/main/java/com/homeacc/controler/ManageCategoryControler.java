@@ -1,6 +1,7 @@
 package com.homeacc.controler;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
@@ -28,6 +32,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 @Component
 public class ManageCategoryControler {
@@ -118,6 +123,24 @@ public class ManageCategoryControler {
 		reloadIncomeTab();
 		clearError();
 		return updated;
+	}
+
+	@FXML
+	public void deleteCategory() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.initStyle(StageStyle.UTILITY);
+		alert.setTitle("Delete category");
+		alert.setHeaderText(null);
+		alert.setContentText("Attention! All records in system will be deleted with such category.");
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK){
+			Category category = tvCategory.getSelectionModel().getSelectedItem();
+			categoryService.deleteCategory(category);
+			reloadCategoryList();
+			reloadIncomeTab();
+		} else {
+			alert.close();
+		}
 	}
 
 	private void reloadCategoryList() {
