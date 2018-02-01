@@ -33,6 +33,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 
 @Component
 public class ManageCategoryControler {
@@ -64,7 +65,6 @@ public class ManageCategoryControler {
 	}
 
 	private void loadCategoryList() {
-
 		tcId.setCellValueFactory(new PropertyValueFactory<Category, Long>("id"));
 		tcName.setCellValueFactory(new PropertyValueFactory<Category, String>("name"));
 		tcName.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -83,7 +83,7 @@ public class ManageCategoryControler {
 		reloadCategoryList();
 	}
 
-	public void openModal() throws IOException {
+	public void openModal(Window window) throws IOException {
 		FXMLLoader loader = springLoader.getLoader("/fxml/manage_category.fxml");
 		AnchorPane anchorPane = (AnchorPane) loader.load();
 		Stage stage = new Stage();
@@ -93,7 +93,8 @@ public class ManageCategoryControler {
         stage.centerOnScreen();
         Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
-        stage.show();
+        stage.initOwner(window);
+        stage.showAndWait();
 	}
 
 	@FXML
