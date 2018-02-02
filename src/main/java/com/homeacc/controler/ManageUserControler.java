@@ -102,8 +102,9 @@ public class ManageUserControler {
 	@FXML
 	public void addUser() {
 		if (StringUtils.isBlank(txtAddUser.getText())) {
-			error.setText("User name must be filled");
-			error.setStyle(TEXT_RED);
+			createError("User name must be filled");
+		} else if (txtAddUser.getText().length() > 15) {
+			createError("User name must be shoter than 15 symbols");
 		} else {
 			try {
 				userService.createUser(txtAddUser.getText());
@@ -112,8 +113,7 @@ public class ManageUserControler {
 				txtAddUser.setText(EMPTY_STRING);
 				incomeControler.loadUserComboBox();
 			} catch (EntityExistException e) {
-				error.setText(e.getMessage());
-				error.setStyle(TEXT_RED);
+				createError(e.getMessage());
 			}
 		}
 	}
@@ -139,9 +139,15 @@ public class ManageUserControler {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
 			Users user = tvUser.getSelectionModel().getSelectedItem();
+			if (user == null) {
+				createError("Choose which user you want to delete");
+				alert.close();
+				return;
+			}
 			userService.deleteUser(user);
 			reloadUserList();
 			reloadIncomeTab();
+			clearError();
 		} else {
 			alert.close();
 		}
@@ -151,6 +157,11 @@ public class ManageUserControler {
 		userList.clear();
 		userList.addAll(userService.getAll());
 		tvUser.setItems(userList);
+	}
+
+	private void createError(String message) {
+		error.setText(message);
+		error.setStyle(TEXT_RED);
 	}
 
 	private void clearError() {

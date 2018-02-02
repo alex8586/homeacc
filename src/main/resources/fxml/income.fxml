@@ -13,7 +13,7 @@
             <AnchorPane prefHeight="70.0" prefWidth="800.0">
                <children>
                     <Label layoutX="28.0" layoutY="12.0" text="Create income" />
-                    <Label fx:id="createIncomeError" layoutX="158.0" layoutY="12.0" prefHeight="17.0" prefWidth="6.0" />
+                    <Label fx:id="createIncomeError" layoutX="158.0" layoutY="12.0" prefHeight="17.0" prefWidth="392.0" />
                     <ChoiceBox fx:id="cbxUser" layoutX="28.0" layoutY="38.0" prefHeight="25.0" prefWidth="120.0" />
                     <ChoiceBox fx:id="cbxCategory" layoutX="161.0" layoutY="38.0" prefHeight="25.0" prefWidth="120.0" />
                     <DatePicker fx:id="incomeDate" layoutX="293.0" layoutY="38.0" prefHeight="25.0" prefWidth="120.0" />

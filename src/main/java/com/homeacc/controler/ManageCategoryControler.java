@@ -1,5 +1,7 @@
 package com.homeacc.controler;
 
+import static com.homeacc.appconst.AppConst.TEXT_RED;
+
 import java.io.IOException;
 import java.util.Optional;
 
@@ -7,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.homeacc.appconst.AppConst;
 import com.homeacc.entity.Category;
 import com.homeacc.exception.EntityExistException;
 import com.homeacc.main.SpringFXMLLoader;
@@ -100,8 +101,9 @@ public class ManageCategoryControler {
 	@FXML
 	public void addCategory() {
 		if (StringUtils.isBlank(txtAddCategory.getText())) {
-			error.setText("Category name must be filled");
-			error.setStyle(AppConst.TEXT_RED);
+			createError("Category name must be filled");
+		} else if (txtAddCategory.getText().length() > 30) {
+			createError("Category name must be shoter than 30 symbols");
 		} else {
 			try {
 				categoryService.createCategory(txtAddCategory.getText());
@@ -109,8 +111,7 @@ public class ManageCategoryControler {
 				clearError();
 				incomeControler.loadCategoryComboBox();
 			} catch (EntityExistException e) {
-				error.setText(e.getMessage());
-				error.setStyle(AppConst.TEXT_RED);
+				createError(e.getMessage());
 			}
 		}
 	}
@@ -136,6 +137,11 @@ public class ManageCategoryControler {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
 			Category category = tvCategory.getSelectionModel().getSelectedItem();
+			if (category == null) {
+				createError("Choose which category you want to delete");
+				alert.close();
+				return;
+			}
 			categoryService.deleteCategory(category);
 			reloadCategoryList();
 			reloadIncomeTab();
@@ -148,6 +154,11 @@ public class ManageCategoryControler {
 		categoryList.clear();
 		categoryList.addAll(categoryService.getAll());
 		tvCategory.setItems(categoryList);
+	}
+
+	private void createError(String message) {
+		error.setText(message);
+		error.setStyle(TEXT_RED);
 	}
 
 	private void clearError() {
