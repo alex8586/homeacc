@@ -6,7 +6,13 @@ import javafx.collections.ObservableList;
 
 public interface UserService {
 
-	void save(String userName);
+	void createUser(String categoryName);
 
 	ObservableList<Users> getAll();
+
+	Users getByName(String userName);
+
+	Users updateUser(Users user);
+
+	void deleteUser(Users user);
 }

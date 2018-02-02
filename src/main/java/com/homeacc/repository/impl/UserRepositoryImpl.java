@@ -26,6 +26,18 @@ public class UserRepositoryImpl implements UserRepository {
 		session.save(user);
 	}
 
+	@Override
+	public void update(Users user) {
+		Session session = sessionFactory.getCurrentSession();
+		session.update(user);
+	}
+
+	@Override
+	public void delete(Users user) {
+		Session session = sessionFactory.getCurrentSession();
+		session.delete(user);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Users> getAll() {
@@ -41,4 +53,5 @@ public class UserRepositoryImpl implements UserRepository {
 		criteria.add(Restrictions.eq("name", name));
 		return (Users) criteria.uniqueResult();
 	}
+
 }

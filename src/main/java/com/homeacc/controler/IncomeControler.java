@@ -36,9 +36,6 @@ import javafx.util.StringConverter;
 public class IncomeControler {
 
 	@FXML
-	private TextField txtAddUser;
-
-	@FXML
 	private ChoiceBox<Users> cbxUser;
 	@FXML
 	private ChoiceBox<Category> cbxCategory;
@@ -84,7 +81,7 @@ public class IncomeControler {
 		handleEventForEditIncomeModalWindow();
     }
 
-	private void loadUserComboBox() {
+	public void loadUserComboBox() {
 		userList = userService.getAll();
 		cbxUser.setItems(userList);
 		StringConverter<Users> converter = new StringConverter<Users>() {
@@ -143,12 +140,6 @@ public class IncomeControler {
                 }
             }
         });
-	}
-
-	public void addUser() {
-		userService.save(txtAddUser.getText());
-		loadUserComboBox();
-		clearErrors();
 	}
 
 	public void saveIncome() {

@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.homeacc.entity.Users;
+import com.homeacc.exception.EntityExistException;
+import com.homeacc.repository.IncomeRepository;
 import com.homeacc.repository.UserRepository;
 import com.homeacc.service.UserService;
 
@@ -15,12 +17,35 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private IncomeRepository incomeRepository;
 
 	@Override
-	public void save(String userName) {
-		Users user = new Users();
+	public void createUser(String userName) {
+		Users user = userRepository.getByName(userName);
+		if (user != null) {
+			throw new EntityExistException("User with this name already exist !");
+		}
+		user = new Users();
 		user.setName(userName);
 		userRepository.save(user);
+	}
+
+	@Override
+	public Users updateUser(Users user) {
+		userRepository.update(user);
+		return userRepository.getByName(user.getName());
+	}
+
+	@Override
+	public void deleteUser(Users user) {
+		incomeRepository.deleteWithUser(user.getId());
+		userRepository.delete(user);
+	}
+
+	@Override
+	public Users getByName(String userName) {
+		return userRepository.getByName(userName);
 	}
 
 	@Override

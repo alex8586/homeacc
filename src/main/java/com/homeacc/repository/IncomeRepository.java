@@ -18,4 +18,5 @@ public interface IncomeRepository {
 
 	void deleteWithCategory(long categoryId);
 
+	void deleteWithUser(long userId);
 }

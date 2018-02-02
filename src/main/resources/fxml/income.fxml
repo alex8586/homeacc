@@ -10,13 +10,6 @@
      <children>
       <VBox prefHeight="530.0" prefWidth="800.0">
          <children>
-            <AnchorPane prefHeight="50.0" prefWidth="800.0">
-               <children>
-                    <Label layoutX="32.0" layoutY="17.0" text="Create user" />
-                    <TextField fx:id="txtAddUser" layoutX="149.0" layoutY="13.0" />
-                    <Button fx:id="btnAddUser" layoutX="323.0" layoutY="13.0" mnemonicParsing="false" onAction="#addUser" prefHeight="25.0" prefWidth="100.0" text="Add" textAlignment="CENTER" />
-               </children>
-            </AnchorPane>
             <AnchorPane prefHeight="70.0" prefWidth="800.0">
                <children>
                     <Label layoutX="28.0" layoutY="12.0" text="Create income" />

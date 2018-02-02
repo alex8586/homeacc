@@ -18,6 +18,7 @@ import com.homeacc.repository.IncomeRepository;
 public class IncomeRepositoryImpl implements IncomeRepository {
 
 	private final static String DELETE_CATEGORY = "delete from Income where category_id = :categoryId";
+	private final static String DELETE_USER = "delete from Income where user_id = :userId";
 
 	@Autowired
 	private SessionFactory  sessionFactory;
@@ -61,6 +62,14 @@ public class IncomeRepositoryImpl implements IncomeRepository {
 		Session session = sessionFactory.getCurrentSession();
 		session.createQuery(DELETE_CATEGORY)
 		.setLong("categoryId", categoryId)
+		.executeUpdate();
+	}
+
+	@Override
+	public void deleteWithUser(long userId) {
+		Session session = sessionFactory.getCurrentSession();
+		session.createQuery(DELETE_USER)
+		.setLong("userId", userId)
 		.executeUpdate();
 	}
 }

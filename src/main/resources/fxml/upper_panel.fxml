@@ -17,7 +17,7 @@
             </AnchorPane>
             <AnchorPane prefHeight="70.0" prefWidth="100.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="70.0" prefWidth="100.0" text="Users" />
+                  <Button fx:id="bntUsers" mnemonicParsing="false" prefHeight="70.0" onAction="#manageUser" prefWidth="100.0" text="Users" />
                </children>
             </AnchorPane>
          </children>
