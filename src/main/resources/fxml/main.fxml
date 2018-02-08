@@ -1,35 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.homeacc.controler.MainControler">
-   <children>
-      <VBox prefHeight="600.0" prefWidth="800.0">
-         <children>
-            <fx:include fx:id="upper_panel" source="upper_panel.fxml" />
-            <AnchorPane prefHeight="530.0" prefWidth="800.0">
-               <children>
-                  <TabPane prefHeight="530.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
-                    <tabs>
-                        <Tab text="Outcome">
-                            <content>
-                                <fx:include fx:id="tabExpenditure" source="expenditure.fxml" />
-                            </content>
-                        </Tab>
-                      <Tab text="Income">
-                            <content>
-                                <fx:include fx:id="tabIncome" source="income.fxml" />
-                            </content>
-                      </Tab>
-                    </tabs>
-                  </TabPane>
-               </children>
-            </AnchorPane>
-         </children>
-      </VBox>
-   </children>
-</AnchorPane>
+<BorderPane minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <TabPane minHeight="500.0" minWidth="800.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+            <Tab fx:id="income" text="Income">
+                <content>
+                    <fx:include fx:id="tabIncome" source="income.fxml" />
+                </content>
+            </Tab>
+            <Tab text="Outcome" />
+        </tabs>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </TabPane>
+   </center>
+   <top>
+      <fx:include fx:id="upperPanel" source="upper_panel.fxml" />
+   </top>
+</BorderPane>

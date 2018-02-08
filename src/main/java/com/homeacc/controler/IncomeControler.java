@@ -58,7 +58,7 @@ public class IncomeControler {
 	private TableColumn<IncomeDTO, BigDecimal> tcAmount;
 
 	@FXML
-	private Label createIncomeError;
+	private Label error;
 
 	@Autowired
 	private EditIncomeControler editIncomeControler;
@@ -126,20 +126,20 @@ public class IncomeControler {
         tvIncome.setItems(incomeList);
 	}
 
-	private void handleEventForEditIncomeModalWindow(){
+	private void handleEventForEditIncomeModalWindow() {
 		tvIncome.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-                        IncomeDTO income = tvIncome.getSelectionModel().getSelectedItem();
-                        try {
-							editIncomeControler.openModal(income, userList, categoryList);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-                }
-            }
-        });
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+					IncomeDTO income = tvIncome.getSelectionModel().getSelectedItem();
+					try {
+						editIncomeControler.openModal(income, userList, categoryList);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 	}
 
 	public void saveIncome() {
@@ -157,13 +157,13 @@ public class IncomeControler {
 			loadIncomeTable();
 			clearErrors();
 		} catch (EmptyFieldsException e) {
-			createIncomeError.setText(e.getMessage());
-			createIncomeError.setStyle(AppConst.TEXT_RED);
+			error.setText(e.getMessage());
+			error.setStyle(AppConst.TEXT_RED);
 		}
 	}
 
 	private void clearErrors() {
-		createIncomeError.setText("");
-		createIncomeError.setStyle("");
+		error.setText(AppConst.EMPTY_STRING);
+		error.setStyle(AppConst.EMPTY_STRING);
 	}
 }

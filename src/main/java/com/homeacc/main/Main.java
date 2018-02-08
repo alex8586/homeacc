@@ -23,8 +23,10 @@ public class Main extends Application {
 
 		FXMLLoader loader = ctx.getBean(SpringFXMLLoader.class).getLoader("/fxml/main.fxml");
 		Parent root = loader.load();
-        Scene scene = new Scene(root, AppConst.APP_WIDTH, AppConst.APP_HEIGHT);
+        Scene scene = new Scene(root);
         primaryStage.setTitle("Home bookkeeping");
+        primaryStage.setMinWidth(AppConst.APP_WIDTH);
+        primaryStage.setMinHeight(AppConst.APP_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
