@@ -15,10 +15,10 @@
                </VBox.margin>
                <children>
                   <Button fx:id="btnSaveIncome" layoutX="688.0" layoutY="35.0" mnemonicParsing="false" onAction="#saveIncome" text="Add record" />
-                  <ChoiceBox fx:id="cbxUser" layoutX="14.0" layoutY="35.0" prefWidth="150.0" />
-                  <ChoiceBox fx:id="cbxCategory" layoutX="173.0" layoutY="35.0" prefWidth="150.0" />
-                  <DatePicker fx:id="incomeDate" layoutX="333.0" layoutY="35.0" />
-                  <TextField fx:id="txtIncomeAmount" layoutX="515.0" layoutY="35.0" />
+                  <ComboBox fx:id="cbxUser" layoutX="14.0" layoutY="35.0" prefWidth="150.0" promptText="Select user" />
+                  <ComboBox fx:id="cbxCategory" layoutX="173.0" layoutY="35.0" prefWidth="150.0" promptText="Select category" />
+                  <DatePicker fx:id="incomeDate" layoutX="333.0" layoutY="35.0" promptText="Select date" />
+                  <TextField fx:id="txtIncomeAmount" layoutX="515.0" layoutY="35.0" promptText="add amount" />
                   <Label layoutX="22.0" layoutY="6.0" text="Create record" />
                   <Label fx:id="error" layoutX="173.0" layoutY="6.0" prefHeight="17.0" prefWidth="490.0" />
                </children>
