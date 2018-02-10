@@ -9,24 +9,24 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.homeacc.dto.IncomeDTO;
+import com.homeacc.entity.BudgetRecord;
 import com.homeacc.entity.Category;
-import com.homeacc.entity.Income;
 import com.homeacc.entity.Users;
 import com.homeacc.mapper.Mapper;
+import com.homeacc.repository.BudgetRecordsRepository;
 import com.homeacc.repository.CategoryRepository;
-import com.homeacc.repository.IncomeRepository;
 import com.homeacc.repository.UserRepository;
-import com.homeacc.service.IncomeService;
+import com.homeacc.service.BudgetRecordsService;
 import com.homeacc.utils.DateUtils;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 @Component
-public class IncomeServiceImpl implements IncomeService {
+public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 
 	@Autowired
-	private IncomeRepository incomeRepository;
+	private BudgetRecordsRepository budgetRecordsRepository;
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
@@ -35,40 +35,40 @@ public class IncomeServiceImpl implements IncomeService {
 	@Override
 	@Transactional
 	public void saveOrUpdate(Long id,String userName, String categoryName, LocalDate date, String amount) {
-		Income income = getIncome(id, userName, categoryName, date, amount);
+		BudgetRecord record = getRecord(id, userName, categoryName, date, amount);
 		if (id == null) {
-			incomeRepository.save(income);
+			budgetRecordsRepository.save(record);
 		} else {
-			incomeRepository.update(income);
+			budgetRecordsRepository.update(record);
 		}
 	}
 
-	private Income getIncome(Long id,String userName, String categoryName, LocalDate date, String amount) {
+	private BudgetRecord getRecord(Long id, String userName, String categoryName, LocalDate date, String amount) {
 		Users user = userRepository.getByName(userName);
 		Category category = categoryRepository.getByName(categoryName);
 
-		Income income = id == null ? new Income() : incomeRepository.getById(id);
-		income.setUsers(user);
-		income.setCategory(category);
-		income.setCreated(DateUtils.localDateToDate(date));
-		income.setAmount(new BigDecimal(amount));
-		return income;
+		BudgetRecord record = id == null ? new BudgetRecord() : budgetRecordsRepository.getById(id);
+		record.setUsers(user);
+		record.setCategory(category);
+		record.setCreated(DateUtils.localDateToDate(date));
+		record.setAmount(new BigDecimal(amount));
+		return record;
 	}
 
 	@Override
 	@Transactional
-	public void deleteIncome(Long id) {
-		Income income = incomeRepository.getById(id);
-		incomeRepository.delete(income);
+	public void deleteBudgetRecords(Long id) {
+		BudgetRecord record = budgetRecordsRepository.getById(id);
+		budgetRecordsRepository.delete(record);
 	}
 
 	@Override
 	@Transactional
 	public ObservableList<IncomeDTO> getAll() {
-		ObservableList<IncomeDTO> incomes = FXCollections.observableArrayList();
-		List<Income> list = incomeRepository.getAll();
-		incomes.addAll(Mapper.mapIncomeListToDtoList(list));
-		return incomes;
+		ObservableList<IncomeDTO> records = FXCollections.observableArrayList();
+		List<BudgetRecord> list = budgetRecordsRepository.getAll();
+		records.addAll(Mapper.mapIncomeListToDtoList(list));
+		return records;
 	}
 
 }

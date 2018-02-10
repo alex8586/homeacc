@@ -22,7 +22,7 @@ public class Users implements java.io.Serializable {
 
 	private long id;
 	private String name;
-	private Set<Income> incomes = new HashSet<Income>(0);
+	private Set<BudgetRecord> incomes = new HashSet<BudgetRecord>(0);
 
 	public Users() {
 	}
@@ -32,7 +32,7 @@ public class Users implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Users(long id, String name, Set<Income> incomes) {
+	public Users(long id, String name, Set<BudgetRecord> incomes) {
 		this.id = id;
 		this.name = name;
 		this.incomes = incomes;
@@ -60,11 +60,11 @@ public class Users implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-	public Set<Income> getIncomes() {
+	public Set<BudgetRecord> getIncomes() {
 		return this.incomes;
 	}
 
-	public void setIncomes(Set<Income> incomes) {
+	public void setIncomes(Set<BudgetRecord> incomes) {
 		this.incomes = incomes;
 	}
 

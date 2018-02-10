@@ -11,9 +11,9 @@ import com.homeacc.entity.Category;
 import com.homeacc.entity.Users;
 import com.homeacc.exception.EmptyFieldsException;
 import com.homeacc.main.SpringFXMLLoader;
-import com.homeacc.service.IncomeService;
+import com.homeacc.service.BudgetRecordsService;
 import com.homeacc.utils.DateUtils;
-import com.homeacc.validation.IncomeValidator;
+import com.homeacc.validation.BudgetRecordValidator;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -33,7 +33,7 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 @Component
-public class EditIncomeControler {
+public class EditBudgetRecordsControler {
 
 	@FXML
 	private ChoiceBox<Users> cbxUser;
@@ -50,25 +50,25 @@ public class EditIncomeControler {
 	private Button bntDelete;
 
 	@FXML
-	private Label editIncomeError;
+	private Label error;
 
 	@Autowired
 	private SpringFXMLLoader springLoader;
 	@Autowired
-	private IncomeService incomeService;
+	private BudgetRecordsService recordsService;
 	@Autowired
-	private IncomeControler incomeControler;
+	private BudgetRecordsControler recordsControler;
 
 	private ObservableList<Users> userList;
 	private ObservableList<Category> categoryList;
-	private long incomeId;
+	private long recordId;
 
 	public void openModal(IncomeDTO income, ObservableList<Users> userList, ObservableList<Category> categoryList) throws IOException {
 		FXMLLoader loader = springLoader.getLoader("/fxml/edit_income.fxml");
 		AnchorPane anchorPane = (AnchorPane) loader.load();
 
 		Stage stage = new Stage();
-        stage.setTitle("Edit or delete income");
+        stage.setTitle("Edit or delete records");
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setResizable(false);
         stage.centerOnScreen();
@@ -76,7 +76,7 @@ public class EditIncomeControler {
         Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
 
-        incomeId = income.getId();
+        recordId = income.getId();
         this.userList = userList;
         this.categoryList = categoryList;
 
@@ -131,25 +131,25 @@ public class EditIncomeControler {
 	}
 
 	@FXML
-	public void editIncome() {
+	public void editBudgetRecord() {
 		try {
-			IncomeValidator.validateFields(cbxUser.getSelectionModel().getSelectedItem(),
+			BudgetRecordValidator.validateFields(cbxUser.getSelectionModel().getSelectedItem(),
 					cbxCategory.getSelectionModel().getSelectedItem(), date.getValue(),
 					amount.getText());
-			IncomeValidator.validateAmount(amount.getText());
+			BudgetRecordValidator.validateAmount(amount.getText());
 
-			incomeService.saveOrUpdate(incomeId, cbxUser.getSelectionModel().getSelectedItem().getName(),
+			recordsService.saveOrUpdate(recordId, cbxUser.getSelectionModel().getSelectedItem().getName(),
 					cbxCategory.getSelectionModel().getSelectedItem().getName(), date.getValue(), amount.getText());
-			incomeControler.loadIncomeTable();
+			recordsControler.loadIncomeTable();
 			closeWindow();
 		} catch (EmptyFieldsException e) {
-			editIncomeError.setText(e.getMessage());
-			editIncomeError.setStyle("-fx-text-fill: red");
+			error.setText(e.getMessage());
+			error.setStyle("-fx-text-fill: red");
 		}
 	}
 
 	@FXML
-	public void deleteIncome() {
+	public void deleteBudgetRecord() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Delete record");
 		alert.setHeaderText(null);
@@ -157,8 +157,8 @@ public class EditIncomeControler {
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
-		    incomeService.deleteIncome(incomeId);
-		    incomeControler.loadIncomeTable();
+		    recordsService.deleteBudgetRecords(recordId);
+		    recordsControler.loadIncomeTable();
 		    closeWindow();
 		} else {
 		    alert.close();

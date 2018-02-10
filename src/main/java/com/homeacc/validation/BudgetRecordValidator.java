@@ -8,7 +8,7 @@ import com.homeacc.entity.Category;
 import com.homeacc.entity.Users;
 import com.homeacc.exception.EmptyFieldsException;
 
-public class IncomeValidator {
+public class BudgetRecordValidator {
 
 	public static void validateFields(Users user, Category category, LocalDate date, String amount) {
 		if (user == null || category == null || StringUtils.isBlank(amount) || date == null) {

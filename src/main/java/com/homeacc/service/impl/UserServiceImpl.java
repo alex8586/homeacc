@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.homeacc.entity.Users;
 import com.homeacc.exception.EntityExistException;
-import com.homeacc.repository.IncomeRepository;
+import com.homeacc.repository.BudgetRecordsRepository;
 import com.homeacc.repository.UserRepository;
 import com.homeacc.service.UserService;
 
@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
-	private IncomeRepository incomeRepository;
+	private BudgetRecordsRepository incomeRepository;
 
 	@Override
 	public void createUser(String userName) {

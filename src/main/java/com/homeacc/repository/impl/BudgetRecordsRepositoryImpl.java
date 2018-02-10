@@ -10,51 +10,51 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.homeacc.entity.Income;
-import com.homeacc.repository.IncomeRepository;
+import com.homeacc.entity.BudgetRecord;
+import com.homeacc.repository.BudgetRecordsRepository;
 
 @Component
 @Transactional
-public class IncomeRepositoryImpl implements IncomeRepository {
+public class BudgetRecordsRepositoryImpl implements BudgetRecordsRepository {
 
-	private final static String DELETE_CATEGORY = "delete from Income where category_id = :categoryId";
-	private final static String DELETE_USER = "delete from Income where user_id = :userId";
+	private final static String DELETE_CATEGORY = "delete from BudgetRecord where category_id = :categoryId";
+	private final static String DELETE_USER = "delete from BudgetRecord where user_id = :userId";
 
 	@Autowired
 	private SessionFactory  sessionFactory;
 
 	@Override
-	public void save(Income income) {
+	public void save(BudgetRecord record) {
 		Session session = sessionFactory.getCurrentSession();
-		session.save(income);
+		session.save(record);
 	}
 
 	@Override
-	public void update(Income income) {
+	public void update(BudgetRecord record) {
 		Session session = sessionFactory.getCurrentSession();
-		session.update(income);
+		session.update(record);
 	}
 
 	@Override
-	public void delete(Income income) {
+	public void delete(BudgetRecord record) {
 		Session session = sessionFactory.getCurrentSession();
-		session.delete(income);
+		session.delete(record);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Income> getAll() {
+	public List<BudgetRecord> getAll() {
 		Session session = sessionFactory.getCurrentSession();
-		Criteria criteria = session.createCriteria(Income.class);
+		Criteria criteria = session.createCriteria(BudgetRecord.class);
 		return criteria.list();
 	}
 
 	@Override
-	public Income getById(long id) {
+	public BudgetRecord getById(long id) {
 		Session session = sessionFactory.getCurrentSession();
-		Criteria criteria = session.createCriteria(Income.class);
+		Criteria criteria = session.createCriteria(BudgetRecord.class);
 		criteria.add(Restrictions.eq("id", id));
-		return (Income) criteria.uniqueResult();
+		return (BudgetRecord) criteria.uniqueResult();
 	}
 
 	@Override

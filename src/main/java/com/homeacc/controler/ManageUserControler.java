@@ -55,7 +55,7 @@ public class ManageUserControler {
 	@Autowired
 	private SpringFXMLLoader springLoader;
 	@Autowired
-	private IncomeControler incomeControler;
+	private BudgetRecordsControler incomeControler;
 	@Autowired
 	private UserService userService;
 

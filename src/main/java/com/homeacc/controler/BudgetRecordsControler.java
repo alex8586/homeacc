@@ -13,10 +13,10 @@ import com.homeacc.dto.IncomeDTO;
 import com.homeacc.entity.Category;
 import com.homeacc.entity.Users;
 import com.homeacc.exception.EmptyFieldsException;
+import com.homeacc.service.BudgetRecordsService;
 import com.homeacc.service.CategoryService;
-import com.homeacc.service.IncomeService;
 import com.homeacc.service.UserService;
-import com.homeacc.validation.IncomeValidator;
+import com.homeacc.validation.BudgetRecordValidator;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,7 +33,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
 
 @Component
-public class IncomeControler {
+public class BudgetRecordsControler {
 
 	@FXML
 	private ComboBox<Users> cbxUser;
@@ -61,17 +61,17 @@ public class IncomeControler {
 	private Label error;
 
 	@Autowired
-	private EditIncomeControler editIncomeControler;
+	private EditBudgetRecordsControler editBudgetRecordsControler;
 	@Autowired
 	private CategoryService categoryService;
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private IncomeService incomeService;
+	private BudgetRecordsService budgetRecordsService;
 
 	private ObservableList<Users> userList = FXCollections.observableArrayList();
 	private ObservableList<Category> categoryList = FXCollections.observableArrayList();
-	private ObservableList<IncomeDTO> incomeList = FXCollections.observableArrayList();
+	private ObservableList<IncomeDTO> recordList = FXCollections.observableArrayList();
 
 	@FXML
     public void initialize() {
@@ -116,14 +116,14 @@ public class IncomeControler {
 	}
 
 	public void loadIncomeTable() {
-		incomeList.clear();
+		recordList.clear();
 		tcId.setCellValueFactory(new PropertyValueFactory<IncomeDTO, Long>("id"));
         tcUser.setCellValueFactory(new PropertyValueFactory<IncomeDTO, String>("userName"));
         tcCategory.setCellValueFactory(new PropertyValueFactory<IncomeDTO, String>("categoryName"));
         tcDate.setCellValueFactory(new PropertyValueFactory<IncomeDTO, Date>("created"));
         tcAmount.setCellValueFactory(new PropertyValueFactory<IncomeDTO, BigDecimal>("amount"));
-        incomeList.addAll(incomeService.getAll());
-        tvIncome.setItems(incomeList);
+        recordList.addAll(budgetRecordsService.getAll());
+        tvIncome.setItems(recordList);
 	}
 
 	private void handleEventForEditIncomeModalWindow() {
@@ -131,9 +131,9 @@ public class IncomeControler {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-					IncomeDTO income = tvIncome.getSelectionModel().getSelectedItem();
+					IncomeDTO record = tvIncome.getSelectionModel().getSelectedItem();
 					try {
-						editIncomeControler.openModal(income, userList, categoryList);
+						editBudgetRecordsControler.openModal(record, userList, categoryList);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -144,16 +144,16 @@ public class IncomeControler {
 
 	public void saveIncome() {
 		try {
-			IncomeValidator.validateFields(cbxUser.getSelectionModel().getSelectedItem(),
+			BudgetRecordValidator.validateFields(cbxUser.getSelectionModel().getSelectedItem(),
 					cbxCategory.getSelectionModel().getSelectedItem(), incomeDate.getValue(),
 					txtIncomeAmount.getText());
-			IncomeValidator.validateAmount(txtIncomeAmount.getText());
+			BudgetRecordValidator.validateAmount(txtIncomeAmount.getText());
 
 			String userName = cbxUser.getSelectionModel().getSelectedItem().getName();
 			String categoryName = cbxCategory.getSelectionModel().getSelectedItem().getName();
 			LocalDate date = incomeDate.getValue();
 			String amount = txtIncomeAmount.getText();
-			incomeService.saveOrUpdate(null,userName, categoryName, date, amount);
+			budgetRecordsService.saveOrUpdate(null,userName, categoryName, date, amount);
 			loadIncomeTable();
 			clearErrors();
 		} catch (EmptyFieldsException e) {

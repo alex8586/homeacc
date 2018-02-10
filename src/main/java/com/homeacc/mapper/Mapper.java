@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.homeacc.dto.IncomeDTO;
-import com.homeacc.entity.Income;
+import com.homeacc.entity.BudgetRecord;
 
 public class Mapper {
 
-	public static List<IncomeDTO> mapIncomeListToDtoList(List<Income> incomes) {
+	public static List<IncomeDTO> mapIncomeListToDtoList(List<BudgetRecord> incomes) {
 		List<IncomeDTO> result = new ArrayList<>();
-		for(Income income : incomes){
+		for(BudgetRecord income : incomes){
 			result.add(mapIncomeToDTO(income));
 		}
 		return result;
 	}
 
-	public static IncomeDTO mapIncomeToDTO(Income income) {
+	public static IncomeDTO mapIncomeToDTO(BudgetRecord income) {
 		IncomeDTO dto = new IncomeDTO();
 		dto.setId(income.getId());
 		dto.setUserName(income.getUsers().getName());

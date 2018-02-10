@@ -54,7 +54,7 @@ public class ManageCategoryControler {
 	@Autowired
 	private SpringFXMLLoader springLoader;
 	@Autowired
-	private IncomeControler incomeControler;
+	private BudgetRecordsControler incomeControler;
 	@Autowired
 	private CategoryService categoryService;
 
