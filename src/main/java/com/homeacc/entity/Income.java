@@ -25,6 +25,7 @@ public class Income implements java.io.Serializable {
 
 	private long id;
 	private Users users;
+	private BudgetType budgetType;
 	private Category category;
 	private Date created;
 	private BigDecimal amount;
@@ -32,9 +33,10 @@ public class Income implements java.io.Serializable {
 	public Income() {
 	}
 
-	public Income(long id, Users users, Category category, Date created, BigDecimal amount) {
+	public Income(long id, Users users, BudgetType budgetType, Category category, Date created, BigDecimal amount) {
 		this.id = id;
 		this.users = users;
+		this.budgetType = budgetType;
 		this.category = category;
 		this.created = created;
 		this.amount = amount;
@@ -60,6 +62,16 @@ public class Income implements java.io.Serializable {
 
 	public void setUsers(Users users) {
 		this.users = users;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "BUDGET_TYPE_ID", nullable = false)
+	public BudgetType getBudgetType() {
+		return this.budgetType;
+	}
+
+	public void setBudgetType(BudgetType budgetType) {
+		this.budgetType = budgetType;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
