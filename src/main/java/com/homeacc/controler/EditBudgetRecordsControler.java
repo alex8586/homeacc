@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.homeacc.dto.BudgetRecordDTO;
+import com.homeacc.entity.BudgetType;
 import com.homeacc.entity.Category;
 import com.homeacc.entity.Users;
 import com.homeacc.exception.EmptyFieldsException;
@@ -40,6 +41,8 @@ public class EditBudgetRecordsControler {
 	@FXML
 	private ChoiceBox<Category> cbxCategory;
 	@FXML
+	private ChoiceBox<BudgetType> cbxBudgetType;
+	@FXML
 	private DatePicker date;
 	@FXML
 	private TextField amount;
@@ -61,10 +64,11 @@ public class EditBudgetRecordsControler {
 
 	private ObservableList<Users> userList;
 	private ObservableList<Category> categoryList;
+	private ObservableList<BudgetType> budgetTypeList;
 	private long recordId;
 
-	public void openModal(BudgetRecordDTO income, ObservableList<Users> userList, ObservableList<Category> categoryList) throws IOException {
-		FXMLLoader loader = springLoader.getLoader("/fxml/edit_income.fxml");
+	public void openModal(BudgetRecordDTO record, ObservableList<Users> userList, ObservableList<Category> categoryList, ObservableList<BudgetType> budgetTypeList) throws IOException {
+		FXMLLoader loader = springLoader.getLoader("/fxml/edit_budget_record.fxml");
 		AnchorPane anchorPane = (AnchorPane) loader.load();
 
 		Stage stage = new Stage();
@@ -76,14 +80,16 @@ public class EditBudgetRecordsControler {
         Scene scene = new Scene(anchorPane);
         stage.setScene(scene);
 
-        recordId = income.getId();
+        recordId = record.getId();
         this.userList = userList;
         this.categoryList = categoryList;
+        this.budgetTypeList = budgetTypeList;
 
-        loadCategoryComboBox(income.getCategoryName());
-        loadUserComboBox(income.getUserName());
-    	date.setValue(DateUtils.dateToLocalDate(income.getCreated()));
-        amount.setText(income.getAmount().toString());
+        loadCategoryComboBox(record.getCategoryName());
+        loadUserComboBox(record.getUserName());
+        loadBudgetType(record.getBudgetType());
+    	date.setValue(DateUtils.dateToLocalDate(record.getCreated()));
+        amount.setText(record.getAmount().toString());
 
         stage.show();
 	}
@@ -130,6 +136,27 @@ public class EditBudgetRecordsControler {
 		cbxCategory.setConverter(converter);
 	}
 
+	public void loadBudgetType(String budgetType) {
+		cbxBudgetType.setItems(budgetTypeList);
+		for (BudgetType type : budgetTypeList) {
+			if (type.getCode().equals(budgetType)) {
+				cbxBudgetType.getSelectionModel().select(type);
+			}
+		}
+		StringConverter<BudgetType> converter = new StringConverter<BudgetType>() {
+            @Override
+            public String toString(BudgetType type) {
+                return type.getCode();
+            }
+
+            @Override
+            public BudgetType fromString(String string) {
+                return null;
+            }
+        };
+        cbxBudgetType.setConverter(converter);
+	}
+
 	@FXML
 	public void editBudgetRecord() {
 		try {
@@ -138,8 +165,9 @@ public class EditBudgetRecordsControler {
 					amount.getText());
 			BudgetRecordValidator.validateAmount(amount.getText());
 
-//			recordsService.saveOrUpdate(recordId, cbxUser.getSelectionModel().getSelectedItem().getName(),
-//					cbxCategory.getSelectionModel().getSelectedItem().getName(), date.getValue(), amount.getText());
+			recordsService.saveOrUpdate(recordId, cbxUser.getSelectionModel().getSelectedItem().getName(),
+					cbxCategory.getSelectionModel().getSelectedItem().getName(), date.getValue(),
+					cbxBudgetType.getSelectionModel().getSelectedItem(), amount.getText());
 			recordsControler.loadIncomeTable();
 			closeWindow();
 		} catch (EmptyFieldsException e) {

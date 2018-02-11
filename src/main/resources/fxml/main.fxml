@@ -12,7 +12,7 @@
         <tabs>
             <Tab fx:id="income" text="Income">
                 <content>
-                    <fx:include fx:id="tabIncome" source="income.fxml" />
+                    <fx:include fx:id="tabIncome" source="budget_records.fxml" />
                 </content>
             </Tab>
             <Tab text="Outcome" />

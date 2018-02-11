@@ -158,7 +158,7 @@ public class BudgetRecordsControler {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
 					BudgetRecordDTO record = tvBudgetRecords.getSelectionModel().getSelectedItem();
 					try {
-						editBudgetRecordsControler.openModal(record, userList, categoryList);
+						editBudgetRecordsControler.openModal(record, userList, categoryList, recordTypeList);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
