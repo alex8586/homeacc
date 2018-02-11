@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.homeacc.appconst.AppConst;
-import com.homeacc.dto.IncomeDTO;
+import com.homeacc.dto.BudgetRecordDTO;
+import com.homeacc.entity.BudgetType;
 import com.homeacc.entity.Category;
 import com.homeacc.entity.Users;
 import com.homeacc.exception.EmptyFieldsException;
@@ -42,20 +43,24 @@ public class BudgetRecordsControler {
 	@FXML
 	private DatePicker incomeDate;
 	@FXML
+	private ComboBox<BudgetType> cbxBudgetType;
+	@FXML
 	private TextField txtIncomeAmount;
 
 	@FXML
-	private TableView<IncomeDTO> tvIncome;
+	private TableView<BudgetRecordDTO> tvBudgetRecords;
 	@FXML
-	private TableColumn<IncomeDTO, Long> tcId;
+	private TableColumn<BudgetRecordDTO, Long> tcId;
 	@FXML
-	private TableColumn<IncomeDTO, String> tcUser;
+	private TableColumn<BudgetRecordDTO, String> tcUser;
 	@FXML
-	private TableColumn<IncomeDTO, String> tcCategory;
+	private TableColumn<BudgetRecordDTO, String> tcCategory;
 	@FXML
-	private TableColumn<IncomeDTO, Date> tcDate;
+	private TableColumn<BudgetRecordDTO, Date> tcDate;
 	@FXML
-	private TableColumn<IncomeDTO, BigDecimal> tcAmount;
+	private TableColumn<BudgetRecordDTO, String> tcBudgetType;
+	@FXML
+	private TableColumn<BudgetRecordDTO, BigDecimal> tcAmount;
 
 	@FXML
 	private Label error;
@@ -71,13 +76,15 @@ public class BudgetRecordsControler {
 
 	private ObservableList<Users> userList = FXCollections.observableArrayList();
 	private ObservableList<Category> categoryList = FXCollections.observableArrayList();
-	private ObservableList<IncomeDTO> recordList = FXCollections.observableArrayList();
+	private ObservableList<BudgetRecordDTO> recordList = FXCollections.observableArrayList();
+	private ObservableList<BudgetType> recordTypeList = FXCollections.observableArrayList();
 
 	@FXML
     public void initialize() {
 		loadUserComboBox();
 		loadCategoryComboBox();
 		loadIncomeTable();
+		loadBudgetType();
 		handleEventForEditIncomeModalWindow();
     }
 
@@ -117,21 +124,39 @@ public class BudgetRecordsControler {
 
 	public void loadIncomeTable() {
 		recordList.clear();
-		tcId.setCellValueFactory(new PropertyValueFactory<IncomeDTO, Long>("id"));
-        tcUser.setCellValueFactory(new PropertyValueFactory<IncomeDTO, String>("userName"));
-        tcCategory.setCellValueFactory(new PropertyValueFactory<IncomeDTO, String>("categoryName"));
-        tcDate.setCellValueFactory(new PropertyValueFactory<IncomeDTO, Date>("created"));
-        tcAmount.setCellValueFactory(new PropertyValueFactory<IncomeDTO, BigDecimal>("amount"));
+		tcId.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, Long>("id"));
+        tcUser.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, String>("userName"));
+        tcCategory.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, String>("categoryName"));
+        tcDate.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, Date>("created"));
+        tcBudgetType.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, String>("budgetType"));
+        tcAmount.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, BigDecimal>("amount"));
         recordList.addAll(budgetRecordsService.getAll());
-        tvIncome.setItems(recordList);
+        tvBudgetRecords.setItems(recordList);
+	}
+
+	public void loadBudgetType() {
+		recordTypeList = budgetRecordsService.getAllBudgetType();
+		cbxBudgetType.setItems(recordTypeList);
+		StringConverter<BudgetType> converter = new StringConverter<BudgetType>() {
+            @Override
+            public String toString(BudgetType type) {
+                return type.getCode();
+            }
+
+            @Override
+            public BudgetType fromString(String string) {
+                return null;
+            }
+        };
+        cbxBudgetType.setConverter(converter);
 	}
 
 	private void handleEventForEditIncomeModalWindow() {
-		tvIncome.setOnMousePressed(new EventHandler<MouseEvent>() {
+		tvBudgetRecords.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-					IncomeDTO record = tvIncome.getSelectionModel().getSelectedItem();
+					BudgetRecordDTO record = tvBudgetRecords.getSelectionModel().getSelectedItem();
 					try {
 						editBudgetRecordsControler.openModal(record, userList, categoryList);
 					} catch (IOException e) {
@@ -152,8 +177,9 @@ public class BudgetRecordsControler {
 			String userName = cbxUser.getSelectionModel().getSelectedItem().getName();
 			String categoryName = cbxCategory.getSelectionModel().getSelectedItem().getName();
 			LocalDate date = incomeDate.getValue();
+			BudgetType budgetType = cbxBudgetType.getSelectionModel().getSelectedItem();
 			String amount = txtIncomeAmount.getText();
-			budgetRecordsService.saveOrUpdate(null,userName, categoryName, date, amount);
+			budgetRecordsService.saveOrUpdate(null,userName, categoryName, date, budgetType, amount);
 			loadIncomeTable();
 			clearErrors();
 		} catch (EmptyFieldsException e) {

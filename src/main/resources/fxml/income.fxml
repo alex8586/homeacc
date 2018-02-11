@@ -15,21 +15,23 @@
                </VBox.margin>
                <children>
                   <Button fx:id="btnSaveIncome" layoutX="688.0" layoutY="35.0" mnemonicParsing="false" onAction="#saveIncome" text="Add record" />
-                  <ComboBox fx:id="cbxUser" layoutX="14.0" layoutY="35.0" prefWidth="150.0" promptText="Select user" />
-                  <ComboBox fx:id="cbxCategory" layoutX="173.0" layoutY="35.0" prefWidth="150.0" promptText="Select category" />
-                  <DatePicker fx:id="incomeDate" layoutX="333.0" layoutY="35.0" promptText="Select date" />
-                  <TextField fx:id="txtIncomeAmount" layoutX="515.0" layoutY="35.0" promptText="add amount" />
+                  <ComboBox fx:id="cbxUser" layoutX="14.0" layoutY="35.0" prefWidth="140.0" promptText="Select user" />
+                  <ComboBox fx:id="cbxCategory" layoutX="163.0" layoutY="35.0" prefWidth="140.0" promptText="Select category" />
+                  <DatePicker fx:id="incomeDate" layoutX="314.0" layoutY="35.0" prefWidth="140.0" promptText="Select date" />
+                  <TextField fx:id="txtIncomeAmount" layoutX="465.0" layoutY="35.0" prefHeight="25.0" prefWidth="100.0" promptText="add amount" />
                   <Label layoutX="22.0" layoutY="6.0" text="Create record" />
                   <Label fx:id="error" layoutX="173.0" layoutY="6.0" prefHeight="17.0" prefWidth="490.0" />
+                  <ComboBox fx:id="cbxBudgetType" layoutX="576.0" layoutY="35.0" prefWidth="100.0" promptText="Select type" />
                </children>
             </AnchorPane>
-            <TableView fx:id="tvIncome" minHeight="375.0" minWidth="780.0" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tvBudgetRecords" minHeight="375.0" minWidth="780.0" VBox.vgrow="ALWAYS">
               <columns>
                 <TableColumn fx:id="tcId" minWidth="40.0" prefWidth="-1.0" text="id" />
-                <TableColumn fx:id="tcUser" minWidth="185.0" prefWidth="-1.0" text="user" />
-                  <TableColumn fx:id="tcCategory" minWidth="185.0" prefWidth="-1.0" text="category" />
-                  <TableColumn fx:id="tcDate" minWidth="185.0" prefWidth="-1.0" text="date" />
-                  <TableColumn fx:id="tcAmount" minWidth="185.0" prefWidth="-1.0" text="amount" />
+                <TableColumn fx:id="tcUser" minWidth="150.0" prefWidth="-1.0" text="user" />
+                  <TableColumn fx:id="tcCategory" minWidth="150.0" prefWidth="-1.0" text="category" />
+                  <TableColumn fx:id="tcDate" minWidth="150.0" prefWidth="-1.0" text="date" />
+                  <TableColumn fx:id="tcBudgetType" minWidth="150.0" prefWidth="-1.0" text="type" />
+                  <TableColumn fx:id="tcAmount" minWidth="150.0" prefWidth="-1.0" text="amount" />
               </columns>
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

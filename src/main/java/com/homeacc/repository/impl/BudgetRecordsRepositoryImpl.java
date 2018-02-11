@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.homeacc.entity.BudgetRecord;
+import com.homeacc.entity.BudgetType;
 import com.homeacc.repository.BudgetRecordsRepository;
 
 @Component
@@ -71,5 +72,13 @@ public class BudgetRecordsRepositoryImpl implements BudgetRecordsRepository {
 		session.createQuery(DELETE_USER)
 		.setLong("userId", userId)
 		.executeUpdate();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<BudgetType> getAllBudgetType() {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(BudgetType.class);
+		return criteria.list();
 	}
 }

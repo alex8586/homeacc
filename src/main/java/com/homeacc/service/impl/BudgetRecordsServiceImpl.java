@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.homeacc.dto.IncomeDTO;
+import com.homeacc.dto.BudgetRecordDTO;
 import com.homeacc.entity.BudgetRecord;
+import com.homeacc.entity.BudgetType;
 import com.homeacc.entity.Category;
 import com.homeacc.entity.Users;
 import com.homeacc.mapper.Mapper;
@@ -34,8 +35,8 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 
 	@Override
 	@Transactional
-	public void saveOrUpdate(Long id,String userName, String categoryName, LocalDate date, String amount) {
-		BudgetRecord record = getRecord(id, userName, categoryName, date, amount);
+	public void saveOrUpdate(Long id,String userName, String categoryName, LocalDate date, BudgetType budgetType, String amount) {
+		BudgetRecord record = getRecord(id, userName, categoryName, date, budgetType, amount);
 		if (id == null) {
 			budgetRecordsRepository.save(record);
 		} else {
@@ -43,7 +44,7 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 		}
 	}
 
-	private BudgetRecord getRecord(Long id, String userName, String categoryName, LocalDate date, String amount) {
+	private BudgetRecord getRecord(Long id, String userName, String categoryName, LocalDate date, BudgetType budgetType, String amount) {
 		Users user = userRepository.getByName(userName);
 		Category category = categoryRepository.getByName(categoryName);
 
@@ -51,6 +52,7 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 		record.setUsers(user);
 		record.setCategory(category);
 		record.setCreated(DateUtils.localDateToDate(date));
+		record.setBudgetType(budgetType);
 		record.setAmount(new BigDecimal(amount));
 		return record;
 	}
@@ -64,11 +66,18 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 
 	@Override
 	@Transactional
-	public ObservableList<IncomeDTO> getAll() {
-		ObservableList<IncomeDTO> records = FXCollections.observableArrayList();
+	public ObservableList<BudgetRecordDTO> getAll() {
+		ObservableList<BudgetRecordDTO> records = FXCollections.observableArrayList();
 		List<BudgetRecord> list = budgetRecordsRepository.getAll();
 		records.addAll(Mapper.mapIncomeListToDtoList(list));
 		return records;
+	}
+
+	@Override
+	public ObservableList<BudgetType> getAllBudgetType() {
+		ObservableList<BudgetType> types = FXCollections.observableArrayList();
+		types.addAll(budgetRecordsRepository.getAllBudgetType());
+		return types;
 	}
 
 }

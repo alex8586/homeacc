@@ -2,15 +2,18 @@ package com.homeacc.service;
 
 import java.time.LocalDate;
 
-import com.homeacc.dto.IncomeDTO;
+import com.homeacc.dto.BudgetRecordDTO;
+import com.homeacc.entity.BudgetType;
 
 import javafx.collections.ObservableList;
 
 public interface BudgetRecordsService {
 
-	void saveOrUpdate(Long id, String userName, String categoryName, LocalDate created, String amount);
+	void saveOrUpdate(Long id, String userName, String categoryName, LocalDate created, BudgetType budgetType, String amount);
 
 	void deleteBudgetRecords(Long id);
 
-	ObservableList<IncomeDTO> getAll();
+	ObservableList<BudgetRecordDTO> getAll();
+
+	ObservableList<BudgetType> getAllBudgetType();
 }

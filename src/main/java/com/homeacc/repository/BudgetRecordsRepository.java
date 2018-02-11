@@ -3,6 +3,7 @@ package com.homeacc.repository;
 import java.util.List;
 
 import com.homeacc.entity.BudgetRecord;
+import com.homeacc.entity.BudgetType;
 
 public interface BudgetRecordsRepository {
 
@@ -19,4 +20,6 @@ public interface BudgetRecordsRepository {
 	void deleteWithCategory(long categoryId);
 
 	void deleteWithUser(long userId);
+
+	List<BudgetType> getAllBudgetType();
 }

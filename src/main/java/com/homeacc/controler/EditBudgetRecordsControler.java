@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.homeacc.dto.IncomeDTO;
+import com.homeacc.dto.BudgetRecordDTO;
 import com.homeacc.entity.Category;
 import com.homeacc.entity.Users;
 import com.homeacc.exception.EmptyFieldsException;
@@ -63,7 +63,7 @@ public class EditBudgetRecordsControler {
 	private ObservableList<Category> categoryList;
 	private long recordId;
 
-	public void openModal(IncomeDTO income, ObservableList<Users> userList, ObservableList<Category> categoryList) throws IOException {
+	public void openModal(BudgetRecordDTO income, ObservableList<Users> userList, ObservableList<Category> categoryList) throws IOException {
 		FXMLLoader loader = springLoader.getLoader("/fxml/edit_income.fxml");
 		AnchorPane anchorPane = (AnchorPane) loader.load();
 
@@ -138,8 +138,8 @@ public class EditBudgetRecordsControler {
 					amount.getText());
 			BudgetRecordValidator.validateAmount(amount.getText());
 
-			recordsService.saveOrUpdate(recordId, cbxUser.getSelectionModel().getSelectedItem().getName(),
-					cbxCategory.getSelectionModel().getSelectedItem().getName(), date.getValue(), amount.getText());
+//			recordsService.saveOrUpdate(recordId, cbxUser.getSelectionModel().getSelectedItem().getName(),
+//					cbxCategory.getSelectionModel().getSelectedItem().getName(), date.getValue(), amount.getText());
 			recordsControler.loadIncomeTable();
 			closeWindow();
 		} catch (EmptyFieldsException e) {
