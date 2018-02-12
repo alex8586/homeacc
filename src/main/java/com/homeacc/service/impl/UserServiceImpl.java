@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import com.homeacc.entity.Users;
 import com.homeacc.exception.EntityExistException;
 import com.homeacc.repository.BudgetRecordsRepository;
+import com.homeacc.repository.GenericRepository;
 import com.homeacc.repository.UserRepository;
 import com.homeacc.service.UserService;
 
@@ -19,6 +20,8 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 	@Autowired
 	private BudgetRecordsRepository incomeRepository;
+	@Autowired
+	private GenericRepository genericRepository;
 
 	@Override
 	public void createUser(String userName) {
@@ -28,19 +31,19 @@ public class UserServiceImpl implements UserService {
 		}
 		user = new Users();
 		user.setName(userName);
-		userRepository.save(user);
+		genericRepository.save(user);
 	}
 
 	@Override
 	public Users updateUser(Users user) {
-		userRepository.update(user);
+		genericRepository.update(user);
 		return userRepository.getByName(user.getName());
 	}
 
 	@Override
 	public void deleteUser(Users user) {
 		incomeRepository.deleteWithUser(user.getId());
-		userRepository.delete(user);
+		genericRepository.delete(user);
 	}
 
 	@Override
@@ -51,7 +54,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public ObservableList<Users> getAll() {
 		ObservableList<Users> users = FXCollections.observableArrayList();
-		users.addAll(userRepository.getAll());
+		users.addAll(genericRepository.getAll(Users.class));
 		return users;
 	}
 

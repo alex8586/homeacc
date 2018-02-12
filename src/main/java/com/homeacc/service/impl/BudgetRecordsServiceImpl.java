@@ -16,6 +16,7 @@ import com.homeacc.entity.Users;
 import com.homeacc.mapper.Mapper;
 import com.homeacc.repository.BudgetRecordsRepository;
 import com.homeacc.repository.CategoryRepository;
+import com.homeacc.repository.GenericRepository;
 import com.homeacc.repository.UserRepository;
 import com.homeacc.service.BudgetRecordsService;
 import com.homeacc.utils.DateUtils;
@@ -32,15 +33,17 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 	private UserRepository userRepository;
 	@Autowired
 	private CategoryRepository categoryRepository;
+	@Autowired
+	private GenericRepository genericRepository;
 
 	@Override
 	@Transactional
 	public void saveOrUpdate(Long id,String userName, String categoryName, LocalDate date, BudgetType budgetType, String amount) {
 		BudgetRecord record = getRecord(id, userName, categoryName, date, budgetType, amount);
 		if (id == null) {
-			budgetRecordsRepository.save(record);
+			genericRepository.save(record);
 		} else {
-			budgetRecordsRepository.update(record);
+			genericRepository.update(record);
 		}
 	}
 
@@ -48,7 +51,7 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 		Users user = userRepository.getByName(userName);
 		Category category = categoryRepository.getByName(categoryName);
 
-		BudgetRecord record = id == null ? new BudgetRecord() : budgetRecordsRepository.getById(id);
+		BudgetRecord record = id == null ? new BudgetRecord() : genericRepository.getById(BudgetRecord.class, id);
 		record.setUsers(user);
 		record.setCategory(category);
 		record.setCreated(DateUtils.localDateToDate(date));
@@ -76,7 +79,7 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 	@Override
 	public ObservableList<BudgetType> getAllBudgetType() {
 		ObservableList<BudgetType> types = FXCollections.observableArrayList();
-		types.addAll(budgetRecordsRepository.getAllBudgetType());
+		types.addAll(genericRepository.getAll(BudgetType.class));
 		return types;
 	}
 

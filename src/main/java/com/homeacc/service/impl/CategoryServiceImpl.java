@@ -5,8 +5,9 @@ import org.springframework.stereotype.Component;
 
 import com.homeacc.entity.Category;
 import com.homeacc.exception.EntityExistException;
-import com.homeacc.repository.CategoryRepository;
 import com.homeacc.repository.BudgetRecordsRepository;
+import com.homeacc.repository.CategoryRepository;
+import com.homeacc.repository.GenericRepository;
 import com.homeacc.service.CategoryService;
 
 import javafx.collections.FXCollections;
@@ -18,7 +19,9 @@ public class CategoryServiceImpl implements CategoryService {
 	@Autowired
 	private CategoryRepository categoryRepository;
 	@Autowired
-	private BudgetRecordsRepository incomeRepository;
+	private BudgetRecordsRepository budgetRecordsRepository;
+	@Autowired
+	private GenericRepository genericRepository;
 
 	@Override
 	public void createCategory(String categoryName) {
@@ -33,14 +36,14 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public Category updateCategory(Category category) {
-		categoryRepository.update(category);
+		genericRepository.update(category);
 		return categoryRepository.getByName(category.getName());
 	}
 
 	@Override
 	public void deleteCategory(Category category) {
-		incomeRepository.deleteWithCategory(category.getId());
-		categoryRepository.delete(category);
+		budgetRecordsRepository.deleteWithCategory(category.getId());
+		genericRepository.delete(category);
 	}
 
 	@Override
@@ -51,7 +54,7 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public ObservableList<Category> getAll() {
 		ObservableList<Category> categories = FXCollections.observableArrayList();
-		categories.addAll(categoryRepository.getAll());
+		categories.addAll(genericRepository.getAll(Category.class));
 		return categories;
 	}
 
