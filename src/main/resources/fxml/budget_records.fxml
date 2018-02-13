@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -9,22 +10,43 @@
    <children>
       <VBox minHeight="475.0" minWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane minHeight="70.0" prefHeight="70.0">
+            <AnchorPane minHeight="70.0" prefHeight="70.0" style="-fx-background-color: gainsboro;">
                <VBox.margin>
                   <Insets left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
                <children>
-                  <Button fx:id="btnSaveIncome" layoutX="688.0" layoutY="35.0" mnemonicParsing="false" onAction="#saveIncome" text="Add record" />
+                  <Button fx:id="btnSaveIncome" layoutX="688.0" layoutY="35.0" mnemonicParsing="false" onAction="#saveRecord" text="Add record" />
                   <ComboBox fx:id="cbxUser" layoutX="14.0" layoutY="35.0" prefWidth="140.0" promptText="Select user" />
                   <ComboBox fx:id="cbxCategory" layoutX="163.0" layoutY="35.0" prefWidth="140.0" promptText="Select category" />
                   <DatePicker fx:id="incomeDate" layoutX="314.0" layoutY="35.0" prefWidth="140.0" promptText="Select date" />
                   <TextField fx:id="txtIncomeAmount" layoutX="465.0" layoutY="35.0" prefHeight="25.0" prefWidth="100.0" promptText="add amount" />
                   <Label layoutX="22.0" layoutY="6.0" text="Create record" />
-                  <Label fx:id="error" layoutX="173.0" layoutY="6.0" prefHeight="17.0" prefWidth="490.0" />
+                  <Label fx:id="createRecordError" layoutX="173.0" layoutY="6.0" prefHeight="17.0" prefWidth="490.0" />
                   <ComboBox fx:id="cbxBudgetType" layoutX="576.0" layoutY="35.0" prefWidth="100.0" promptText="Select type" />
                </children>
             </AnchorPane>
-            <TableView fx:id="tvBudgetRecords" minHeight="375.0" minWidth="780.0" VBox.vgrow="ALWAYS">
+            <AnchorPane minHeight="100.0" prefHeight="100.0" style="-fx-background-color: gainsboro;">
+               <children>
+                  <Label layoutX="28.0" layoutY="9.0" text="Order by" />
+                  <ComboBox fx:id="filterSelectUser" layoutX="99.0" layoutY="7.0" prefWidth="140.0" promptText="Select user" />
+                  <ComboBox fx:id="filterSelectCategory" layoutX="99.0" layoutY="37.0" prefWidth="140.0" promptText="Select category" />
+                  <ComboBox fx:id="filterSelectBudgetType" layoutX="99.0" layoutY="67.0" prefWidth="140.0" promptText="Select type" />
+                  <Label layoutX="266.0" layoutY="9.0" text="Date from" />
+                  <Label layoutX="266.0" layoutY="39.0" text="Date to" />
+                  <DatePicker fx:id="filterDateFrom" layoutX="342.0" layoutY="7.0" prefWidth="100.0" />
+                  <DatePicker fx:id="filterDateTo" layoutX="342.0" layoutY="37.0" prefWidth="100.0" />
+                  <Label layoutX="465.0" layoutY="9.0" text="Amount from" />
+                  <Label layoutX="465.0" layoutY="39.0" text="Amount to" />
+                  <TextField fx:id="filterAmountFrom" layoutX="550.0" layoutY="7.0" prefWidth="100.0" />
+                  <TextField fx:id="filterAmountTo" layoutX="550.0" layoutY="37.0" prefWidth="100.0" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" depthTest="DISABLE" layoutX="688.0" layoutY="67.0" mnemonicParsing="false" onAction="#filterRecords" prefHeight="25.0" prefWidth="72.0" text="Filter" textAlignment="CENTER" textOverrun="CLIP" />
+                  <Label fx:id="createFilterError" layoutX="266.0" layoutY="71.0" prefHeight="17.0" prefWidth="385.0" />
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </AnchorPane>
+            <TableView fx:id="tvBudgetRecords" minHeight="285.0" minWidth="780.0" prefHeight="285.0" prefWidth="792.0" VBox.vgrow="ALWAYS">
               <columns>
                 <TableColumn fx:id="tcId" minWidth="40.0" prefWidth="-1.0" text="id" />
                 <TableColumn fx:id="tcUser" minWidth="150.0" prefWidth="-1.0" text="user" />
