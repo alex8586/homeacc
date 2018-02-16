@@ -5,11 +5,13 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.homeacc.dto.BudgetRecordsCriteriaFilter;
 import com.homeacc.entity.BudgetRecord;
 import com.homeacc.entity.BudgetType;
 import com.homeacc.repository.BudgetRecordsRepository;
@@ -79,6 +81,36 @@ public class BudgetRecordsRepositoryImpl implements BudgetRecordsRepository {
 	public List<BudgetType> getAllBudgetType() {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(BudgetType.class);
+		return criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<BudgetRecord> filterBudgetRecords(BudgetRecordsCriteriaFilter filter) {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(BudgetRecord.class);
+		if (filter.getUser() != null) {
+			criteria.add(Restrictions.eq("users.id", filter.getUser().getId()));
+		}
+		if (filter.getCategory() != null) {
+			criteria.add(Restrictions.eq("category.id", filter.getCategory().getId()));
+		}
+		if (filter.getBudgetType() != null) {
+			criteria.add(Restrictions.eq("budgetType.id", filter.getBudgetType().getId()));
+		}
+		if (filter.getDateFrom() != null) {
+			criteria.add(Restrictions.ge("created", filter.getDateFrom()));
+		}
+		if (filter.getDateTo() != null) {
+			criteria.add(Restrictions.le("created", filter.getDateTo()));
+		}
+		if (filter.getAmountFrom() != null) {
+			criteria.add(Restrictions.ge("amount", filter.getAmountFrom()));
+		}
+		if (filter.getAmountTo() != null) {
+			criteria.add(Restrictions.le("amount", filter.getAmountTo()));
+		}
+		criteria.addOrder(Order.asc("id"));
 		return criteria.list();
 	}
 }
