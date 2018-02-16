@@ -1,5 +1,7 @@
 package com.homeacc.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,9 +11,6 @@ import com.homeacc.repository.BudgetRecordsRepository;
 import com.homeacc.repository.GenericRepository;
 import com.homeacc.repository.UserRepository;
 import com.homeacc.service.UserService;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 @Component
 public class UserServiceImpl implements UserService {
@@ -52,10 +51,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public ObservableList<Users> getAll() {
-		ObservableList<Users> users = FXCollections.observableArrayList();
-		users.addAll(genericRepository.getAll(Users.class));
-		return users;
+	public List<Users> getAll() {
+		return genericRepository.getAll(Users.class);
 	}
 
 }

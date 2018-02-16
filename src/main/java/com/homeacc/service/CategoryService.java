@@ -1,14 +1,14 @@
 package com.homeacc.service;
 
-import com.homeacc.entity.Category;
+import java.util.List;
 
-import javafx.collections.ObservableList;
+import com.homeacc.entity.Category;
 
 public interface CategoryService {
 
 	void createCategory(String categoryName);
 
-	ObservableList<Category> getAll();
+	List<Category> getAll();
 
 	Category getByName(String categoryName);
 

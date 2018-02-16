@@ -1,14 +1,14 @@
 package com.homeacc.service;
 
-import com.homeacc.entity.Users;
+import java.util.List;
 
-import javafx.collections.ObservableList;
+import com.homeacc.entity.Users;
 
 public interface UserService {
 
 	void createUser(String categoryName);
 
-	ObservableList<Users> getAll();
+	List<Users> getAll();
 
 	Users getByName(String userName);
 

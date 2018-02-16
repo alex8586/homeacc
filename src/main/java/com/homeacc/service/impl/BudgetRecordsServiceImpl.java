@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.homeacc.dto.BudgetRecordDTO;
+import com.homeacc.dto.BudgetRecordsCriteriaFilter;
 import com.homeacc.entity.BudgetRecord;
 import com.homeacc.entity.BudgetType;
 import com.homeacc.entity.Category;
@@ -77,10 +78,15 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 	}
 
 	@Override
-	public ObservableList<BudgetType> getAllBudgetType() {
-		ObservableList<BudgetType> types = FXCollections.observableArrayList();
-		types.addAll(genericRepository.getAll(BudgetType.class));
-		return types;
+	public List<BudgetType> getAllBudgetType() {
+		return genericRepository.getAll(BudgetType.class);
+	}
+
+	@Override
+	@Transactional
+	public List<BudgetRecordDTO> filterBudgetRecords(BudgetRecordsCriteriaFilter criteria) {
+		List<BudgetRecord> records = budgetRecordsRepository.filterBudgetRecords(criteria);
+		return Mapper.mapIncomeListToDtoList(records);
 	}
 
 }

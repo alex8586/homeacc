@@ -1,8 +1,10 @@
 package com.homeacc.service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.homeacc.dto.BudgetRecordDTO;
+import com.homeacc.dto.BudgetRecordsCriteriaFilter;
 import com.homeacc.entity.BudgetType;
 
 import javafx.collections.ObservableList;
@@ -15,5 +17,7 @@ public interface BudgetRecordsService {
 
 	ObservableList<BudgetRecordDTO> getAll();
 
-	ObservableList<BudgetType> getAllBudgetType();
+	List<BudgetType> getAllBudgetType();
+
+	List<BudgetRecordDTO> filterBudgetRecords(BudgetRecordsCriteriaFilter criteria);
 }

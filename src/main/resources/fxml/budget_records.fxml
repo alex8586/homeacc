@@ -18,7 +18,7 @@
                   <Button fx:id="btnSaveIncome" layoutX="688.0" layoutY="35.0" mnemonicParsing="false" onAction="#saveRecord" text="Add record" />
                   <ComboBox fx:id="cbxUser" layoutX="14.0" layoutY="35.0" prefWidth="140.0" promptText="Select user" />
                   <ComboBox fx:id="cbxCategory" layoutX="163.0" layoutY="35.0" prefWidth="140.0" promptText="Select category" />
-                  <DatePicker fx:id="incomeDate" layoutX="314.0" layoutY="35.0" prefWidth="140.0" promptText="Select date" />
+                  <DatePicker fx:id="incomeDate" editable="false" layoutX="314.0" layoutY="35.0" prefWidth="140.0" promptText="Select date" />
                   <TextField fx:id="txtIncomeAmount" layoutX="465.0" layoutY="35.0" prefHeight="25.0" prefWidth="100.0" promptText="add amount" />
                   <Label layoutX="22.0" layoutY="6.0" text="Create record" />
                   <Label fx:id="createRecordError" layoutX="173.0" layoutY="6.0" prefHeight="17.0" prefWidth="490.0" />
@@ -33,8 +33,8 @@
                   <ComboBox fx:id="filterSelectBudgetType" layoutX="99.0" layoutY="67.0" prefWidth="140.0" promptText="Select type" />
                   <Label layoutX="266.0" layoutY="9.0" text="Date from" />
                   <Label layoutX="266.0" layoutY="39.0" text="Date to" />
-                  <DatePicker fx:id="filterDateFrom" layoutX="342.0" layoutY="7.0" prefWidth="100.0" />
-                  <DatePicker fx:id="filterDateTo" layoutX="342.0" layoutY="37.0" prefWidth="100.0" />
+                  <DatePicker fx:id="filterDateFrom" editable="false" layoutX="342.0" layoutY="7.0" prefWidth="100.0" />
+                  <DatePicker fx:id="filterDateTo" editable="false" layoutX="342.0" layoutY="37.0" prefWidth="100.0" />
                   <Label layoutX="465.0" layoutY="9.0" text="Amount from" />
                   <Label layoutX="465.0" layoutY="39.0" text="Amount to" />
                   <TextField fx:id="filterAmountFrom" layoutX="550.0" layoutY="7.0" prefWidth="100.0" />

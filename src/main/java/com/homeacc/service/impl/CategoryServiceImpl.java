@@ -1,5 +1,7 @@
 package com.homeacc.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,9 +11,6 @@ import com.homeacc.repository.BudgetRecordsRepository;
 import com.homeacc.repository.CategoryRepository;
 import com.homeacc.repository.GenericRepository;
 import com.homeacc.service.CategoryService;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 @Component
 public class CategoryServiceImpl implements CategoryService {
@@ -52,10 +51,8 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public ObservableList<Category> getAll() {
-		ObservableList<Category> categories = FXCollections.observableArrayList();
-		categories.addAll(genericRepository.getAll(Category.class));
-		return categories;
+	public List<Category> getAll() {
+		return genericRepository.getAll(Category.class);
 	}
 
 }
