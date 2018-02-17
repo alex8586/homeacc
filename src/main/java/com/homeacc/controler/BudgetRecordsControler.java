@@ -1,5 +1,8 @@
 package com.homeacc.controler;
 
+import static com.homeacc.appconst.AppConst.EMPTY_STRING;
+import static com.homeacc.appconst.AppConst.TEXT_RED;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,7 +13,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.homeacc.appconst.AppConst;
 import com.homeacc.appconst.AppFieldsConst;
 import com.homeacc.classifier.BudgetTypeEnum;
 import com.homeacc.dto.BudgetRecordDTO;
@@ -48,11 +50,11 @@ public class BudgetRecordsControler {
 	@FXML
 	private ComboBox<Category> cbxCategory;
 	@FXML
-	private DatePicker incomeDate;
+	private DatePicker recordDate;
 	@FXML
 	private ComboBox<BudgetType> cbxBudgetType;
 	@FXML
-	private TextField txtIncomeAmount;
+	private TextField txtRecordAmount;
 
 	@FXML
 	private ComboBox<Users> filterSelectUser;
@@ -111,9 +113,9 @@ public class BudgetRecordsControler {
     public void initialize() {
 		loadUserComboBox();
 		loadCategoryComboBox();
-		loadIncomeTable();
+		loadBudgetRecordsTable();
 		loadBudgetType();
-		handleEventForEditIncomeModalWindow();
+		handleEventForEditBudgetRecordModalWindow();
     }
 
 	public void loadUserComboBox() {
@@ -172,7 +174,7 @@ public class BudgetRecordsControler {
 		filterSelectCategory.setConverter(converter);
 	}
 
-	public void loadIncomeTable() {
+	public void loadBudgetRecordsTable() {
 		recordList.clear();
 		tcId.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, Long>("id"));
         tcUser.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, String>("userName"));
@@ -210,14 +212,15 @@ public class BudgetRecordsControler {
         filterSelectBudgetType.setConverter(converter);
 	}
 
-	private void handleEventForEditIncomeModalWindow() {
+	private void handleEventForEditBudgetRecordModalWindow() {
 		tvBudgetRecords.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
 					BudgetRecordDTO record = tvBudgetRecords.getSelectionModel().getSelectedItem();
 					try {
-						editBudgetRecordsControler.openModal(record, userList, categoryList, recordTypeList);
+						editBudgetRecordsControler.openModal(tvBudgetRecords.getScene().getWindow(), record, userList,
+								categoryList, recordTypeList);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -229,21 +232,21 @@ public class BudgetRecordsControler {
 	public void saveRecord() {
 		try {
 			BudgetRecordValidator.validateFields(cbxUser.getSelectionModel().getSelectedItem(),
-					cbxCategory.getSelectionModel().getSelectedItem(), incomeDate.getValue(),
-					txtIncomeAmount.getText());
-			BudgetRecordValidator.validateAmount(txtIncomeAmount.getText());
+					cbxCategory.getSelectionModel().getSelectedItem(), recordDate.getValue(),
+					txtRecordAmount.getText());
+			BudgetRecordValidator.validateAmount(txtRecordAmount.getText());
 
 			String userName = cbxUser.getSelectionModel().getSelectedItem().getName();
 			String categoryName = cbxCategory.getSelectionModel().getSelectedItem().getName();
-			LocalDate date = incomeDate.getValue();
+			LocalDate date = recordDate.getValue();
 			BudgetType budgetType = cbxBudgetType.getSelectionModel().getSelectedItem();
-			String amount = txtIncomeAmount.getText();
+			String amount = txtRecordAmount.getText();
 			budgetRecordsService.saveOrUpdate(null,userName, categoryName, date, budgetType, amount);
-			loadIncomeTable();
+			loadBudgetRecordsTable();
 			clearErrors();
 		} catch (EmptyFieldsException e) {
 			createRecordError.setText(e.getMessage());
-			createRecordError.setStyle(AppConst.TEXT_RED);
+			createRecordError.setStyle(TEXT_RED);
 		}
 	}
 
@@ -275,8 +278,8 @@ public class BudgetRecordsControler {
 				.withBudgetType(type)
 				.withDateFrom(filterDateFrom.getValue() == null ? null : DateUtils.localDateToDate(filterDateFrom.getValue()))
 				.withDateTo(filterDateTo.getValue() == null ? null : DateUtils.localDateToDate(filterDateTo.getValue()))
-				.withAmountFrom(filterAmountFrom.getText().equals(AppConst.EMPTY_STRING) ? null : new BigDecimal(filterAmountFrom.getText()))
-				.withAmountTo(filterAmountTo.getText().equals(AppConst.EMPTY_STRING) ? null : new BigDecimal(filterAmountTo.getText()))
+				.withAmountFrom(filterAmountFrom.getText().equals(EMPTY_STRING) ? null : new BigDecimal(filterAmountFrom.getText()))
+				.withAmountTo(filterAmountTo.getText().equals(EMPTY_STRING) ? null : new BigDecimal(filterAmountTo.getText()))
 				.build();
 
 		List<BudgetRecordDTO> filteredRecords = budgetRecordsService.filterBudgetRecords(criteria);
@@ -289,14 +292,14 @@ public class BudgetRecordsControler {
 	private void cleanSearchFields() {
 		filterDateFrom.setValue(null);
 		filterDateTo.setValue(null);
-		filterAmountFrom.setText(AppConst.EMPTY_STRING);
-		filterAmountTo.setText(AppConst.EMPTY_STRING);
+		filterAmountFrom.setText(EMPTY_STRING);
+		filterAmountTo.setText(EMPTY_STRING);
 	}
 
 	private void clearErrors() {
-		createRecordError.setText(AppConst.EMPTY_STRING);
-		createRecordError.setStyle(AppConst.EMPTY_STRING);
-		createFilterError.setText(AppConst.EMPTY_STRING);
-		createFilterError.setStyle(AppConst.EMPTY_STRING);
+		createRecordError.setText(EMPTY_STRING);
+		createRecordError.setStyle(EMPTY_STRING);
+		createFilterError.setText(EMPTY_STRING);
+		createFilterError.setStyle(EMPTY_STRING);
 	}
 }

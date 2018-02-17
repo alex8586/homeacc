@@ -1,7 +1,9 @@
 package com.homeacc.controler;
 
 import static com.homeacc.appconst.AppConst.EMPTY_STRING;
+import static com.homeacc.appconst.AppConst.MANAGE_USER_PATH;
 import static com.homeacc.appconst.AppConst.TEXT_RED;
+import static com.homeacc.appconst.AppFieldsConst.MANAGE_USER_WINDOW_TITLE;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -55,7 +57,7 @@ public class ManageUserControler {
 	@Autowired
 	private SpringFXMLLoader springLoader;
 	@Autowired
-	private BudgetRecordsControler incomeControler;
+	private BudgetRecordsControler budgetRecordsControler;
 	@Autowired
 	private UserService userService;
 
@@ -73,23 +75,24 @@ public class ManageUserControler {
 		tcName.setOnEditCommit(new EventHandler<CellEditEvent<Users, String>>() {
 			@Override
 			public void handle(CellEditEvent<Users, String> event) {
-				Users user = editUser(
-						event.getTableView().getItems().get(event.getTablePosition().getRow()).getName(),
-						event.getNewValue());
-
+				String userName = event.getTableView().getItems().get(event.getTablePosition().getRow()).getName();
+				String newName = event.getNewValue();
+				if (userName.equals(newName)) {
+					return;
+				}
+				Users user = editUser(userName, newName);
 				((Users) event.getTableView().getItems().get(event.getTablePosition().getRow()))
 						.setName(user.getName());
-
 			}
 		});
 		reloadUserList();
 	}
 
 	public void openModal(Window window) throws IOException {
-		FXMLLoader loader = springLoader.getLoader("/fxml/manage_user.fxml");
+		FXMLLoader loader = springLoader.getLoader(MANAGE_USER_PATH);
 		AnchorPane anchorPane = (AnchorPane) loader.load();
 		Stage stage = new Stage();
-        stage.setTitle("Manage users");
+        stage.setTitle(MANAGE_USER_WINDOW_TITLE);
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setResizable(false);
         stage.centerOnScreen();
@@ -111,7 +114,7 @@ public class ManageUserControler {
 				loadUserList();
 				clearError();
 				txtAddUser.setText(EMPTY_STRING);
-				incomeControler.loadUserComboBox();
+				budgetRecordsControler.loadUserComboBox();
 			} catch (EntityExistException e) {
 				createError(e.getMessage());
 			}
@@ -170,7 +173,7 @@ public class ManageUserControler {
 	}
 
 	private void reloadIncomeTab() {
-		incomeControler.loadUserComboBox();
-		incomeControler.loadIncomeTable();
+		budgetRecordsControler.loadUserComboBox();
+		budgetRecordsControler.loadBudgetRecordsTable();
 	}
 }

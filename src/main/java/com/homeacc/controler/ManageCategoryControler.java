@@ -1,6 +1,9 @@
 package com.homeacc.controler;
 
+import static com.homeacc.appconst.AppConst.EMPTY_STRING;
+import static com.homeacc.appconst.AppConst.MANAGE_CATEGORY_PATH;
 import static com.homeacc.appconst.AppConst.TEXT_RED;
+import static com.homeacc.appconst.AppFieldsConst.MANAGE_CATEGORY_WINDOW_TITLE;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -54,7 +57,7 @@ public class ManageCategoryControler {
 	@Autowired
 	private SpringFXMLLoader springLoader;
 	@Autowired
-	private BudgetRecordsControler incomeControler;
+	private BudgetRecordsControler budgetRecordsControler;
 	@Autowired
 	private CategoryService categoryService;
 
@@ -72,23 +75,24 @@ public class ManageCategoryControler {
 		tcName.setOnEditCommit(new EventHandler<CellEditEvent<Category, String>>() {
 			@Override
 			public void handle(CellEditEvent<Category, String> event) {
-				Category category = editCategory(
-						event.getTableView().getItems().get(event.getTablePosition().getRow()).getName(),
-						event.getNewValue());
-
+				String oldName = event.getTableView().getItems().get(event.getTablePosition().getRow()).getName();
+				String newName = event.getNewValue();
+				if (oldName.equals(newName)) {
+					return;
+				}
+				Category category = editCategory(oldName, newName);
 				((Category) event.getTableView().getItems().get(event.getTablePosition().getRow()))
 						.setName(category.getName());
-
 			}
 		});
 		reloadCategoryList();
 	}
 
 	public void openModal(Window window) throws IOException {
-		FXMLLoader loader = springLoader.getLoader("/fxml/manage_category.fxml");
+		FXMLLoader loader = springLoader.getLoader(MANAGE_CATEGORY_PATH);
 		AnchorPane anchorPane = (AnchorPane) loader.load();
 		Stage stage = new Stage();
-        stage.setTitle("Manage categories");
+        stage.setTitle(MANAGE_CATEGORY_WINDOW_TITLE);
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setResizable(false);
         stage.centerOnScreen();
@@ -109,7 +113,7 @@ public class ManageCategoryControler {
 				categoryService.createCategory(txtAddCategory.getText());
 				loadCategoryList();
 				clearError();
-				incomeControler.loadCategoryComboBox();
+				budgetRecordsControler.loadCategoryComboBox();
 			} catch (EntityExistException e) {
 				createError(e.getMessage());
 			}
@@ -162,13 +166,13 @@ public class ManageCategoryControler {
 	}
 
 	private void clearError() {
-		error.setText("");
-		error.setStyle("");
+		error.setText(EMPTY_STRING);
+		error.setStyle(EMPTY_STRING);
 	}
 
 	private void reloadIncomeTab() {
-		incomeControler.loadCategoryComboBox();
-		incomeControler.loadIncomeTable();
+		budgetRecordsControler.loadCategoryComboBox();
+		budgetRecordsControler.loadBudgetRecordsTable();
 	}
 
 }

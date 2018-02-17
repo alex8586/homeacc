@@ -39,7 +39,8 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 
 	@Override
 	@Transactional
-	public void saveOrUpdate(Long id,String userName, String categoryName, LocalDate date, BudgetType budgetType, String amount) {
+	public void saveOrUpdate(Long id, String userName, String categoryName, LocalDate date, BudgetType budgetType,
+			String amount) {
 		BudgetRecord record = getRecord(id, userName, categoryName, date, budgetType, amount);
 		if (id == null) {
 			genericRepository.save(record);
@@ -48,7 +49,8 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 		}
 	}
 
-	private BudgetRecord getRecord(Long id, String userName, String categoryName, LocalDate date, BudgetType budgetType, String amount) {
+	private BudgetRecord getRecord(Long id, String userName, String categoryName, LocalDate date, BudgetType budgetType,
+			String amount) {
 		Users user = userRepository.getByName(userName);
 		Category category = categoryRepository.getByName(categoryName);
 
@@ -73,7 +75,7 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 	public ObservableList<BudgetRecordDTO> getAll() {
 		ObservableList<BudgetRecordDTO> records = FXCollections.observableArrayList();
 		List<BudgetRecord> list = budgetRecordsRepository.getAll();
-		records.addAll(Mapper.mapIncomeListToDtoList(list));
+		records.addAll(Mapper.mapBudgetRecordsListToDtoList(list));
 		return records;
 	}
 
@@ -86,7 +88,7 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 	@Transactional
 	public List<BudgetRecordDTO> filterBudgetRecords(BudgetRecordsCriteriaFilter criteria) {
 		List<BudgetRecord> records = budgetRecordsRepository.filterBudgetRecords(criteria);
-		return Mapper.mapIncomeListToDtoList(records);
+		return Mapper.mapBudgetRecordsListToDtoList(records);
 	}
 
 }

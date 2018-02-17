@@ -8,11 +8,11 @@ import com.homeacc.entity.BudgetType;
 
 public interface BudgetRecordsRepository {
 
-	void save(BudgetRecord income);
+	void save(BudgetRecord recor);
 
-	void update(BudgetRecord income);
+	void update(BudgetRecord record);
 
-	void delete(BudgetRecord income);
+	void delete(BudgetRecord record);
 
 	List<BudgetRecord> getAll();
 

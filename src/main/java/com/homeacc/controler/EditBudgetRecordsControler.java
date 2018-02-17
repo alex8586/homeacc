@@ -1,5 +1,9 @@
 package com.homeacc.controler;
 
+import static com.homeacc.appconst.AppConst.EDIT_BUDGET_RECORD_PATH;
+import static com.homeacc.appconst.AppConst.TEXT_RED;
+import static com.homeacc.appconst.AppFieldsConst.EDIT_BUDGET_RECORD_WINDOW_TITLE;
+
 import java.io.IOException;
 import java.util.Optional;
 
@@ -31,6 +35,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.StringConverter;
 
 @Component
@@ -67,12 +72,12 @@ public class EditBudgetRecordsControler {
 	private ObservableList<BudgetType> budgetTypeList;
 	private long recordId;
 
-	public void openModal(BudgetRecordDTO record, ObservableList<Users> userList, ObservableList<Category> categoryList, ObservableList<BudgetType> budgetTypeList) throws IOException {
-		FXMLLoader loader = springLoader.getLoader("/fxml/edit_budget_record.fxml");
+	public void openModal(Window window, BudgetRecordDTO record, ObservableList<Users> userList, ObservableList<Category> categoryList, ObservableList<BudgetType> budgetTypeList) throws IOException {
+		FXMLLoader loader = springLoader.getLoader(EDIT_BUDGET_RECORD_PATH);
 		AnchorPane anchorPane = (AnchorPane) loader.load();
 
 		Stage stage = new Stage();
-        stage.setTitle("Edit or delete records");
+        stage.setTitle(EDIT_BUDGET_RECORD_WINDOW_TITLE);
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setResizable(false);
         stage.centerOnScreen();
@@ -91,7 +96,8 @@ public class EditBudgetRecordsControler {
     	date.setValue(DateUtils.dateToLocalDate(record.getCreated()));
         amount.setText(record.getAmount().toString());
 
-        stage.show();
+        stage.initOwner(window);
+        stage.showAndWait();
 	}
 
 	private void loadUserComboBox(String userName) {
@@ -168,11 +174,11 @@ public class EditBudgetRecordsControler {
 			recordsService.saveOrUpdate(recordId, cbxUser.getSelectionModel().getSelectedItem().getName(),
 					cbxCategory.getSelectionModel().getSelectedItem().getName(), date.getValue(),
 					cbxBudgetType.getSelectionModel().getSelectedItem(), amount.getText());
-			recordsControler.loadIncomeTable();
+			recordsControler.loadBudgetRecordsTable();
 			closeWindow();
 		} catch (EmptyFieldsException e) {
 			error.setText(e.getMessage());
-			error.setStyle("-fx-text-fill: red");
+			error.setStyle(TEXT_RED);
 		}
 	}
 
@@ -186,7 +192,7 @@ public class EditBudgetRecordsControler {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
 		    recordsService.deleteBudgetRecords(recordId);
-		    recordsControler.loadIncomeTable();
+		    recordsControler.loadBudgetRecordsTable();
 		    closeWindow();
 		} else {
 		    alert.close();
