@@ -87,6 +87,13 @@ public class BudgetRecordsControler {
 	private TableColumn<BudgetRecordDTO, BigDecimal> tcAmount;
 
 	@FXML
+	private Label periodIncome;
+	@FXML
+	private Label periodExpenses;
+	@FXML
+	private Label periodBalance;
+
+	@FXML
 	private Label createRecordError;
 	@FXML
 	private Label createFilterError;
@@ -184,6 +191,28 @@ public class BudgetRecordsControler {
         tcAmount.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, BigDecimal>("amount"));
         recordList.addAll(budgetRecordsService.getAll());
         tvBudgetRecords.setItems(recordList);
+
+        countBalance();
+	}
+
+	public void countBalance() {
+		BigDecimal income = BigDecimal.ZERO;
+		BigDecimal expenses = BigDecimal.ZERO;
+
+		for (BudgetRecordDTO record : recordList) {
+			if (record.getBudgetType().equals(BudgetTypeEnum.INCOME.getCode())) {
+				income = income.add(record.getAmount());
+			} else if (record.getBudgetType().equals(BudgetTypeEnum.EXPENSES.getCode())) {
+				expenses = expenses.add(record.getAmount());
+			}
+		}
+
+		BigDecimal balance = income.subtract(expenses);
+		periodIncome.setText(income.toString());
+		periodExpenses.setText(expenses.toString());
+		periodBalance.setText(balance.toString());
+
+		periodBalance.setStyle(balance.compareTo(BigDecimal.ZERO) < 0 ? TEXT_RED : EMPTY_STRING);
 	}
 
 	public void loadBudgetType() {

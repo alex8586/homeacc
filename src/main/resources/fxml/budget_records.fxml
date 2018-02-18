@@ -46,7 +46,7 @@
                   <Insets left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
             </AnchorPane>
-            <TableView fx:id="tvBudgetRecords" minHeight="285.0" minWidth="780.0" prefHeight="285.0" prefWidth="792.0" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tvBudgetRecords" minHeight="205.0" minWidth="780.0" prefHeight="205.0" prefWidth="792.0" VBox.vgrow="ALWAYS">
               <columns>
                 <TableColumn fx:id="tcId" minWidth="40.0" prefWidth="-1.0" text="id" />
                 <TableColumn fx:id="tcUser" minWidth="150.0" prefWidth="-1.0" text="user" />
@@ -56,12 +56,25 @@
                   <TableColumn fx:id="tcAmount" minWidth="150.0" prefWidth="-1.0" text="amount" />
               </columns>
                <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
+            <AnchorPane prefHeight="70.0" style="-fx-background-color: gainsboro;">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+               <children>
+                  <Label layoutX="568.0" layoutY="6.0" text="Income for period" />
+                  <Label layoutX="568.0" layoutY="27.0" text="Expenses for period" />
+                  <Label layoutX="568.0" layoutY="48.0" text="Total balance" />
+                  <Label fx:id="periodIncome" layoutX="709.0" layoutY="6.0" prefHeight="17.0" prefWidth="71.0" />
+                  <Label fx:id="periodExpenses" layoutX="709.0" layoutY="27.0" prefHeight="17.0" prefWidth="71.0" />
+                  <Label fx:id="periodBalance" layoutX="709.0" layoutY="48.0" prefHeight="17.0" prefWidth="71.0" />
+               </children>
+            </AnchorPane>
          </children>
       </VBox>
    </children>
