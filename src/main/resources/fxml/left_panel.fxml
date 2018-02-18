@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="leftPanel" minWidth="100.0" prefWidth="100.0" style="-fx-background-color: gainsboro;" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.homeacc.controler.LeftPanelControler">
+         <children>
+      <VBox minWidth="100.0" prefWidth="100.0">
+         <children>
+                  <Button fx:id="bntUsers" mnemonicParsing="false" onAction="#manageUser" prefHeight="90.0" prefWidth="90.0" text="Users">
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" top="5.0" />
+               </VBox.margin></Button>
+                  <Button fx:id="bntCategories" mnemonicParsing="false" onAction="#manageCategory" prefHeight="90.0" prefWidth="90.0" text="Categories">
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" top="5.0" />
+               </VBox.margin></Button>
+         </children>
+      </VBox>
+         </children>
+      </AnchorPane>

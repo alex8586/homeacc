@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 @Component
-public class UpperPanelControler {
+public class LeftPanelControler {
 
 	@FXML
 	private Button bntCategories;
