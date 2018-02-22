@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="475.0" minWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.homeacc.controler.ChartControler">
+   <children>
+      <VBox minHeight="475.0" minWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane minHeight="40.0" minWidth="700.0" prefHeight="40.0" style="-fx-background-color: gainsboro;" VBox.vgrow="NEVER">
+               <children>
+                  <ComboBox fx:id="selectBudgetType" layoutX="211.0" layoutY="9.0" onAction="#switchBudgetType" prefWidth="150.0" />
+                  <Label layoutX="63.0" layoutY="13.0" text="Select budget type" />
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </AnchorPane>
+            <BarChart fx:id="barChart" minHeight="400.0" minWidth="700.0" style="-fx-background-color: gainsboro;" title="Income and Expences for period" VBox.vgrow="ALWAYS">
+              <xAxis>
+                <CategoryAxis fx:id="categories" label="Categories" side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="amount" label="Amount" side="LEFT" />
+              </yAxis>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </BarChart>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

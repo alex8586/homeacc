@@ -10,12 +10,16 @@
    <center>
       <TabPane minHeight="500.0" minWidth="800.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-            <Tab fx:id="income" text="Budget records">
+            <Tab fx:id="budgetRecords" text="Budget records">
                 <content>
-                    <fx:include fx:id="tabIncome" source="budget_records.fxml" />
+                    <fx:include fx:id="tabBudgetRecords" source="budget_records.fxml" />
                 </content>
             </Tab>
-            <Tab text="Outcome" />
+            <Tab fx:id="charts" text="Charts">
+                <content>
+                    <fx:include fx:id="tabGraphics" source="charts.fxml" />
+                </content>
+            </Tab>
         </tabs>
          <opaqueInsets>
             <Insets />
