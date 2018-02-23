@@ -34,13 +34,13 @@ public class ChartControler {
 
 	@FXML
 	public void initialize() {
-		loadBarChart();
+		loadBarChart(BudgetTypeEnum.EXPENSES);
 		loadSelectionBudgetType();
 	}
 
-	private void loadBarChart() {
+	private void loadBarChart(BudgetTypeEnum budgetType) {
 		ObservableList<BudgetRecordDTO> records = budgetRecordsService.getAll();
-		Map<String, BigDecimal> map = getRec(records, BudgetTypeEnum.EXPENSES);
+		Map<String, BigDecimal> map = getRecordsForChart(records, budgetType);
 
 		XYChart.Series<String, Number> series = new XYChart.Series<>();
 
@@ -48,6 +48,7 @@ public class ChartControler {
 			series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
 		}
 
+		barChart.getData().clear();
 		barChart.getData().add(series);
 		barChart.setLegendVisible(false);
 	}
@@ -62,7 +63,7 @@ public class ChartControler {
 		selectBudgetType.setItems(types);
 	}
 
-	private Map<String, BigDecimal> getRec(ObservableList<BudgetRecordDTO> records, BudgetTypeEnum type) {
+	private Map<String, BigDecimal> getRecordsForChart(ObservableList<BudgetRecordDTO> records, BudgetTypeEnum type) {
 		Map<String, BigDecimal> map = new HashMap<>();
 		for(BudgetRecordDTO dto : records) {
 			if (dto.getBudgetType().equals(type.getCode())) {
@@ -80,15 +81,6 @@ public class ChartControler {
 
 	public void switchBudgetType() {
 		String type = selectBudgetType.getSelectionModel().getSelectedItem();
-
-		ObservableList<BudgetRecordDTO> records = budgetRecordsService.getAll();
-		Map<String, BigDecimal> map = getRec(records, BudgetTypeEnum.valueOf(type));
-
-		XYChart.Series<String, Number> series = new XYChart.Series<>();
-		for(Map.Entry<String, BigDecimal> entry : map.entrySet()) {
-			series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
-		}
-		barChart.getData().clear();
-		barChart.getData().add(series);
+		loadBarChart(BudgetTypeEnum.valueOf(type));
 	}
 }
