@@ -1,6 +1,7 @@
 package com.homeacc.controler;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import com.homeacc.classifier.BudgetTypeEnum;
 import com.homeacc.dto.BudgetRecordDTO;
 import com.homeacc.entity.BudgetType;
 import com.homeacc.service.BudgetRecordsService;
+import com.homeacc.utils.DateUtils;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +21,7 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 
 @Component
 public class ChartControler {
@@ -29,17 +32,24 @@ public class ChartControler {
 	@FXML
 	private BarChart<String, Number> barChart;
 
+	@FXML
+	private DatePicker dateFrom;
+	@FXML
+	private DatePicker dateTo;
+
 	@Autowired
 	private BudgetRecordsService budgetRecordsService;
 
 	@FXML
 	public void initialize() {
-		loadBarChart(BudgetTypeEnum.EXPENSES);
+		loadBarChart(BudgetTypeEnum.EXPENSES, null, null);
 		loadSelectionBudgetType();
 	}
 
-	private void loadBarChart(BudgetTypeEnum budgetType) {
-		ObservableList<BudgetRecordDTO> records = budgetRecordsService.getAll();
+	private void loadBarChart(BudgetTypeEnum budgetType, Date from, Date to) {
+		List<BudgetRecordDTO> records = budgetRecordsService
+				.getBudgetRecordsByDateAndBudgetType(budgetType.getId(), from, to);
+
 		Map<String, BigDecimal> map = getRecordsForChart(records, budgetType);
 
 		XYChart.Series<String, Number> series = new XYChart.Series<>();
@@ -63,7 +73,17 @@ public class ChartControler {
 		selectBudgetType.setItems(types);
 	}
 
-	private Map<String, BigDecimal> getRecordsForChart(ObservableList<BudgetRecordDTO> records, BudgetTypeEnum type) {
+	public void reloadCharBar() {
+		String type = selectBudgetType.getSelectionModel().getSelectedItem();
+		Date from = dateFrom.getValue() == null ? null : DateUtils.localDateToDate(dateFrom.getValue());
+		Date to = dateTo.getValue() == null ? null : DateUtils.localDateToDate(dateTo.getValue());
+
+		loadBarChart(BudgetTypeEnum.valueOf(type), from, to);
+		dateFrom.setValue(null);
+		dateTo.setValue(null);
+	}
+
+	private Map<String, BigDecimal> getRecordsForChart(List<BudgetRecordDTO> records, BudgetTypeEnum type) {
 		Map<String, BigDecimal> map = new HashMap<>();
 		for(BudgetRecordDTO dto : records) {
 			if (dto.getBudgetType().equals(type.getCode())) {
@@ -79,8 +99,4 @@ public class ChartControler {
 		return map;
 	}
 
-	public void switchBudgetType() {
-		String type = selectBudgetType.getSelectionModel().getSelectedItem();
-		loadBarChart(BudgetTypeEnum.valueOf(type));
-	}
 }

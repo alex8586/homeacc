@@ -1,6 +1,7 @@
 package com.homeacc.service;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import com.homeacc.dto.BudgetRecordDTO;
@@ -20,4 +21,6 @@ public interface BudgetRecordsService {
 	List<BudgetType> getAllBudgetType();
 
 	List<BudgetRecordDTO> filterBudgetRecords(BudgetRecordsCriteriaFilter criteria);
+
+	List<BudgetRecordDTO> getBudgetRecordsByDateAndBudgetType(long budgetTypeId, Date from, Date to);
 }

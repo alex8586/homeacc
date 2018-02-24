@@ -2,6 +2,7 @@ package com.homeacc.service.impl;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,4 +92,11 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 		return Mapper.mapBudgetRecordsListToDtoList(records);
 	}
 
+	@Override
+	@Transactional
+	public List<BudgetRecordDTO> getBudgetRecordsByDateAndBudgetType(long budgetTypeId, Date from, Date to) {
+		List<BudgetRecord> records = budgetRecordsRepository.getBudgetRecordsByDateAndBudgetType(budgetTypeId, from,
+				to);
+		return Mapper.mapBudgetRecordsListToDtoList(records);
+	}
 }

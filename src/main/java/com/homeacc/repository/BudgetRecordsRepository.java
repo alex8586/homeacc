@@ -1,5 +1,6 @@
 package com.homeacc.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import com.homeacc.dto.BudgetRecordsCriteriaFilter;
@@ -25,4 +26,6 @@ public interface BudgetRecordsRepository {
 	List<BudgetType> getAllBudgetType();
 
 	List<BudgetRecord> filterBudgetRecords(BudgetRecordsCriteriaFilter criteria);
+
+	List<BudgetRecord> getBudgetRecordsByDateAndBudgetType(long budgetTypeId, Date from, Date to);
 }

@@ -2,14 +2,20 @@ package com.homeacc.classifier;
 
 public enum BudgetTypeEnum {
 
-	INCOME("INCOME"),
-	EXPENSES("EXPENSES"),
-	ALL("ALL BUDGET TYPES");
+	INCOME(1, "INCOME"),
+	EXPENSES(2, "EXPENSES"),
+	ALL(100, "ALL BUDGET TYPES");
 
+	private long id;
 	private String code;
 
-	BudgetTypeEnum(String code) {
+	BudgetTypeEnum(long id, String code) {
+		this.id = id;
 		this.code = code;
+	}
+
+	public long getId() {
+		return id;
 	}
 
 	public String getCode() {

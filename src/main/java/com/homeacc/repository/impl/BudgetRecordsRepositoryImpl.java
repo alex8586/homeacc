@@ -1,5 +1,6 @@
 package com.homeacc.repository.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -111,6 +112,21 @@ public class BudgetRecordsRepositoryImpl implements BudgetRecordsRepository {
 			criteria.add(Restrictions.le("amount", filter.getAmountTo()));
 		}
 		criteria.addOrder(Order.asc("id"));
+		return criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<BudgetRecord> getBudgetRecordsByDateAndBudgetType(long budgetTypeId, Date from, Date to) {
+		Session session = sessionFactory.getCurrentSession();
+		Criteria criteria = session.createCriteria(BudgetRecord.class);
+		criteria.add(Restrictions.eq("budgetType.id", budgetTypeId));
+		if (from != null) {
+			criteria.add(Restrictions.ge("created", from));
+		}
+		if (to != null) {
+			criteria.add(Restrictions.le("created", to));
+		}
 		return criteria.list();
 	}
 }
