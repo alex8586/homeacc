@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.homeacc.appconst.AppFieldsConst;
 import com.homeacc.classifier.BudgetTypeEnum;
 import com.homeacc.dto.BudgetRecordDTO;
 import com.homeacc.entity.BudgetType;
@@ -46,7 +47,7 @@ public class ChartControler {
 		loadSelectionBudgetType();
 	}
 
-	private void loadBarChart(BudgetTypeEnum budgetType, Date from, Date to) {
+	public void loadBarChart(BudgetTypeEnum budgetType, Date from, Date to) {
 		List<BudgetRecordDTO> records = budgetRecordsService
 				.getBudgetRecordsByDateAndBudgetType(budgetType.getId(), from, to);
 
@@ -61,6 +62,7 @@ public class ChartControler {
 		barChart.getData().clear();
 		barChart.getData().add(series);
 		barChart.setLegendVisible(false);
+		barChart.setTitle(getTitle(budgetType, from, to));
 	}
 
 	private void loadSelectionBudgetType() {
@@ -73,7 +75,7 @@ public class ChartControler {
 		selectBudgetType.setItems(types);
 	}
 
-	public void reloadCharBar() {
+	public void filterRecordsInBarChart() {
 		String type = selectBudgetType.getSelectionModel().getSelectedItem();
 		Date from = dateFrom.getValue() == null ? null : DateUtils.localDateToDate(dateFrom.getValue());
 		Date to = dateTo.getValue() == null ? null : DateUtils.localDateToDate(dateTo.getValue());
@@ -97,6 +99,22 @@ public class ChartControler {
 			}
 		}
 		return map;
+	}
+
+	private String getTitle(BudgetTypeEnum budgetType, Date from, Date to) {
+		String title = budgetType.getCode();
+		if (budgetType.getCode().equals(BudgetTypeEnum.INCOME.getCode())) {
+			title = AppFieldsConst.INCOME;
+		} else if (budgetType.getCode().equals(BudgetTypeEnum.EXPENSES.getCode())) {
+			title = AppFieldsConst.EXPENSES;
+		}
+		if (from != null) {
+			title = title + "  from  " + DateUtils.format(from);
+		}
+		if (to != null) {
+			title = title + "  to  " + DateUtils.format(to);
+		}
+		return title;
 	}
 
 }

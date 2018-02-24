@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.homeacc.controler.MainControler">
    <center>
       <TabPane minHeight="500.0" minWidth="800.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -15,7 +15,7 @@
                     <fx:include fx:id="tabBudgetRecords" source="budget_records.fxml" />
                 </content>
             </Tab>
-            <Tab fx:id="charts" text="Charts">
+            <Tab fx:id="charts" onSelectionChanged="#reloadChart" text="Charts">
                 <content>
                     <fx:include fx:id="tabGraphics" source="charts.fxml" />
                 </content>

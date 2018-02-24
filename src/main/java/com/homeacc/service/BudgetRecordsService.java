@@ -23,4 +23,8 @@ public interface BudgetRecordsService {
 	List<BudgetRecordDTO> filterBudgetRecords(BudgetRecordsCriteriaFilter criteria);
 
 	List<BudgetRecordDTO> getBudgetRecordsByDateAndBudgetType(long budgetTypeId, Date from, Date to);
+
+	boolean isRecordsChanged();
+
+	void setIsRecordsChanged(boolean isRecordsChanged);
 }
