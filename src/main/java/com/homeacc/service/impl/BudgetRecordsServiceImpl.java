@@ -29,8 +29,6 @@ import javafx.collections.ObservableList;
 @Component
 public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 
-	private boolean isRecordsChanged = false;
-
 	@Autowired
 	private BudgetRecordsRepository budgetRecordsRepository;
 	@Autowired
@@ -50,7 +48,6 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 		} else {
 			genericRepository.update(record);
 		}
-		isRecordsChanged = true;
 	}
 
 	private BudgetRecord getRecord(Long id, String userName, String categoryName, LocalDate date, BudgetType budgetType,
@@ -69,8 +66,8 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 
 	@Override
 	@Transactional
-	public void deleteBudgetRecords(Long id) {
-		BudgetRecord record = budgetRecordsRepository.getById(id);
+	public void deleteBudgetRecord(Long id) {
+		BudgetRecord record = genericRepository.getById(BudgetRecord.class, id);
 		budgetRecordsRepository.delete(record);
 	}
 
@@ -103,13 +100,4 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 		return Mapper.mapBudgetRecordsListToDtoList(records);
 	}
 
-	@Override
-	public boolean isRecordsChanged() {
-		return isRecordsChanged;
-	}
-
-	@Override
-	public void setIsRecordsChanged(boolean isRecordsChanged) {
-		this.isRecordsChanged = isRecordsChanged;
-	}
 }

@@ -40,7 +40,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 @Component
-public class ManageUserControler {
+public class ManageUserControler extends ChangeRecordControler {
 
 	@FXML
 	private Label error;
@@ -129,6 +129,7 @@ public class ManageUserControler {
 		reloadUserList();
 		reloadIncomeTab();
 		clearError();
+		recordsChanged = true;
 		return updated;
 	}
 
@@ -151,6 +152,7 @@ public class ManageUserControler {
 			reloadUserList();
 			reloadIncomeTab();
 			clearError();
+			recordsChanged = true;
 		} else {
 			alert.close();
 		}

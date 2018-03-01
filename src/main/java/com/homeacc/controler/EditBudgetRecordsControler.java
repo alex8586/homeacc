@@ -39,7 +39,7 @@ import javafx.stage.Window;
 import javafx.util.StringConverter;
 
 @Component
-public class EditBudgetRecordsControler {
+public class EditBudgetRecordsControler extends ChangeRecordControler {
 
 	@FXML
 	private ChoiceBox<Users> cbxUser;
@@ -175,6 +175,7 @@ public class EditBudgetRecordsControler {
 					cbxCategory.getSelectionModel().getSelectedItem().getName(), date.getValue(),
 					cbxBudgetType.getSelectionModel().getSelectedItem(), amount.getText());
 			recordsControler.loadBudgetRecordsTable();
+			recordsChanged = true;
 			closeWindow();
 		} catch (EmptyFieldsException e) {
 			error.setText(e.getMessage());
@@ -191,8 +192,9 @@ public class EditBudgetRecordsControler {
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
-		    recordsService.deleteBudgetRecords(recordId);
+		    recordsService.deleteBudgetRecord(recordId);
 		    recordsControler.loadBudgetRecordsTable();
+		    recordsChanged = true;
 		    closeWindow();
 		} else {
 		    alert.close();

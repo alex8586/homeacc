@@ -40,7 +40,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 @Component
-public class ManageCategoryControler {
+public class ManageCategoryControler extends ChangeRecordControler {
 
 	@FXML
 	private Label error;
@@ -128,6 +128,7 @@ public class ManageCategoryControler {
 		reloadCategoryList();
 		reloadIncomeTab();
 		clearError();
+		recordsChanged = true;
 		return updated;
 	}
 
@@ -149,6 +150,7 @@ public class ManageCategoryControler {
 			categoryService.deleteCategory(category);
 			reloadCategoryList();
 			reloadIncomeTab();
+			recordsChanged = true;
 		} else {
 			alert.close();
 		}

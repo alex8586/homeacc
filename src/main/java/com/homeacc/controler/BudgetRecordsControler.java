@@ -43,7 +43,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
 
 @Component
-public class BudgetRecordsControler {
+public class BudgetRecordsControler extends ChangeRecordControler {
 
 	@FXML
 	private ComboBox<Users> cbxUser;
@@ -195,7 +195,7 @@ public class BudgetRecordsControler {
         countBalance();
 	}
 
-	public void countBalance() {
+	private void countBalance() {
 		BigDecimal income = BigDecimal.ZERO;
 		BigDecimal expenses = BigDecimal.ZERO;
 
@@ -273,6 +273,7 @@ public class BudgetRecordsControler {
 			budgetRecordsService.saveOrUpdate(null,userName, categoryName, date, budgetType, amount);
 			loadBudgetRecordsTable();
 			clearErrors();
+			recordsChanged = true;
 		} catch (EmptyFieldsException e) {
 			createRecordError.setText(e.getMessage());
 			createRecordError.setStyle(TEXT_RED);

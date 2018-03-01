@@ -14,7 +14,7 @@ public interface BudgetRecordsService {
 
 	void saveOrUpdate(Long id, String userName, String categoryName, LocalDate created, BudgetType budgetType, String amount);
 
-	void deleteBudgetRecords(Long id);
+	void deleteBudgetRecord(Long id);
 
 	ObservableList<BudgetRecordDTO> getAll();
 
@@ -24,7 +24,4 @@ public interface BudgetRecordsService {
 
 	List<BudgetRecordDTO> getBudgetRecordsByDateAndBudgetType(long budgetTypeId, Date from, Date to);
 
-	boolean isRecordsChanged();
-
-	void setIsRecordsChanged(boolean isRecordsChanged);
 }
