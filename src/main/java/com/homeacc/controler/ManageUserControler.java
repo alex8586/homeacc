@@ -27,6 +27,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
@@ -86,6 +87,7 @@ public class ManageUserControler extends ChangeRecordControler {
 			}
 		});
 		reloadUserList();
+		tvUser.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 	}
 
 	public void openModal(Window window) throws IOException {
@@ -142,13 +144,15 @@ public class ManageUserControler extends ChangeRecordControler {
 		alert.setContentText("Attention! All records in system will be deleted with such user name.");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
-			Users user = tvUser.getSelectionModel().getSelectedItem();
-			if (user == null) {
+			ObservableList<Users> users = tvUser.getSelectionModel().getSelectedItems();
+			if (users == null || users.isEmpty()) {
 				createError("Choose which user you want to delete");
 				alert.close();
 				return;
 			}
-			userService.deleteUser(user);
+			for(Users user : users) {
+				userService.deleteUser(user);
+			}
 			reloadUserList();
 			reloadIncomeTab();
 			clearError();

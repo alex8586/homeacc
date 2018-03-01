@@ -27,6 +27,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
@@ -86,6 +87,7 @@ public class ManageCategoryControler extends ChangeRecordControler {
 			}
 		});
 		reloadCategoryList();
+		tvCategory.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 	}
 
 	public void openModal(Window window) throws IOException {
@@ -141,13 +143,15 @@ public class ManageCategoryControler extends ChangeRecordControler {
 		alert.setContentText("Attention! All records in system will be deleted with such category.");
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
-			Category category = tvCategory.getSelectionModel().getSelectedItem();
-			if (category == null) {
+			ObservableList<Category> categories =  tvCategory.getSelectionModel().getSelectedItems();
+			if (categories == null || categories.isEmpty()) {
 				createError("Choose which category you want to delete");
 				alert.close();
 				return;
 			}
-			categoryService.deleteCategory(category);
+			for (Category category : categories) {
+				categoryService.deleteCategory(category);
+			}
 			reloadCategoryList();
 			reloadIncomeTab();
 			recordsChanged = true;
