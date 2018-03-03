@@ -31,7 +31,7 @@ public class ChartControler {
 	private ComboBox<String> selectBudgetType;
 
 	@FXML
-	private BarChart<String, Number> barChart;
+	private BarChart<String, BigDecimal> barChart;
 
 	@FXML
 	private DatePicker dateFrom;
@@ -53,7 +53,7 @@ public class ChartControler {
 
 		Map<String, BigDecimal> map = getRecordsForChart(records, budgetType);
 
-		XYChart.Series<String, Number> series = new XYChart.Series<>();
+		XYChart.Series<String, BigDecimal> series = new XYChart.Series<>();
 
 		for(Map.Entry<String, BigDecimal> entry : map.entrySet()) {
 			series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
