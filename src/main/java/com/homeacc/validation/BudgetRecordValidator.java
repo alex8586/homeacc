@@ -12,7 +12,7 @@ public class BudgetRecordValidator {
 
 	public static void validateFields(Users user, Category category, LocalDate date, String amount) {
 		if (user == null || category == null || StringUtils.isBlank(amount) || date == null) {
-			throw new EmptyFieldsException("all fields must be filled");
+			throw new EmptyFieldsException("all fields exept description must be filled");
 		}
 	}
 

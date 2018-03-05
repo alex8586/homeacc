@@ -40,9 +40,9 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 
 	@Override
 	@Transactional
-	public void saveOrUpdate(Long id, String userName, String categoryName, LocalDate date, BudgetType budgetType,
-			String amount) {
-		BudgetRecord record = getRecord(id, userName, categoryName, date, budgetType, amount);
+	public void saveOrUpdate(Long id, String userName, String categoryName, String descripiton, LocalDate date,
+			BudgetType budgetType, String amount) {
+		BudgetRecord record = getRecord(id, userName, categoryName, descripiton, date, budgetType, amount);
 		if (id == null) {
 			genericRepository.save(record);
 		} else {
@@ -50,14 +50,15 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 		}
 	}
 
-	private BudgetRecord getRecord(Long id, String userName, String categoryName, LocalDate date, BudgetType budgetType,
-			String amount) {
+	private BudgetRecord getRecord(Long id, String userName, String categoryName, String description, LocalDate date,
+			BudgetType budgetType, String amount) {
 		Users user = userRepository.getByName(userName);
 		Category category = categoryRepository.getByName(categoryName);
 
 		BudgetRecord record = id == null ? new BudgetRecord() : genericRepository.getById(BudgetRecord.class, id);
 		record.setUsers(user);
 		record.setCategory(category);
+		record.setDescription(description);
 		record.setCreated(DateUtils.localDateToDate(date));
 		record.setBudgetType(budgetType);
 		record.setAmount(new BigDecimal(amount));

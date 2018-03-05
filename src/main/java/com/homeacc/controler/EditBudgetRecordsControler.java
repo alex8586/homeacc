@@ -172,7 +172,7 @@ public class EditBudgetRecordsControler extends ChangeRecordControler {
 			BudgetRecordValidator.validateAmount(amount.getText());
 
 			recordsService.saveOrUpdate(recordId, cbxUser.getSelectionModel().getSelectedItem().getName(),
-					cbxCategory.getSelectionModel().getSelectedItem().getName(), date.getValue(),
+					cbxCategory.getSelectionModel().getSelectedItem().getName(), null, date.getValue(),
 					cbxBudgetType.getSelectionModel().getSelectedItem(), amount.getText());
 			recordsControler.loadBudgetRecordsTable();
 			recordsChanged = true;

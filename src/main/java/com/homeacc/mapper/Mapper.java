@@ -21,6 +21,7 @@ public class Mapper {
 		dto.setId(record.getId());
 		dto.setUserName(record.getUsers().getName());
 		dto.setCategoryName(record.getCategory().getName());
+		dto.setDescription(record.getDescription());
 		dto.setCreated(record.getCreated());
 		dto.setBudgetType(record.getBudgetType().getCode());
 		dto.setAmount(record.getAmount());

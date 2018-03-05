@@ -50,6 +50,8 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 	@FXML
 	private ComboBox<Category> cbxCategory;
 	@FXML
+	private TextField txtDescription;
+	@FXML
 	private DatePicker recordDate;
 	@FXML
 	private ComboBox<BudgetType> cbxBudgetType;
@@ -79,6 +81,8 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 	private TableColumn<BudgetRecordDTO, String> tcUser;
 	@FXML
 	private TableColumn<BudgetRecordDTO, String> tcCategory;
+	@FXML
+	private TableColumn<BudgetRecordDTO, String> tcDescription;
 	@FXML
 	private TableColumn<BudgetRecordDTO, Date> tcDate;
 	@FXML
@@ -186,6 +190,7 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 		tcId.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, Long>("id"));
         tcUser.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, String>("userName"));
         tcCategory.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, String>("categoryName"));
+        tcDescription.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, String>("description"));
         tcDate.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, Date>("created"));
         tcBudgetType.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, String>("budgetType"));
         tcAmount.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, BigDecimal>("amount"));
@@ -267,10 +272,11 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 
 			String userName = cbxUser.getSelectionModel().getSelectedItem().getName();
 			String categoryName = cbxCategory.getSelectionModel().getSelectedItem().getName();
+			String description = txtDescription.getText() == null ? EMPTY_STRING : txtDescription.getText();
 			LocalDate date = recordDate.getValue();
 			BudgetType budgetType = cbxBudgetType.getSelectionModel().getSelectedItem();
 			String amount = txtRecordAmount.getText();
-			budgetRecordsService.saveOrUpdate(null,userName, categoryName, date, budgetType, amount);
+			budgetRecordsService.saveOrUpdate(null,userName, categoryName, description, date, budgetType, amount);
 			loadBudgetRecordsTable();
 			clearErrors();
 			recordsChanged = true;

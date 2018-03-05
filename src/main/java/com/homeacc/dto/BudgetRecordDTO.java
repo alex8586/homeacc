@@ -8,6 +8,7 @@ public class BudgetRecordDTO {
 	private long id;
 	private String userName;
 	private String categoryName;
+	private String description;
 	private Date created;
 	private String budgetType;
 	private BigDecimal amount;
@@ -29,6 +30,12 @@ public class BudgetRecordDTO {
 	}
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public Date getCreated() {
 		return created;
@@ -58,6 +65,8 @@ public class BudgetRecordDTO {
 		builder.append(userName);
 		builder.append(", categoryName=");
 		builder.append(categoryName);
+		builder.append(", description=");
+		builder.append(description);
 		builder.append(", created=");
 		builder.append(created);
 		builder.append(", budgetType=");
