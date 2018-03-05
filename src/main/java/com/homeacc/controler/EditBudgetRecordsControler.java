@@ -46,6 +46,8 @@ public class EditBudgetRecordsControler extends ChangeRecordControler {
 	@FXML
 	private ChoiceBox<Category> cbxCategory;
 	@FXML
+	private TextField description;
+	@FXML
 	private ChoiceBox<BudgetType> cbxBudgetType;
 	@FXML
 	private DatePicker date;
@@ -93,6 +95,7 @@ public class EditBudgetRecordsControler extends ChangeRecordControler {
         loadCategoryComboBox(record.getCategoryName());
         loadUserComboBox(record.getUserName());
         loadBudgetType(record.getBudgetType());
+        description.setText(record.getDescription());
     	date.setValue(DateUtils.dateToLocalDate(record.getCreated()));
         amount.setText(record.getAmount().toString());
 
@@ -172,7 +175,7 @@ public class EditBudgetRecordsControler extends ChangeRecordControler {
 			BudgetRecordValidator.validateAmount(amount.getText());
 
 			recordsService.saveOrUpdate(recordId, cbxUser.getSelectionModel().getSelectedItem().getName(),
-					cbxCategory.getSelectionModel().getSelectedItem().getName(), null, date.getValue(),
+					cbxCategory.getSelectionModel().getSelectedItem().getName(), description.getText(), date.getValue(),
 					cbxBudgetType.getSelectionModel().getSelectedItem(), amount.getText());
 			recordsControler.loadBudgetRecordsTable();
 			recordsChanged = true;
