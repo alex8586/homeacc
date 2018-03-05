@@ -27,17 +27,20 @@ public class BudgetRecord implements java.io.Serializable {
 	private Users users;
 	private BudgetType budgetType;
 	private Category category;
+	private String description;
 	private Date created;
 	private BigDecimal amount;
 
 	public BudgetRecord() {
 	}
 
-	public BudgetRecord(long id, Users users, BudgetType budgetType, Category category, Date created, BigDecimal amount) {
+	public BudgetRecord(long id, Users users, BudgetType budgetType, Category category, String description,
+			Date created, BigDecimal amount) {
 		this.id = id;
 		this.users = users;
 		this.budgetType = budgetType;
 		this.category = category;
+		this.description = description;
 		this.created = created;
 		this.amount = amount;
 	}
@@ -82,6 +85,15 @@ public class BudgetRecord implements java.io.Serializable {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	@Column(name = "DESCRIPTION", length = 120)
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Temporal(TemporalType.DATE)
