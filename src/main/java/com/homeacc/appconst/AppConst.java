@@ -2,6 +2,8 @@ package com.homeacc.appconst;
 
 public class AppConst {
 
+	public static final String LOGIN_PATH = "/fxml/login.fxml";
+	public static final String REGISTRATION_PATH = "/fxml/registration.fxml";
 	public static final String MAIN_PATH = "/fxml/main.fxml";
 	public static final String MANAGE_USER_PATH = "/fxml/manage_user.fxml";
 	public static final String MANAGE_CATEGORY_PATH = "/fxml/manage_category.fxml";
@@ -12,4 +14,5 @@ public class AppConst {
 
 	public static final String EMPTY_STRING = "";
 	public static final String TEXT_RED = "-fx-text-fill: red";
+	public static final String TEXT_BLUE = "-fx-text-fill: blue";
 }

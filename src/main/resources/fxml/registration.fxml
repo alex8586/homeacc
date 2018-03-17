@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="930.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.homeacc.controler.RegistrationControler">
+    <center>
+    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="670.0" minWidth="930.0">
+       <children>
+          <Label layoutX="391.0" layoutY="125.0" text="Registration form">
+             <font>
+                <Font size="24.0" />
+             </font>
+          </Label>
+          <Label fx:id="error" layoutX="365.0" layoutY="202.0" minWidth="200.0" />
+          <Label layoutX="391.0" layoutY="228.0" minWidth="100.0" text="enter group name" />
+          <TextField fx:id="name" layoutX="391.0" layoutY="258.0" />
+          <Label layoutX="391.0" layoutY="298.0" minWidth="100.0" text="enter password" />
+          <PasswordField fx:id="password" layoutX="391.0" layoutY="328.0" />
+          <Button layoutX="416.0" layoutY="378.0" minWidth="100.0" mnemonicParsing="false" onAction="#registration" text="Registration" />
+          <Label layoutX="289.0" layoutY="507.0" text="if you already register go to the " />
+          <Button layoutX="527.0" layoutY="504.0" minWidth="80.0" mnemonicParsing="false" onAction="#toLoginPage" text="login page">
+             <font>
+                <Font size="10.0" />
+             </font>
+          </Button>
+       </children>
+    </AnchorPane>
+    </center>
+</BorderPane>
