@@ -1,9 +1,7 @@
 package com.homeacc.controler;
 
-import static com.homeacc.appconst.AppConst.EMPTY_STRING;
 import static com.homeacc.appconst.AppConst.LOGIN_PATH;
 import static com.homeacc.appconst.AppConst.TEXT_BLUE;
-import static com.homeacc.appconst.AppConst.TEXT_RED;
 import static com.homeacc.appconst.AppFieldsConst.LOGIN_TITLE;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 @Component
-public class LoginControler {
+public class LoginControler extends ChangeRecordControler {
 
 	private Stage primaryStage;
 
@@ -64,10 +62,10 @@ public class LoginControler {
 	public void login() throws Exception {
 		try {
 			authenticationManager.loginGroup(login.getText(), password.getText());
-			clearError();
+			clearError(error);
 			mainControler.loadApplication(primaryStage);
 		} catch (EntityExistException | EmptyFieldsException e) {
-			createError(e.getMessage());
+			createError(error, e.getMessage());
 		}
 	}
 
@@ -79,13 +77,4 @@ public class LoginControler {
 		}
 	}
 
-	private void createError(String message) {
-		error.setText(message);
-		error.setStyle(TEXT_RED);
-	}
-
-	private void clearError() {
-		error.setText(EMPTY_STRING);
-		error.setStyle(EMPTY_STRING);
-	}
 }

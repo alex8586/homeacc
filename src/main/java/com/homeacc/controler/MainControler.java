@@ -35,4 +35,5 @@ public class MainControler extends ChangeRecordControler {
         primaryStage.setTitle(APP_TITLE);
         primaryStage.show();
 	}
+
 }

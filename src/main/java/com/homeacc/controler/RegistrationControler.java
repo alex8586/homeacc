@@ -1,8 +1,6 @@
 package com.homeacc.controler;
 
-import static com.homeacc.appconst.AppConst.EMPTY_STRING;
 import static com.homeacc.appconst.AppConst.REGISTRATION_PATH;
-import static com.homeacc.appconst.AppConst.TEXT_RED;
 import static com.homeacc.appconst.AppFieldsConst.REGISTRATION_TITLE;
 import static com.homeacc.appconst.AppFieldsConst.SUCCESS_REGISTRATION;
 
@@ -25,7 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 @Component
-public class RegistrationControler {
+public class RegistrationControler extends ChangeRecordControler {
 
 	private Stage primaryStage;
 
@@ -56,33 +54,23 @@ public class RegistrationControler {
 	public void registration() {
 		try {
 			authenticationManager.registerGroup(name.getText(), password.getText());
-			clearError();
+			clearError(error);
 			loadLoginPage(SUCCESS_REGISTRATION);
 		} catch (EmptyFieldsException | EntityExistException | ValidationException e) {
-			createError(e.getMessage());
+			createError(error, e.getMessage());
 		}
 	}
+
 	public void toLoginPage() throws Exception{
 		loadLoginPage(null);
 	}
 
 	private void loadLoginPage(String message) {
 		try {
-			clearError();
+			clearError(error);
 			loginControler.loadLoginForm(primaryStage, message);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-
-	private void createError(String message) {
-		error.setText(message);
-		error.setStyle(TEXT_RED);
-	}
-
-	private void clearError() {
-		error.setText(EMPTY_STRING);
-		error.setStyle(EMPTY_STRING);
 	}
 }

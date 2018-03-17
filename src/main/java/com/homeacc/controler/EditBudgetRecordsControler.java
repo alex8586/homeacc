@@ -1,7 +1,6 @@
 package com.homeacc.controler;
 
 import static com.homeacc.appconst.AppConst.EDIT_BUDGET_RECORD_PATH;
-import static com.homeacc.appconst.AppConst.TEXT_RED;
 import static com.homeacc.appconst.AppFieldsConst.EDIT_BUDGET_RECORD_WINDOW_TITLE;
 
 import java.io.IOException;
@@ -181,8 +180,7 @@ public class EditBudgetRecordsControler extends ChangeRecordControler {
 			recordsChanged = true;
 			closeWindow();
 		} catch (EmptyFieldsException e) {
-			error.setText(e.getMessage());
-			error.setStyle(TEXT_RED);
+			createError(error, e.getMessage());
 		}
 	}
 

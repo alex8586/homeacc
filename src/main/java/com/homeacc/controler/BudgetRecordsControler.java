@@ -281,8 +281,7 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 			clearErrors();
 			recordsChanged = true;
 		} catch (EmptyFieldsException e) {
-			createRecordError.setText(e.getMessage());
-			createRecordError.setStyle(TEXT_RED);
+			createError(createRecordError, e.getMessage());
 		}
 	}
 
@@ -333,9 +332,7 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 	}
 
 	private void clearErrors() {
-		createRecordError.setText(EMPTY_STRING);
-		createRecordError.setStyle(EMPTY_STRING);
-		createFilterError.setText(EMPTY_STRING);
-		createFilterError.setStyle(EMPTY_STRING);
+		clearError(createRecordError);
+		clearError(createFilterError);
 	}
 }

@@ -2,7 +2,6 @@ package com.homeacc.controler;
 
 import static com.homeacc.appconst.AppConst.EMPTY_STRING;
 import static com.homeacc.appconst.AppConst.MANAGE_USER_PATH;
-import static com.homeacc.appconst.AppConst.TEXT_RED;
 import static com.homeacc.appconst.AppFieldsConst.MANAGE_USER_WINDOW_TITLE;
 
 import java.io.IOException;
@@ -107,18 +106,18 @@ public class ManageUserControler extends ChangeRecordControler {
 	@FXML
 	public void addUser() {
 		if (StringUtils.isBlank(txtAddUser.getText())) {
-			createError("User name must be filled");
+			createError(error, "User name must be filled");
 		} else if (txtAddUser.getText().length() > 15) {
-			createError("User name must be shoter than 15 symbols");
+			createError(error, "User name must be shoter than 15 symbols");
 		} else {
 			try {
 				userService.createUser(txtAddUser.getText());
 				loadUserList();
-				clearError();
+				clearError(error);
 				txtAddUser.setText(EMPTY_STRING);
 				budgetRecordsControler.loadUserComboBox();
 			} catch (EntityExistException e) {
-				createError(e.getMessage());
+				createError(error, e.getMessage());
 			}
 		}
 	}
@@ -130,7 +129,7 @@ public class ManageUserControler extends ChangeRecordControler {
 		Users updated = userService.updateUser(user);
 		reloadUserList();
 		reloadIncomeTab();
-		clearError();
+		clearError(error);
 		recordsChanged = true;
 		return updated;
 	}
@@ -146,7 +145,7 @@ public class ManageUserControler extends ChangeRecordControler {
 		if (result.get() == ButtonType.OK){
 			ObservableList<Users> users = tvUser.getSelectionModel().getSelectedItems();
 			if (users == null || users.isEmpty()) {
-				createError("Choose which user you want to delete");
+				createError(error, "Choose which user you want to delete");
 				alert.close();
 				return;
 			}
@@ -155,7 +154,7 @@ public class ManageUserControler extends ChangeRecordControler {
 			}
 			reloadUserList();
 			reloadIncomeTab();
-			clearError();
+			clearError(error);
 			recordsChanged = true;
 		} else {
 			alert.close();
@@ -166,16 +165,6 @@ public class ManageUserControler extends ChangeRecordControler {
 		userList.clear();
 		userList.addAll(userService.getAll());
 		tvUser.setItems(userList);
-	}
-
-	private void createError(String message) {
-		error.setText(message);
-		error.setStyle(TEXT_RED);
-	}
-
-	private void clearError() {
-		error.setText(EMPTY_STRING);
-		error.setStyle(EMPTY_STRING);
 	}
 
 	private void reloadIncomeTab() {

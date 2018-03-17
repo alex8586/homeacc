@@ -1,8 +1,6 @@
 package com.homeacc.controler;
 
-import static com.homeacc.appconst.AppConst.EMPTY_STRING;
 import static com.homeacc.appconst.AppConst.MANAGE_CATEGORY_PATH;
-import static com.homeacc.appconst.AppConst.TEXT_RED;
 import static com.homeacc.appconst.AppFieldsConst.MANAGE_CATEGORY_WINDOW_TITLE;
 
 import java.io.IOException;
@@ -107,17 +105,17 @@ public class ManageCategoryControler extends ChangeRecordControler {
 	@FXML
 	public void addCategory() {
 		if (StringUtils.isBlank(txtAddCategory.getText())) {
-			createError("Category name must be filled");
+			createError(error, "Category name must be filled");
 		} else if (txtAddCategory.getText().length() > 30) {
-			createError("Category name must be shoter than 30 symbols");
+			createError(error, "Category name must be shoter than 30 symbols");
 		} else {
 			try {
 				categoryService.createCategory(txtAddCategory.getText());
 				loadCategoryList();
-				clearError();
+				clearError(error);
 				budgetRecordsControler.loadCategoryComboBox();
 			} catch (EntityExistException e) {
-				createError(e.getMessage());
+				createError(error, e.getMessage());
 			}
 		}
 	}
@@ -129,7 +127,7 @@ public class ManageCategoryControler extends ChangeRecordControler {
 		Category updated = categoryService.updateCategory(category);
 		reloadCategoryList();
 		reloadIncomeTab();
-		clearError();
+		clearError(error);
 		recordsChanged = true;
 		return updated;
 	}
@@ -145,7 +143,7 @@ public class ManageCategoryControler extends ChangeRecordControler {
 		if (result.get() == ButtonType.OK){
 			ObservableList<Category> categories =  tvCategory.getSelectionModel().getSelectedItems();
 			if (categories == null || categories.isEmpty()) {
-				createError("Choose which category you want to delete");
+				createError(error, "Choose which category you want to delete");
 				alert.close();
 				return;
 			}
@@ -164,16 +162,6 @@ public class ManageCategoryControler extends ChangeRecordControler {
 		categoryList.clear();
 		categoryList.addAll(categoryService.getAll());
 		tvCategory.setItems(categoryList);
-	}
-
-	private void createError(String message) {
-		error.setText(message);
-		error.setStyle(TEXT_RED);
-	}
-
-	private void clearError() {
-		error.setText(EMPTY_STRING);
-		error.setStyle(EMPTY_STRING);
 	}
 
 	private void reloadIncomeTab() {
