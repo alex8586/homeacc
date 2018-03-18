@@ -71,7 +71,7 @@ public class ManageUserControler extends ChangeRecordControler {
 	private void loadUserList() {
 		tcId.setCellValueFactory(new PropertyValueFactory<Users, Long>("id"));
 		tcName.setCellValueFactory(new PropertyValueFactory<Users, String>("name"));
-		tcName.setCellFactory(TextFieldTableCell.forTableColumn());
+		tcName.setCellFactory(TextFieldTableCell.<Users>forTableColumn());
 		tcName.setOnEditCommit(new EventHandler<CellEditEvent<Users, String>>() {
 			@Override
 			public void handle(CellEditEvent<Users, String> event) {

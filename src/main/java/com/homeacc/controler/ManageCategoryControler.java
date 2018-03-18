@@ -70,7 +70,7 @@ public class ManageCategoryControler extends ChangeRecordControler {
 	private void loadCategoryList() {
 		tcId.setCellValueFactory(new PropertyValueFactory<Category, Long>("id"));
 		tcName.setCellValueFactory(new PropertyValueFactory<Category, String>("name"));
-		tcName.setCellFactory(TextFieldTableCell.forTableColumn());
+		tcName.setCellFactory(TextFieldTableCell.<Category>forTableColumn());
 		tcName.setOnEditCommit(new EventHandler<CellEditEvent<Category, String>>() {
 			@Override
 			public void handle(CellEditEvent<Category, String> event) {
