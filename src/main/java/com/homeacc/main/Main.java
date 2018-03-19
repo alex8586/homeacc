@@ -19,7 +19,7 @@ public class Main extends Application {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("bean.xml");
 
 		LoginControler controler = ctx.getBean(LoginControler.class);
-		controler.loadLoginForm(primaryStage, null);
+		controler.loadLoginForm(primaryStage, null, null, null);
     }
 }
 

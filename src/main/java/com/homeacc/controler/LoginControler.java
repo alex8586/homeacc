@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 public class LoginControler extends ChangeRecordControler {
 
 	private Stage primaryStage;
+	private Scene scene;
 
 	@FXML
 	private TextField login;
@@ -44,12 +45,18 @@ public class LoginControler extends ChangeRecordControler {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	public void loadLoginForm(Stage primaryStage, String message) throws Exception {
+	public void loadLoginForm(Stage primaryStage, String message, Double width, Double height) throws Exception {
 		this.primaryStage = primaryStage;
-
 		FXMLLoader loader = springLoader.getLoader(LOGIN_PATH);
 		Parent root = loader.load();
-        Scene scene = new Scene(root);
+		Scene scene;
+		if (width != null && height != null) {
+			scene = new Scene(root, width, height);
+		} else {
+			scene = new Scene(root);
+		}
+        this.scene = scene;
+
         primaryStage.setTitle(LOGIN_TITLE);
         primaryStage.setScene(scene);
         if (message != null) {
@@ -63,7 +70,7 @@ public class LoginControler extends ChangeRecordControler {
 		try {
 			authenticationManager.loginGroup(login.getText(), password.getText());
 			clearError(error);
-			mainControler.loadApplication(primaryStage);
+			mainControler.loadApplication(primaryStage, scene);
 		} catch (EntityExistException | EmptyFieldsException e) {
 			createError(error, e.getMessage());
 		}
@@ -71,7 +78,7 @@ public class LoginControler extends ChangeRecordControler {
 
 	public void toRegistrationPage() {
 		try {
-			registrationControler.loadRegistrationForm(primaryStage);
+			registrationControler.loadRegistrationForm(primaryStage, scene);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

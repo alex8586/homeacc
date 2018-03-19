@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 public class RegistrationControler extends ChangeRecordControler {
 
 	private Stage primaryStage;
+	private Scene scene;
 
 	@FXML
 	private TextField name;
@@ -41,13 +42,14 @@ public class RegistrationControler extends ChangeRecordControler {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	public void loadRegistrationForm(Stage primaryStage) throws Exception {
+	public void loadRegistrationForm(Stage primaryStage, Scene scene) throws Exception {
 		this.primaryStage = primaryStage;
 		FXMLLoader loader = springLoader.getLoader(REGISTRATION_PATH);
 		Parent root = loader.load();
-        Scene scene = new Scene(root);
+        this.scene = new Scene(root, scene.getWidth(), scene.getHeight());
+
+        primaryStage.setScene(this.scene);
         primaryStage.setTitle(REGISTRATION_TITLE);
-        primaryStage.setScene(scene);
         primaryStage.show();
 	}
 
@@ -68,7 +70,7 @@ public class RegistrationControler extends ChangeRecordControler {
 	private void loadLoginPage(String message) {
 		try {
 			clearError(error);
-			loginControler.loadLoginForm(primaryStage, message);
+			loginControler.loadLoginForm(primaryStage, message, scene.getWidth(), scene.getHeight());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

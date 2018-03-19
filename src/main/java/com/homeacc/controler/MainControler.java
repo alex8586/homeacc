@@ -11,6 +11,7 @@ import com.homeacc.main.SpringFXMLLoader;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 @Component
@@ -28,10 +29,12 @@ public class MainControler extends ChangeRecordControler {
 		}
 	}
 
-	public void loadApplication(Stage primaryStage) throws Exception {
+	public void loadApplication(Stage primaryStage, Scene scene) throws Exception {
 		FXMLLoader loader = springLoader.getLoader(MAIN_PATH);
 		Parent root = loader.load();
-		primaryStage.getScene().setRoot(root);
+		scene.setRoot(root);
+
+		primaryStage.setScene(scene);
         primaryStage.setTitle(APP_TITLE);
         primaryStage.show();
 	}
