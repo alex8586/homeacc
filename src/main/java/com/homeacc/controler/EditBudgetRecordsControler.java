@@ -13,7 +13,7 @@ import com.homeacc.dto.BudgetRecordDTO;
 import com.homeacc.entity.BudgetType;
 import com.homeacc.entity.Category;
 import com.homeacc.entity.Users;
-import com.homeacc.exception.EmptyFieldsException;
+import com.homeacc.exception.ValidationException;
 import com.homeacc.main.SpringFXMLLoader;
 import com.homeacc.service.BudgetRecordsService;
 import com.homeacc.utils.DateUtils;
@@ -179,7 +179,7 @@ public class EditBudgetRecordsControler extends ChangeRecordControler {
 			recordsControler.loadBudgetRecordsTable();
 			recordsChanged = true;
 			closeWindow();
-		} catch (EmptyFieldsException e) {
+		} catch (ValidationException e) {
 			createError(error, e.getMessage());
 		}
 	}

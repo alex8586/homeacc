@@ -20,7 +20,7 @@
           <TextField fx:id="login" layoutX="391.0" layoutY="258.0" />
           <Label layoutX="391.0" layoutY="298.0" minWidth="100.0" text="enter password" />
           <PasswordField fx:id="password" layoutX="391.0" layoutY="328.0" />
-          <Button layoutX="416.0" layoutY="378.0" minWidth="100.0" mnemonicParsing="false" onAction="#login" text="Enter" />
+          <Button fx:id="enter" layoutX="416.0" layoutY="378.0" minWidth="100.0" mnemonicParsing="false" onAction="#login" text="Enter" />
           <Label layoutX="289.0" layoutY="507.0" text="if you have no login please " />
           <Button layoutX="527.0" layoutY="504.0" minWidth="80.0" mnemonicParsing="false" onAction="#toRegistrationPage" text="Register here">
              <font>

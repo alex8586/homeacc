@@ -2,23 +2,27 @@ package com.homeacc.controler;
 
 import static com.homeacc.appconst.AppConst.LOGIN_PATH;
 import static com.homeacc.appconst.AppConst.TEXT_BLUE;
+import static com.homeacc.appconst.AppFieldsConst.INTERNAL_ERROR;
 import static com.homeacc.appconst.AppFieldsConst.LOGIN_TITLE;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.homeacc.exception.EmptyFieldsException;
-import com.homeacc.exception.EntityExistException;
+import com.homeacc.exception.ValidationException;
 import com.homeacc.main.SpringFXMLLoader;
 import com.homeacc.service.AuthenticationManager;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 @Component
@@ -35,6 +39,8 @@ public class LoginControler extends ChangeRecordControler {
 	private Label error;
 	@FXML
 	private Label information;
+	@FXML
+	private Button enter;
 
 	@Autowired
 	private SpringFXMLLoader springLoader;
@@ -66,12 +72,29 @@ public class LoginControler extends ChangeRecordControler {
         primaryStage.show();
 	}
 
+	@FXML
+	public void initialize() {
+		enter.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode().equals(KeyCode.ENTER)) {
+					try {
+						login();
+					} catch (Exception e) {
+						error.setText(INTERNAL_ERROR);
+					}
+				}
+			}
+		});
+
+	}
+
 	public void login() throws Exception {
 		try {
 			authenticationManager.loginGroup(login.getText(), password.getText());
 			clearError(error);
 			mainControler.loadApplication(primaryStage, scene);
-		} catch (EntityExistException | EmptyFieldsException e) {
+		} catch (ValidationException e) {
 			createError(error, e.getMessage());
 		}
 	}
@@ -80,7 +103,7 @@ public class LoginControler extends ChangeRecordControler {
 		try {
 			registrationControler.loadRegistrationForm(primaryStage, scene);
 		} catch (Exception e) {
-			e.printStackTrace();
+			error.setText(INTERNAL_ERROR);
 		}
 	}
 

@@ -17,10 +17,15 @@ import javafx.stage.Stage;
 @Component
 public class MainControler extends ChangeRecordControler {
 
+	private Stage primaryStage;
+	private Scene scene;
+
 	@Autowired
 	private SpringFXMLLoader springLoader;
 	@Autowired
 	private ChartControler chartControler;
+	@Autowired
+	private LoginControler loginControler;
 
 	public void reloadChart() {
 		if (recordsChanged) {
@@ -29,14 +34,19 @@ public class MainControler extends ChangeRecordControler {
 		}
 	}
 
-	public void loadApplication(Stage primaryStage, Scene scene) throws Exception {
+	public void loadApplication(Stage stage, Scene scene) throws Exception {
+		this.scene = scene;
+		this.primaryStage = stage;
 		FXMLLoader loader = springLoader.getLoader(MAIN_PATH);
 		Parent root = loader.load();
-		scene.setRoot(root);
+		this.scene.setRoot(root);
 
 		primaryStage.setScene(scene);
         primaryStage.setTitle(APP_TITLE);
         primaryStage.show();
 	}
 
+	public void logout() throws Exception {
+		loginControler.loadLoginForm(primaryStage, null, scene.getWidth(), scene.getHeight());
+	}
 }

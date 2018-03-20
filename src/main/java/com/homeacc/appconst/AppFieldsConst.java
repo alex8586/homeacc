@@ -11,6 +11,8 @@ public class AppFieldsConst {
 
 	public static final String SUCCESS_REGISTRATION = "You successfully registered, now you can login";
 
+	public static final String INTERNAL_ERROR = "Internal system error";
+
 	public static final String ALL_USERS = "ALL_USERS";
 	public static final String ALL_CATEGORIES = "ALL_CATEGORIES";
 

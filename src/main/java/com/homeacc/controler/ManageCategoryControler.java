@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.homeacc.entity.Category;
-import com.homeacc.exception.EntityExistException;
+import com.homeacc.exception.ValidationException;
 import com.homeacc.main.SpringFXMLLoader;
 import com.homeacc.service.CategoryService;
 
@@ -114,7 +114,7 @@ public class ManageCategoryControler extends ChangeRecordControler {
 				loadCategoryList();
 				clearError(error);
 				budgetRecordsControler.loadCategoryComboBox();
-			} catch (EntityExistException e) {
+			} catch (ValidationException e) {
 				createError(error, e.getMessage());
 			}
 		}

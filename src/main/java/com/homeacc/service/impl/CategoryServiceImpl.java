@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.homeacc.entity.Category;
-import com.homeacc.exception.EntityExistException;
+import com.homeacc.exception.ValidationException;
 import com.homeacc.repository.BudgetRecordsRepository;
 import com.homeacc.repository.CategoryRepository;
 import com.homeacc.repository.GenericRepository;
@@ -26,7 +26,7 @@ public class CategoryServiceImpl implements CategoryService {
 	public void createCategory(String categoryName) {
 		Category category = categoryRepository.getByName(categoryName);
 		if (category != null) {
-			throw new EntityExistException("Category with this name already exist !");
+			throw new ValidationException("Category with this name already exist !");
 		}
 		category = new Category();
 		category.setName(categoryName);

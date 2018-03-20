@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.homeacc.entity.Groups;
-import com.homeacc.exception.EmptyFieldsException;
-import com.homeacc.exception.EntityExistException;
 import com.homeacc.exception.ValidationException;
 import com.homeacc.repository.GenericRepository;
 import com.homeacc.repository.GroupRepository;
@@ -28,7 +26,7 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 		}
 		Groups group = groupRepository.getByNameAndPassword(name, password);
 		if (group != null) {
-			throw new EntityExistException("Group with this name already exist");
+			throw new ValidationException("Group with this name already exist");
 		}
 
 		group = new Groups();
@@ -42,13 +40,13 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 		validateFields(name, password);
 		Groups group = groupRepository.getByNameAndPassword(name, password);
 		if (group == null) {
-			throw new EntityExistException("Group with name " + name + " not found");
+			throw new ValidationException("Group with name " + name + " not found");
 		}
 	}
 
 	private void validateFields(String name, String password) {
 		if (StringUtils.isAnyBlank(name, password)) {
-			throw new EmptyFieldsException("All fields must be filled");
+			throw new ValidationException("All fields must be filled");
 		}
 	}
 }

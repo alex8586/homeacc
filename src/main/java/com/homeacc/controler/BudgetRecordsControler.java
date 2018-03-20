@@ -2,6 +2,7 @@ package com.homeacc.controler;
 
 import static com.homeacc.appconst.AppConst.EMPTY_STRING;
 import static com.homeacc.appconst.AppConst.TEXT_RED;
+import static com.homeacc.appconst.AppFieldsConst.INTERNAL_ERROR;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -21,7 +22,7 @@ import com.homeacc.dto.BudgetRecordsCriteriaFilterBuilder;
 import com.homeacc.entity.BudgetType;
 import com.homeacc.entity.Category;
 import com.homeacc.entity.Users;
-import com.homeacc.exception.EmptyFieldsException;
+import com.homeacc.exception.ValidationException;
 import com.homeacc.service.BudgetRecordsService;
 import com.homeacc.service.CategoryService;
 import com.homeacc.service.UserService;
@@ -98,7 +99,7 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 	private Label periodBalance;
 
 	@FXML
-	private Label createRecordError;
+	private Label createRecordInfo;
 	@FXML
 	private Label createFilterError;
 
@@ -256,7 +257,7 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 						editBudgetRecordsControler.openModal(tvBudgetRecords.getScene().getWindow(), record, userList,
 								categoryList, recordTypeList);
 					} catch (IOException e) {
-						e.printStackTrace();
+						createRecordInfo.setText(INTERNAL_ERROR);
 					}
 				}
 			}
@@ -280,12 +281,14 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 			loadBudgetRecordsTable();
 			clearErrors();
 			recordsChanged = true;
-		} catch (EmptyFieldsException e) {
-			createError(createRecordError, e.getMessage());
+			createInfo(createRecordInfo, "Record successfully added");
+		} catch (ValidationException e) {
+			createError(createRecordInfo, e.getMessage());
 		}
 	}
 
 	public void filterRecords() {
+		clearError(createRecordInfo);
 		if (StringUtils.isNotBlank(filterAmountFrom.getText())) {
 			BudgetRecordValidator.validateAmount(filterAmountFrom.getText());
 		}
@@ -332,7 +335,7 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 	}
 
 	private void clearErrors() {
-		clearError(createRecordError);
+		clearError(createRecordInfo);
 		clearError(createFilterError);
 	}
 }

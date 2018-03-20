@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.homeacc.entity.Users;
-import com.homeacc.exception.EntityExistException;
+import com.homeacc.exception.ValidationException;
 import com.homeacc.main.SpringFXMLLoader;
 import com.homeacc.service.UserService;
 
@@ -116,7 +116,7 @@ public class ManageUserControler extends ChangeRecordControler {
 				clearError(error);
 				txtAddUser.setText(EMPTY_STRING);
 				budgetRecordsControler.loadUserComboBox();
-			} catch (EntityExistException e) {
+			} catch (ValidationException e) {
 				createError(error, e.getMessage());
 			}
 		}

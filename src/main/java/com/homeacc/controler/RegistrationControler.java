@@ -1,14 +1,13 @@
 package com.homeacc.controler;
 
 import static com.homeacc.appconst.AppConst.REGISTRATION_PATH;
+import static com.homeacc.appconst.AppFieldsConst.INTERNAL_ERROR;
 import static com.homeacc.appconst.AppFieldsConst.REGISTRATION_TITLE;
 import static com.homeacc.appconst.AppFieldsConst.SUCCESS_REGISTRATION;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.homeacc.exception.EmptyFieldsException;
-import com.homeacc.exception.EntityExistException;
 import com.homeacc.exception.ValidationException;
 import com.homeacc.main.SpringFXMLLoader;
 import com.homeacc.service.AuthenticationManager;
@@ -58,7 +57,7 @@ public class RegistrationControler extends ChangeRecordControler {
 			authenticationManager.registerGroup(name.getText(), password.getText());
 			clearError(error);
 			loadLoginPage(SUCCESS_REGISTRATION);
-		} catch (EmptyFieldsException | EntityExistException | ValidationException e) {
+		} catch (ValidationException e) {
 			createError(error, e.getMessage());
 		}
 	}
@@ -72,7 +71,7 @@ public class RegistrationControler extends ChangeRecordControler {
 			clearError(error);
 			loginControler.loadLoginForm(primaryStage, message, scene.getWidth(), scene.getHeight());
 		} catch (Exception e) {
-			e.printStackTrace();
+			error.setText(INTERNAL_ERROR);
 		}
 	}
 }

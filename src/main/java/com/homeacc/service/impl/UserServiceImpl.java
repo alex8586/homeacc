@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.homeacc.entity.Users;
-import com.homeacc.exception.EntityExistException;
+import com.homeacc.exception.ValidationException;
 import com.homeacc.repository.BudgetRecordsRepository;
 import com.homeacc.repository.GenericRepository;
 import com.homeacc.repository.UserRepository;
@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 	public void createUser(String userName) {
 		Users user = userRepository.getByName(userName);
 		if (user != null) {
-			throw new EntityExistException("User with this name already exist !");
+			throw new ValidationException("User with this name already exist !");
 		}
 		user = new Users();
 		user.setName(userName);
