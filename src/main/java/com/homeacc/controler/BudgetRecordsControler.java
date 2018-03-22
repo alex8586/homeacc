@@ -106,8 +106,6 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 	@Autowired
 	private EditBudgetRecordsControler editBudgetRecordsControler;
 	@Autowired
-	private MainControler mainControler;
-	@Autowired
 	private CategoryService categoryService;
 	@Autowired
 	private UserService userService;
@@ -123,8 +121,8 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 	private ObservableList<Category> filterCategoryList = FXCollections.observableArrayList();
 	private ObservableList<BudgetType> filterRecordTypeList = FXCollections.observableArrayList();
 
-//	@FXML
-    public void initializeLoad() {
+	@FXML
+    public void initialize() {
 		loadUserComboBox();
 		loadCategoryComboBox();
 		loadBudgetRecordsTable();
@@ -135,7 +133,7 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 	public void loadUserComboBox() {
 		userList.clear();
 		filterUserList.clear();
-		List<Users> users = userService.getAll();
+		List<Users> users = userService.getAll(groupId);
 		userList.addAll(users);
 		cbxUser.setItems(userList);
 
@@ -163,7 +161,7 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 	public void loadCategoryComboBox() {
 		categoryList.clear();
 		filterCategoryList.clear();
-		List<Category> categories =  categoryService.getAll();
+		List<Category> categories =  categoryService.getAll(groupId);
 		categoryList.addAll(categories);
 		cbxCategory.setItems(categoryList);
 
@@ -197,7 +195,7 @@ public class BudgetRecordsControler extends ChangeRecordControler {
         tcDate.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, Date>("created"));
         tcBudgetType.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, String>("budgetType"));
         tcAmount.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, BigDecimal>("amount"));
-        recordList.addAll(budgetRecordsService.getAll());
+        recordList.addAll(budgetRecordsService.getAll(groupId));
         tvBudgetRecords.setItems(recordList);
 
         countBalance();

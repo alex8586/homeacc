@@ -8,7 +8,7 @@ public interface CategoryService {
 
 	void createCategory(String categoryName, long groupId);
 
-	List<Category> getAll();
+	List<Category> getAll(long groupId);
 
 	Category getByName(String categoryName);
 

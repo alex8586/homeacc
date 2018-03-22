@@ -76,9 +76,9 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 
 	@Override
 	@Transactional
-	public ObservableList<BudgetRecordDTO> getAll() {
+	public ObservableList<BudgetRecordDTO> getAll(long groupId) {
 		ObservableList<BudgetRecordDTO> records = FXCollections.observableArrayList();
-		List<BudgetRecord> list = budgetRecordsRepository.getAll();
+		List<BudgetRecord> list = budgetRecordsRepository.getAll(groupId);
 		records.addAll(Mapper.mapBudgetRecordsListToDtoList(list));
 		return records;
 	}
@@ -97,8 +97,8 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 
 	@Override
 	@Transactional
-	public List<BudgetRecordDTO> getBudgetRecordsByDateAndBudgetType(long budgetTypeId, Date from, Date to) {
-		List<BudgetRecord> records = budgetRecordsRepository.getBudgetRecordsByDateAndBudgetType(budgetTypeId, from,
+	public List<BudgetRecordDTO> getBudgetRecordsByDateAndBudgetType(long groupId, long budgetTypeId, Date from, Date to) {
+		List<BudgetRecord> records = budgetRecordsRepository.getBudgetRecordsByDateAndBudgetType(groupId, budgetTypeId, from,
 				to);
 		return Mapper.mapBudgetRecordsListToDtoList(records);
 	}

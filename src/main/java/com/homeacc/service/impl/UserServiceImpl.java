@@ -54,8 +54,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Users> getAll() {
-		return genericRepository.getAll(Users.class);
+	public List<Users> getAll(long groupId) {
+		return userRepository.getByGroup(groupId);
 	}
 
 }

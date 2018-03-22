@@ -47,9 +47,10 @@ public class BudgetRecordsRepositoryImpl implements BudgetRecordsRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<BudgetRecord> getAll() {
+	public List<BudgetRecord> getAll(long groupId) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(BudgetRecord.class);
+		criteria.add(Restrictions.eq("groups.id", groupId));
 		return criteria.list();
 	}
 
@@ -117,9 +118,10 @@ public class BudgetRecordsRepositoryImpl implements BudgetRecordsRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<BudgetRecord> getBudgetRecordsByDateAndBudgetType(long budgetTypeId, Date from, Date to) {
+	public List<BudgetRecord> getBudgetRecordsByDateAndBudgetType(long groupId, long budgetTypeId, Date from, Date to) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(BudgetRecord.class);
+		criteria.add(Restrictions.eq("groups.id", groupId));
 		criteria.add(Restrictions.eq("budgetType.id", budgetTypeId));
 		if (from != null) {
 			criteria.add(Restrictions.ge("created", from));

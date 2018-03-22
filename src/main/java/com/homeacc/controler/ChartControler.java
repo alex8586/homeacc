@@ -25,7 +25,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 
 @Component
-public class ChartControler {
+public class ChartControler extends ChangeRecordControler {
 
 	@FXML
 	private ComboBox<String> selectBudgetType;
@@ -41,15 +41,15 @@ public class ChartControler {
 	@Autowired
 	private BudgetRecordsService budgetRecordsService;
 
-//	@FXML
-	public void initializeLoad() {
+	@FXML
+	public void initialize() {
 		loadBarChart(BudgetTypeEnum.EXPENSES, null, null);
 		loadSelectionBudgetType();
 	}
 
 	public void loadBarChart(BudgetTypeEnum budgetType, Date from, Date to) {
 		List<BudgetRecordDTO> records = budgetRecordsService
-				.getBudgetRecordsByDateAndBudgetType(budgetType.getId(), from, to);
+				.getBudgetRecordsByDateAndBudgetType(groupId, budgetType.getId(), from, to);
 
 		Map<String, BigDecimal> map = getRecordsForChart(records, budgetType);
 

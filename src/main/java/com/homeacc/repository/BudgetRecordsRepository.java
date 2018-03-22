@@ -15,7 +15,7 @@ public interface BudgetRecordsRepository {
 
 	void delete(BudgetRecord record);
 
-	List<BudgetRecord> getAll();
+	List<BudgetRecord> getAll(long groupId);
 
 	BudgetRecord getById(long id);
 
@@ -27,5 +27,5 @@ public interface BudgetRecordsRepository {
 
 	List<BudgetRecord> filterBudgetRecords(BudgetRecordsCriteriaFilter criteria);
 
-	List<BudgetRecord> getBudgetRecordsByDateAndBudgetType(long budgetTypeId, Date from, Date to);
+	List<BudgetRecord> getBudgetRecordsByDateAndBudgetType(long groupId, long budgetTypeId, Date from, Date to);
 }

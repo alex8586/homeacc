@@ -54,8 +54,8 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public List<Category> getAll() {
-		return genericRepository.getAll(Category.class);
+	public List<Category> getAll(long groupId) {
+		return categoryRepository.getAll(groupId);
 	}
 
 }

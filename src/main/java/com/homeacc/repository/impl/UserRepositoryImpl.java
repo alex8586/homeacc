@@ -40,9 +40,10 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Users> getAll() {
+	public List<Users> getByGroup(long groupId) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(Users.class);
+		criteria.add(Restrictions.eq("groups.id", groupId));
 		return criteria.list();
 	}
 

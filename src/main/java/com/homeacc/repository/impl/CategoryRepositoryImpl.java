@@ -34,9 +34,10 @@ public class CategoryRepositoryImpl implements CategoryRepository{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Category> getAll() {
+	public List<Category> getAll(long groupId) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(Category.class);
+		criteria.add(Restrictions.eq("groups.id", groupId));
 		return criteria.list();
 	}
 

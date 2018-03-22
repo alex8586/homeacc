@@ -17,12 +17,12 @@ public interface BudgetRecordsService {
 
 	void deleteBudgetRecord(Long id);
 
-	ObservableList<BudgetRecordDTO> getAll();
+	ObservableList<BudgetRecordDTO> getAll(long groupId);
 
 	List<BudgetType> getAllBudgetType();
 
 	List<BudgetRecordDTO> filterBudgetRecords(BudgetRecordsCriteriaFilter criteria);
 
-	List<BudgetRecordDTO> getBudgetRecordsByDateAndBudgetType(long budgetTypeId, Date from, Date to);
+	List<BudgetRecordDTO> getBudgetRecordsByDateAndBudgetType(long groupId, long budgetTypeId, Date from, Date to);
 
 }

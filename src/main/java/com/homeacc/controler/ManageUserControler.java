@@ -163,7 +163,7 @@ public class ManageUserControler extends ChangeRecordControler {
 
 	private void reloadUserList() {
 		userList.clear();
-		userList.addAll(userService.getAll());
+		userList.addAll(userService.getAll(groupId));
 		tvUser.setItems(userList);
 	}
 

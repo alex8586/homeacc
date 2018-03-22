@@ -26,8 +26,6 @@ public class MainControler extends ChangeRecordControler {
 	private ChartControler chartControler;
 	@Autowired
 	private LoginControler loginControler;
-	@Autowired
-	private BudgetRecordsControler budgetRecordControler;
 
 	public void reloadChart() {
 		if (recordsChanged) {
@@ -39,13 +37,10 @@ public class MainControler extends ChangeRecordControler {
 	public void loadApplication(Stage stage, Scene scene, long groupId) throws Exception {
 		this.scene = scene;
 		this.primaryStage = stage;
-		this.groupId = groupId;
+		ChangeRecordControler.groupId = groupId;
 		FXMLLoader loader = springLoader.getLoader(MAIN_PATH);
 		Parent root = loader.load();
 		this.scene.setRoot(root);
-
-		budgetRecordControler.initializeLoad();
-		chartControler.initializeLoad();
 
 		primaryStage.setScene(scene);
         primaryStage.setTitle(APP_TITLE);

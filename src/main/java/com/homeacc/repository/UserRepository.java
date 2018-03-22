@@ -8,7 +8,7 @@ public interface UserRepository {
 
 	void save(Users user);
 
-	List<Users> getAll();
+	List<Users> getByGroup(long groupId);
 
 	Users getByName(String name);
 

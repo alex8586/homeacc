@@ -160,7 +160,7 @@ public class ManageCategoryControler extends ChangeRecordControler {
 
 	private void reloadCategoryList() {
 		categoryList.clear();
-		categoryList.addAll(categoryService.getAll());
+		categoryList.addAll(categoryService.getAll(groupId));
 		tvCategory.setItems(categoryList);
 	}
 

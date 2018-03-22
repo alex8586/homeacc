@@ -8,7 +8,7 @@ public interface UserService {
 
 	void createUser(String categoryName, long groupId);
 
-	List<Users> getAll();
+	List<Users> getAll(long groupId);
 
 	Users getByName(String userName);
 

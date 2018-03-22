@@ -8,7 +8,7 @@ public interface CategoryRepository {
 
 	void save(Category category);
 
-	List<Category> getAll();
+	List<Category> getAll(long groupId);
 
 	Category getByName(String name);
 

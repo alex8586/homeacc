@@ -62,8 +62,6 @@ public class EditBudgetRecordsControler extends ChangeRecordControler {
 	private Label error;
 
 	@Autowired
-	private MainControler mainControler;
-	@Autowired
 	private SpringFXMLLoader springLoader;
 	@Autowired
 	private BudgetRecordsService recordsService;
