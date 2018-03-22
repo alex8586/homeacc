@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -21,21 +23,24 @@ import javax.persistence.Table;
 public class Category implements java.io.Serializable {
 
 	private long id;
+	private Groups groups;
 	private String name;
 	private Set<BudgetRecord> incomes = new HashSet<BudgetRecord>(0);
 
 	public Category() {
 	}
 
-	public Category(long id, String name) {
+	public Category(long id, Groups groups, String name) {
 		this.id = id;
+		this.groups = groups;
 		this.name = name;
 	}
 
-	public Category(long id, String name, Set<BudgetRecord> incomes) {
+	public Category(long id, Groups groups, String name, Set<BudgetRecord> budgetRecords) {
 		this.id = id;
+		this.groups = groups;
 		this.name = name;
-		this.incomes = incomes;
+		this.incomes = budgetRecords;
 	}
 
 	@Id
@@ -48,6 +53,16 @@ public class Category implements java.io.Serializable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "GROUP_ID", nullable = false)
+	public Groups getGroups() {
+		return this.groups;
+	}
+
+	public void setGroups(Groups groups) {
+		this.groups = groups;
 	}
 
 	@Column(name = "NAME", nullable = false, length = 120)

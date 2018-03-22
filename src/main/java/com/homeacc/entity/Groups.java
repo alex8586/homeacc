@@ -1,9 +1,14 @@
 package com.homeacc.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -19,6 +24,9 @@ public class Groups implements java.io.Serializable {
 	private long id;
 	private String name;
 	private String password;
+	private Set<Users> userses = new HashSet<Users>(0);
+	private Set<BudgetRecord> budgetRecords = new HashSet<BudgetRecord>(0);
+	private Set<Category> categories = new HashSet<Category>(0);
 
 	public Groups() {
 	}
@@ -27,6 +35,16 @@ public class Groups implements java.io.Serializable {
 		this.id = id;
 		this.name = name;
 		this.password = password;
+	}
+
+	public Groups(long id, String name, String password, Set<Users> userses, Set<BudgetRecord> budgetRecords,
+			Set<Category> categories) {
+		this.id = id;
+		this.name = name;
+		this.password = password;
+		this.userses = userses;
+		this.budgetRecords = budgetRecords;
+		this.categories = categories;
 	}
 
 	@Id
@@ -62,6 +80,33 @@ public class Groups implements java.io.Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "groups")
+	public Set<Users> getUserses() {
+		return this.userses;
+	}
+
+	public void setUserses(Set<Users> userses) {
+		this.userses = userses;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "groups")
+	public Set<BudgetRecord> getBudgetRecords() {
+		return this.budgetRecords;
+	}
+
+	public void setBudgetRecords(Set<BudgetRecord> budgetRecords) {
+		this.budgetRecords = budgetRecords;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "groups")
+	public Set<Category> getCategories() {
+		return this.categories;
+	}
+
+	public void setCategories(Set<Category> categories) {
+		this.categories = categories;
 	}
 
 }

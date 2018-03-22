@@ -25,6 +25,7 @@ public class BudgetRecord implements java.io.Serializable {
 
 	private long id;
 	private Users users;
+	private Groups groups;
 	private BudgetType budgetType;
 	private Category category;
 	private String description;
@@ -34,17 +35,28 @@ public class BudgetRecord implements java.io.Serializable {
 	public BudgetRecord() {
 	}
 
-	public BudgetRecord(long id, Users users, BudgetType budgetType, Category category, String description,
-			Date created, BigDecimal amount) {
+	public BudgetRecord(long id, Users users, Groups groups, BudgetType budgetType, Category category, Date created,
+			BigDecimal amount) {
 		this.id = id;
 		this.users = users;
+		this.groups = groups;
 		this.budgetType = budgetType;
 		this.category = category;
-		this.description = description;
 		this.created = created;
 		this.amount = amount;
 	}
 
+	public BudgetRecord(long id, Users users, Groups groups, BudgetType budgetType, Category category, Date created,
+			BigDecimal amount, String description) {
+		this.id = id;
+		this.users = users;
+		this.groups = groups;
+		this.budgetType = budgetType;
+		this.category = category;
+		this.created = created;
+		this.amount = amount;
+		this.description = description;
+	}
 	@Id
 	@GeneratedValue(generator = "generator", strategy = GenerationType.SEQUENCE)
 	@SequenceGenerator(name = "generator", sequenceName = "budget_record_id", initialValue = 50, allocationSize = 1)
@@ -65,6 +77,16 @@ public class BudgetRecord implements java.io.Serializable {
 
 	public void setUsers(Users users) {
 		this.users = users;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "GROUP_ID", nullable = false)
+	public Groups getGroups() {
+		return this.groups;
+	}
+
+	public void setGroups(Groups groups) {
+		this.groups = groups;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -115,6 +137,4 @@ public class BudgetRecord implements java.io.Serializable {
 		this.amount = amount;
 	}
 
-
 }
-
