@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.homeacc.entity.Category;
+import com.homeacc.entity.Groups;
 import com.homeacc.exception.ValidationException;
 import com.homeacc.repository.BudgetRecordsRepository;
 import com.homeacc.repository.CategoryRepository;
@@ -23,13 +24,15 @@ public class CategoryServiceImpl implements CategoryService {
 	private GenericRepository genericRepository;
 
 	@Override
-	public void createCategory(String categoryName) {
+	public void createCategory(String categoryName, long groupId) {
 		Category category = categoryRepository.getByName(categoryName);
 		if (category != null) {
 			throw new ValidationException("Category with this name already exist !");
 		}
 		category = new Category();
 		category.setName(categoryName);
+		Groups group = genericRepository.getById(Groups.class, groupId);
+		category.setGroups(group);
 		categoryRepository.save(category);
 	}
 

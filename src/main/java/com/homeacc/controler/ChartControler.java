@@ -41,8 +41,8 @@ public class ChartControler {
 	@Autowired
 	private BudgetRecordsService budgetRecordsService;
 
-	@FXML
-	public void initialize() {
+//	@FXML
+	public void initializeLoad() {
 		loadBarChart(BudgetTypeEnum.EXPENSES, null, null);
 		loadSelectionBudgetType();
 	}

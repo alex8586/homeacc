@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.homeacc.entity.Groups;
 import com.homeacc.entity.Users;
 import com.homeacc.exception.ValidationException;
 import com.homeacc.repository.BudgetRecordsRepository;
@@ -23,13 +24,15 @@ public class UserServiceImpl implements UserService {
 	private GenericRepository genericRepository;
 
 	@Override
-	public void createUser(String userName) {
+	public void createUser(String userName, long groupId) {
 		Users user = userRepository.getByName(userName);
 		if (user != null) {
 			throw new ValidationException("User with this name already exist !");
 		}
 		user = new Users();
 		user.setName(userName);
+		Groups group = genericRepository.getById(Groups.class, groupId);
+		user.setGroups(group);
 		genericRepository.save(user);
 	}
 

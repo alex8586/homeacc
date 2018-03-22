@@ -14,6 +14,7 @@ import com.homeacc.dto.BudgetRecordsCriteriaFilter;
 import com.homeacc.entity.BudgetRecord;
 import com.homeacc.entity.BudgetType;
 import com.homeacc.entity.Category;
+import com.homeacc.entity.Groups;
 import com.homeacc.entity.Users;
 import com.homeacc.mapper.Mapper;
 import com.homeacc.repository.BudgetRecordsRepository;
@@ -40,9 +41,9 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 
 	@Override
 	@Transactional
-	public void saveOrUpdate(Long id, String userName, String categoryName, String descripiton, LocalDate date,
-			BudgetType budgetType, String amount) {
-		BudgetRecord record = getRecord(id, userName, categoryName, descripiton, date, budgetType, amount);
+	public void saveOrUpdate(Long id, long groupId, String userName, String categoryName, String descripiton,
+			LocalDate date, BudgetType budgetType, String amount) {
+		BudgetRecord record = getRecord(id, groupId, userName, categoryName, descripiton, date, budgetType, amount);
 		if (id == null) {
 			genericRepository.save(record);
 		} else {
@@ -50,14 +51,15 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 		}
 	}
 
-	private BudgetRecord getRecord(Long id, String userName, String categoryName, String description, LocalDate date,
+	private BudgetRecord getRecord(Long id, long groupId, String userName, String categoryName, String description, LocalDate date,
 			BudgetType budgetType, String amount) {
 		Users user = userRepository.getByName(userName);
 		Category category = categoryRepository.getByName(categoryName);
-
+		Groups group = genericRepository.getById(Groups.class, groupId);
 		BudgetRecord record = id == null ? new BudgetRecord() : genericRepository.getById(BudgetRecord.class, id);
 		record.setUsers(user);
 		record.setCategory(category);
+		record.setGroups(group);
 		record.setDescription(description);
 		record.setCreated(DateUtils.localDateToDate(date));
 		record.setBudgetType(budgetType);

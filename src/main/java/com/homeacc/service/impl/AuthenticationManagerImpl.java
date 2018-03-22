@@ -24,7 +24,7 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 		if (name.length() > 20 || password.length() > 20) {
 			throw new ValidationException("Field length exceeded");
 		}
-		Groups group = groupRepository.getByNameAndPassword(name, password);
+		Groups group = groupRepository.getByName(name, password);
 		if (group != null) {
 			throw new ValidationException("Group with this name already exist");
 		}
@@ -36,12 +36,17 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 	}
 
 	@Override
-	public void loginGroup(String name, String password) {
+	public long loginGroup(String name, String password) {
 		validateFields(name, password);
-		Groups group = groupRepository.getByNameAndPassword(name, password);
+		Groups group = groupRepository.getByName(name, password);
 		if (group == null) {
 			throw new ValidationException("Group with name " + name + " not found");
 		}
+
+		if (!group.getPassword().equals(password)) {
+			throw new ValidationException("Name or password wrong");
+		}
+		return group.getId();
 	}
 
 	private void validateFields(String name, String password) {

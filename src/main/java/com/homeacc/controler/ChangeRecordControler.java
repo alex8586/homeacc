@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 public abstract class ChangeRecordControler {
 
 	protected static boolean recordsChanged;
+	protected static long groupId;
 
 	protected void createError(Label error, String message) {
 		error.setText(message);
@@ -24,4 +25,5 @@ public abstract class ChangeRecordControler {
 		error.setText(EMPTY_STRING);
 		error.setStyle(EMPTY_STRING);
 	}
+
 }

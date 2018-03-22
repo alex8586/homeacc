@@ -111,7 +111,7 @@ public class ManageUserControler extends ChangeRecordControler {
 			createError(error, "User name must be shoter than 15 symbols");
 		} else {
 			try {
-				userService.createUser(txtAddUser.getText());
+				userService.createUser(txtAddUser.getText(), groupId);
 				loadUserList();
 				clearError(error);
 				txtAddUser.setText(EMPTY_STRING);

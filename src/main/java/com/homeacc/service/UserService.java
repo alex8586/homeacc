@@ -6,7 +6,7 @@ import com.homeacc.entity.Users;
 
 public interface UserService {
 
-	void createUser(String categoryName);
+	void createUser(String categoryName, long groupId);
 
 	List<Users> getAll();
 

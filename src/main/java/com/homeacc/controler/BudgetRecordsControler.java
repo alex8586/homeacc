@@ -106,6 +106,8 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 	@Autowired
 	private EditBudgetRecordsControler editBudgetRecordsControler;
 	@Autowired
+	private MainControler mainControler;
+	@Autowired
 	private CategoryService categoryService;
 	@Autowired
 	private UserService userService;
@@ -121,8 +123,8 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 	private ObservableList<Category> filterCategoryList = FXCollections.observableArrayList();
 	private ObservableList<BudgetType> filterRecordTypeList = FXCollections.observableArrayList();
 
-	@FXML
-    public void initialize() {
+//	@FXML
+    public void initializeLoad() {
 		loadUserComboBox();
 		loadCategoryComboBox();
 		loadBudgetRecordsTable();
@@ -277,7 +279,9 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 			LocalDate date = recordDate.getValue();
 			BudgetType budgetType = cbxBudgetType.getSelectionModel().getSelectedItem();
 			String amount = txtRecordAmount.getText();
-			budgetRecordsService.saveOrUpdate(null,userName, categoryName, description, date, budgetType, amount);
+
+			budgetRecordsService.saveOrUpdate(null, groupId, userName, categoryName, description,
+					date, budgetType, amount);
 			loadBudgetRecordsTable();
 			clearErrors();
 			recordsChanged = true;

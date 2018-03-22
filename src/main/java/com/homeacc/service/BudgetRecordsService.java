@@ -12,8 +12,8 @@ import javafx.collections.ObservableList;
 
 public interface BudgetRecordsService {
 
-	void saveOrUpdate(Long id, String userName, String categoryName, String description, LocalDate created,
-			BudgetType budgetType, String amount);
+	void saveOrUpdate(Long id, long groupId, String userName, String categoryName, String description,
+			LocalDate created, BudgetType budgetType, String amount);
 
 	void deleteBudgetRecord(Long id);
 

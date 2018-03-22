@@ -91,9 +91,9 @@ public class LoginControler extends ChangeRecordControler {
 
 	public void login() throws Exception {
 		try {
-			authenticationManager.loginGroup(login.getText(), password.getText());
+			long groupId = authenticationManager.loginGroup(login.getText(), password.getText());
 			clearError(error);
-			mainControler.loadApplication(primaryStage, scene);
+			mainControler.loadApplication(primaryStage, scene, groupId);
 		} catch (ValidationException e) {
 			createError(error, e.getMessage());
 		}

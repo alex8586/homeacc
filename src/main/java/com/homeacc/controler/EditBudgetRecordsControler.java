@@ -62,6 +62,8 @@ public class EditBudgetRecordsControler extends ChangeRecordControler {
 	private Label error;
 
 	@Autowired
+	private MainControler mainControler;
+	@Autowired
 	private SpringFXMLLoader springLoader;
 	@Autowired
 	private BudgetRecordsService recordsService;
@@ -173,7 +175,8 @@ public class EditBudgetRecordsControler extends ChangeRecordControler {
 					amount.getText());
 			BudgetRecordValidator.validateAmount(amount.getText());
 
-			recordsService.saveOrUpdate(recordId, cbxUser.getSelectionModel().getSelectedItem().getName(),
+			recordsService.saveOrUpdate(recordId, groupId,
+					cbxUser.getSelectionModel().getSelectedItem().getName(),
 					cbxCategory.getSelectionModel().getSelectedItem().getName(), description.getText(), date.getValue(),
 					cbxBudgetType.getSelectionModel().getSelectedItem(), amount.getText());
 			recordsControler.loadBudgetRecordsTable();

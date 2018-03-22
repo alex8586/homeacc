@@ -4,5 +4,5 @@ import com.homeacc.entity.Groups;
 
 public interface GroupRepository {
 
-	Groups getByNameAndPassword(String name, String password);
+	Groups getByName(String name, String password);
 }

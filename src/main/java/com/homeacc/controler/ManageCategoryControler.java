@@ -110,7 +110,7 @@ public class ManageCategoryControler extends ChangeRecordControler {
 			createError(error, "Category name must be shoter than 30 symbols");
 		} else {
 			try {
-				categoryService.createCategory(txtAddCategory.getText());
+				categoryService.createCategory(txtAddCategory.getText(), groupId);
 				loadCategoryList();
 				clearError(error);
 				budgetRecordsControler.loadCategoryComboBox();

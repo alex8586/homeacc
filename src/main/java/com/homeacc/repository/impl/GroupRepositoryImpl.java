@@ -19,11 +19,10 @@ public class GroupRepositoryImpl implements GroupRepository {
 	private SessionFactory  sessionFactory;
 
 	@Override
-	public Groups getByNameAndPassword(String name, String password) {
+	public Groups getByName(String name, String password) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(Groups.class);
 		criteria.add(Restrictions.eq("name", name));
-		criteria.add(Restrictions.eq("password", password));
 		return (Groups) criteria.uniqueResult();
 	}
 }

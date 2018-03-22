@@ -6,7 +6,7 @@ import com.homeacc.entity.Category;
 
 public interface CategoryService {
 
-	void createCategory(String categoryName);
+	void createCategory(String categoryName, long groupId);
 
 	List<Category> getAll();
 
