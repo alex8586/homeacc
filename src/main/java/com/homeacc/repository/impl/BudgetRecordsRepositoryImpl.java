@@ -91,6 +91,7 @@ public class BudgetRecordsRepositoryImpl implements BudgetRecordsRepository {
 	public List<BudgetRecord> filterBudgetRecords(BudgetRecordsCriteriaFilter filter) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(BudgetRecord.class);
+		criteria.add(Restrictions.eq("groups.id", filter.getGroup()));
 		if (filter.getUser() != null) {
 			criteria.add(Restrictions.eq("users.id", filter.getUser().getId()));
 		}

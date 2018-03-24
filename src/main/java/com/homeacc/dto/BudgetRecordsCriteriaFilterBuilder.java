@@ -9,6 +9,7 @@ import com.homeacc.entity.Users;
 
 public class BudgetRecordsCriteriaFilterBuilder {
 
+	private long groupId;
 	private Users user;
 	private Category category;
 	private BudgetType budgetType;
@@ -27,6 +28,7 @@ public class BudgetRecordsCriteriaFilterBuilder {
 
 	public BudgetRecordsCriteriaFilter build() {
 		BudgetRecordsCriteriaFilter criteria = new BudgetRecordsCriteriaFilter();
+		criteria.setGroupId(groupId);
 		criteria.setUser(user);
 		criteria.setCategory(category);
 		criteria.setBudgetType(budgetType);
@@ -37,6 +39,10 @@ public class BudgetRecordsCriteriaFilterBuilder {
 		return criteria;
 	}
 
+	public BudgetRecordsCriteriaFilterBuilder withGroupId(long groupId) {
+        this.groupId = groupId;
+        return this;
+	}
 	public BudgetRecordsCriteriaFilterBuilder withUser(Users user) {
         this.user = user;
         return this;

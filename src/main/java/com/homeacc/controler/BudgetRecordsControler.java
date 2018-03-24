@@ -313,6 +313,7 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 			type = null;
 		}
 		BudgetRecordsCriteriaFilter criteria = BudgetRecordsCriteriaFilterBuilder.createBudgetRecordsCriteraFilter()
+				.withGroupId(MainControler.groupId)
 				.withUser(user)
 				.withCategory(category)
 				.withBudgetType(type)
