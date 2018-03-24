@@ -20,24 +20,6 @@ public class UserRepositoryImpl implements UserRepository {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	@Override
-	public void save(Users user) {
-		Session session = sessionFactory.getCurrentSession();
-		session.save(user);
-	}
-
-	@Override
-	public void update(Users user) {
-		Session session = sessionFactory.getCurrentSession();
-		session.update(user);
-	}
-
-	@Override
-	public void delete(Users user) {
-		Session session = sessionFactory.getCurrentSession();
-		session.delete(user);
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Users> getByGroup(long groupId) {

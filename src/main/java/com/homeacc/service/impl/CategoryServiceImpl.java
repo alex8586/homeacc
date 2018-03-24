@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements CategoryService {
 		category.setName(categoryName);
 		Groups group = genericRepository.getById(Groups.class, groupId);
 		category.setGroups(group);
-		categoryRepository.save(category);
+		genericRepository.save(category);
 	}
 
 	@Override

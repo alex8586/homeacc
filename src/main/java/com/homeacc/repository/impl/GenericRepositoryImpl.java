@@ -47,8 +47,7 @@ public class GenericRepositoryImpl implements GenericRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> List<T> getAll(Class<T> clazz) {
-		Session session = sessionFactory.getCurrentSession();
-		Criteria criteria = session.createCriteria(clazz);
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(clazz);
 		return criteria.list();
 	}
 

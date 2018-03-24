@@ -71,7 +71,7 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 	@Transactional
 	public void deleteBudgetRecord(Long id) {
 		BudgetRecord record = genericRepository.getById(BudgetRecord.class, id);
-		budgetRecordsRepository.delete(record);
+		genericRepository.delete(record);
 	}
 
 	@Override
