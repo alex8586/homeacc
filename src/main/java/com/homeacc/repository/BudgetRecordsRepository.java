@@ -8,7 +8,7 @@ import com.homeacc.entity.BudgetRecord;
 
 public interface BudgetRecordsRepository {
 
-	List<BudgetRecord> getAll(long groupId);
+	List<BudgetRecord> getAll(long groupId, int month);
 
 	void deleteWithCategory(long categoryId);
 

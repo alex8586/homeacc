@@ -71,7 +71,7 @@ public class RegistrationControler extends ChangeRecordControler {
 			clearError(error);
 			loginControler.loadLoginForm(primaryStage, message, scene.getWidth(), scene.getHeight());
 		} catch (Exception e) {
-			error.setText(INTERNAL_ERROR);
+			createError(error, INTERNAL_ERROR);
 		}
 	}
 }

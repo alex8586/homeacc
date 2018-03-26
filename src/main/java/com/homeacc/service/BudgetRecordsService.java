@@ -17,7 +17,7 @@ public interface BudgetRecordsService {
 
 	void deleteBudgetRecord(Long id);
 
-	ObservableList<BudgetRecordDTO> getAll(long groupId);
+	ObservableList<BudgetRecordDTO> getAll(long groupId, Integer month);
 
 	List<BudgetType> getAllBudgetType();
 

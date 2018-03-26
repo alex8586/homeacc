@@ -195,7 +195,7 @@ public class BudgetRecordsControler extends ChangeRecordControler {
         tcDate.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, Date>("created"));
         tcBudgetType.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, String>("budgetType"));
         tcAmount.setCellValueFactory(new PropertyValueFactory<BudgetRecordDTO, BigDecimal>("amount"));
-        recordList.addAll(budgetRecordsService.getAll(groupId));
+        recordList.addAll(budgetRecordsService.getAll(groupId, null));
         tvBudgetRecords.setItems(recordList);
 
         countBalance();
@@ -223,11 +223,13 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 
 	public void loadBudgetType() {
 		List<BudgetType> types = budgetRecordsService.getAllBudgetType();
+		recordTypeList.clear();
 		recordTypeList.addAll(types);
 		cbxBudgetType.setItems(recordTypeList);
 
 		BudgetType type = new BudgetType();
 		type.setCode(BudgetTypeEnum.ALL.getCode());
+		filterRecordTypeList.clear();
 		filterRecordTypeList.add(type);
 		filterRecordTypeList.addAll(types);
 		filterSelectBudgetType.setItems(filterRecordTypeList);

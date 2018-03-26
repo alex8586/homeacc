@@ -2,6 +2,7 @@ package com.homeacc.service.impl;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +30,8 @@ import javafx.collections.ObservableList;
 
 @Component
 public class BudgetRecordsServiceImpl implements BudgetRecordsService {
+
+	private static Calendar calendar = Calendar.getInstance();
 
 	@Autowired
 	private BudgetRecordsRepository budgetRecordsRepository;
@@ -76,9 +79,10 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 
 	@Override
 	@Transactional
-	public ObservableList<BudgetRecordDTO> getAll(long groupId) {
+	public ObservableList<BudgetRecordDTO> getAll(long groupId, Integer month) {
 		ObservableList<BudgetRecordDTO> records = FXCollections.observableArrayList();
-		List<BudgetRecord> list = budgetRecordsRepository.getAll(groupId);
+		month = month == null ? calendar.get(Calendar.MONTH) + 1 : month++;
+		List<BudgetRecord> list = budgetRecordsRepository.getAll(groupId, month);
 		records.addAll(Mapper.mapBudgetRecordsListToDtoList(list));
 		return records;
 	}

@@ -81,7 +81,7 @@ public class LoginControler extends ChangeRecordControler {
 					try {
 						login();
 					} catch (Exception e) {
-						error.setText(INTERNAL_ERROR);
+						createError(error, INTERNAL_ERROR);
 					}
 				}
 			}
@@ -103,7 +103,7 @@ public class LoginControler extends ChangeRecordControler {
 		try {
 			registrationControler.loadRegistrationForm(primaryStage, scene);
 		} catch (Exception e) {
-			error.setText(INTERNAL_ERROR);
+			createError(error, INTERNAL_ERROR);
 		}
 	}
 

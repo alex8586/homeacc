@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -22,16 +23,20 @@ public class BudgetRecordsRepositoryImpl implements BudgetRecordsRepository {
 
 	private final static String DELETE_CATEGORY = "delete from BudgetRecord where category_id = :categoryId";
 	private final static String DELETE_USER = "delete from BudgetRecord where user_id = :userId";
+//	select * from BUDGET_RECORD where to_char(created, 'MM') = (select to_char(sysdate, 'MM') from dual);
+	private final static String RECORDS_FOR_MONTH = "from BudgetRecord where to_char(created, 'MM') "
+			+ "= :month and group_id = :groupId";
 
 	@Autowired
 	private SessionFactory  sessionFactory;
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<BudgetRecord> getAll(long groupId) {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(BudgetRecord.class);
-		criteria.add(Restrictions.eq("groups.id", groupId));
-		return criteria.list();
+	public List<BudgetRecord> getAll(long groupId, int month) {
+		Query query = sessionFactory.getCurrentSession().createQuery(RECORDS_FOR_MONTH)
+				.setLong("groupId", groupId)
+				.setInteger("month", month);
+		return query.list();
 	}
 
 	@Override
