@@ -7,6 +7,7 @@ import static com.homeacc.appconst.AppFieldsConst.INTERNAL_ERROR;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.homeacc.appconst.AppFieldsConst;
 import com.homeacc.classifier.BudgetTypeEnum;
+import com.homeacc.classifier.MonthEnum;
 import com.homeacc.dto.BudgetRecordDTO;
 import com.homeacc.dto.BudgetRecordsCriteriaFilter;
 import com.homeacc.dto.BudgetRecordsCriteriaFilterBuilder;
@@ -70,6 +72,8 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 	@FXML
 	private DatePicker filterDateTo;
 	@FXML
+	private ComboBox<MonthEnum> month;
+	@FXML
 	private TextField filterAmountFrom;
 	@FXML
 	private TextField filterAmountTo;
@@ -120,6 +124,7 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 	private ObservableList<Users> filterUserList = FXCollections.observableArrayList();
 	private ObservableList<Category> filterCategoryList = FXCollections.observableArrayList();
 	private ObservableList<BudgetType> filterRecordTypeList = FXCollections.observableArrayList();
+	private ObservableList<MonthEnum> monthList = FXCollections.observableArrayList();
 
 	@FXML
     public void initialize() {
@@ -127,6 +132,7 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 		loadCategoryComboBox();
 		loadBudgetRecordsTable();
 		loadBudgetType();
+		loadMonth();
 		handleEventForEditBudgetRecordModalWindow();
     }
 
@@ -249,6 +255,13 @@ public class BudgetRecordsControler extends ChangeRecordControler {
         filterSelectBudgetType.setConverter(converter);
 	}
 
+	private void loadMonth() {
+		List<MonthEnum> months = Arrays.asList(MonthEnum.values());
+		monthList.addAll(months);
+		month.setItems(monthList);
+		month.getSelectionModel().select(0);
+	}
+
 	private void handleEventForEditBudgetRecordModalWindow() {
 		tvBudgetRecords.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
@@ -292,14 +305,18 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 	}
 
 	public void filterRecords() {
-		clearError(createRecordInfo);
-		if (StringUtils.isNotBlank(filterAmountFrom.getText())) {
-			BudgetRecordValidator.validateAmount(filterAmountFrom.getText());
+		clearError(createRecordInfo, createFilterError);
+		try {
+			if (StringUtils.isNotBlank(filterAmountFrom.getText())) {
+				BudgetRecordValidator.validateAmount(filterAmountFrom.getText());
+			}
+			if (StringUtils.isNotBlank(filterAmountTo.getText())) {
+				BudgetRecordValidator.validateAmount(filterAmountTo.getText());
+			}
+		} catch (ValidationException e) {
+			createError(createFilterError, e.getMessage());
+			return;
 		}
-		if (StringUtils.isNotBlank(filterAmountTo.getText())) {
-			BudgetRecordValidator.validateAmount(filterAmountTo.getText());
-		}
-
 		Users user = filterSelectUser.getSelectionModel().getSelectedItem();
 		if (user != null && user.getName().equals(AppFieldsConst.ALL_USERS)) {
 			user = null;
@@ -308,6 +325,14 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 		Category category = filterSelectCategory.getSelectionModel().getSelectedItem();
 		if (category != null && category.getName().equals(AppFieldsConst.ALL_CATEGORIES)) {
 			category = null;
+		}
+
+		Date from = filterDateFrom.getValue() == null ? null : DateUtils.localDateToDate(filterDateFrom.getValue());
+		Date to = filterDateTo.getValue() == null ? null : DateUtils.localDateToDate(filterDateTo.getValue());
+		int monthNumber = month.getSelectionModel().getSelectedItem().getMonthNumber();
+
+		if ((from != null || to != null) && monthNumber != MonthEnum.UNDEFINED.getMonthNumber()) {
+			createError(createFilterError, "select search by dates or by whole month");
 		}
 
 		BudgetType type = filterSelectBudgetType.getSelectionModel().getSelectedItem();
@@ -319,8 +344,9 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 				.withUser(user)
 				.withCategory(category)
 				.withBudgetType(type)
-				.withDateFrom(filterDateFrom.getValue() == null ? null : DateUtils.localDateToDate(filterDateFrom.getValue()))
-				.withDateTo(filterDateTo.getValue() == null ? null : DateUtils.localDateToDate(filterDateTo.getValue()))
+				.withDateFrom(from)
+				.withDateTo(to)
+				.withMonthNumber(monthNumber)
 				.withAmountFrom(filterAmountFrom.getText().equals(EMPTY_STRING) ? null : new BigDecimal(filterAmountFrom.getText()))
 				.withAmountTo(filterAmountTo.getText().equals(EMPTY_STRING) ? null : new BigDecimal(filterAmountTo.getText()))
 				.build();
@@ -328,7 +354,7 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 		List<BudgetRecordDTO> filteredRecords = budgetRecordsService.filterBudgetRecords(criteria);
 		recordList.clear();
 		recordList.addAll(filteredRecords);
-
+		countBalance();
 		cleanSearchFields();
 	}
 

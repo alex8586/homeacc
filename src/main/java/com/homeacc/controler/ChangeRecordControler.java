@@ -21,9 +21,11 @@ public abstract class ChangeRecordControler {
 		error.setStyle(TEXT_BLUE);
 	}
 
-	protected void clearError(Label error) {
-		error.setText(EMPTY_STRING);
-		error.setStyle(EMPTY_STRING);
+	protected void clearError(Label ...error) {
+		for (Label label : error) {
+			label.setText(EMPTY_STRING);
+			label.setStyle(EMPTY_STRING);
+		}
 	}
 
 }

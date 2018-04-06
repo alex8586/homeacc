@@ -15,10 +15,11 @@ public class BudgetRecordsCriteriaFilter {
 	private BudgetType budgetType;
 	private Date dateFrom;
 	private Date dateTo;
+	private int monthNumber;
 	private BigDecimal amountFrom;
 	private BigDecimal amountTo;
 
-	public long getGroup() {
+	public long getGroupId() {
 		return groupId;
 	}
 	public void setGroupId(long groupId) {
@@ -54,6 +55,12 @@ public class BudgetRecordsCriteriaFilter {
 	public void setDateTo(Date dateTo) {
 		this.dateTo = dateTo;
 	}
+	public int getMonthNumber() {
+		return monthNumber;
+	}
+	public void setMonthNumber(int monthNumber) {
+		this.monthNumber = monthNumber;
+	}
 	public BigDecimal getAmountFrom() {
 		return amountFrom;
 	}
@@ -82,6 +89,8 @@ public class BudgetRecordsCriteriaFilter {
 		builder.append(dateFrom);
 		builder.append(", dateTo=");
 		builder.append(dateTo);
+		builder.append(", monthNumber=");
+		builder.append(monthNumber);
 		builder.append(", amountFrom=");
 		builder.append(amountFrom);
 		builder.append(", amountTo=");

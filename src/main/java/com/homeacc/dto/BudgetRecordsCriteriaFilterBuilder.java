@@ -15,6 +15,7 @@ public class BudgetRecordsCriteriaFilterBuilder {
 	private BudgetType budgetType;
 	private Date dateFrom;
 	private Date dateTo;
+	private int monthNumber;
 	private BigDecimal amountFrom;
 	private BigDecimal amountTo;
 
@@ -34,6 +35,7 @@ public class BudgetRecordsCriteriaFilterBuilder {
 		criteria.setBudgetType(budgetType);
 		criteria.setDateFrom(dateFrom);
 		criteria.setDateTo(dateTo);
+		criteria.setMonthNumber(monthNumber);
 		criteria.setAmountFrom(amountFrom);
 		criteria.setAmountTo(amountTo);
 		return criteria;
@@ -65,6 +67,11 @@ public class BudgetRecordsCriteriaFilterBuilder {
 
 	public BudgetRecordsCriteriaFilterBuilder withDateTo(Date dateTo) {
         this.dateTo = dateTo;
+        return this;
+	}
+
+	public BudgetRecordsCriteriaFilterBuilder withMonthNumber(int monthNumber) {
+        this.monthNumber = monthNumber;
         return this;
 	}
 

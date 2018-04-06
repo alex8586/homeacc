@@ -36,12 +36,14 @@
                   <Label layoutX="266.0" layoutY="39.0" text="Date to" />
                   <DatePicker fx:id="filterDateFrom" editable="false" layoutX="342.0" layoutY="7.0" prefWidth="100.0" />
                   <DatePicker fx:id="filterDateTo" editable="false" layoutX="342.0" layoutY="37.0" prefWidth="100.0" />
+                  <Label layoutX="266.0" layoutY="71.0" text="or month" />
+                  <ComboBox fx:id="month" layoutX="342.0" layoutY="67.0" prefHeight="25.0" prefWidth="117.0" />
                   <Label layoutX="465.0" layoutY="9.0" text="Amount from" />
                   <Label layoutX="465.0" layoutY="39.0" text="Amount to" />
                   <TextField fx:id="filterAmountFrom" layoutX="550.0" layoutY="7.0" prefWidth="100.0" />
                   <TextField fx:id="filterAmountTo" layoutX="550.0" layoutY="37.0" prefWidth="100.0" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" depthTest="DISABLE" layoutX="688.0" layoutY="67.0" mnemonicParsing="false" onAction="#filterRecords" prefHeight="25.0" prefWidth="72.0" text="Filter" textAlignment="CENTER" textOverrun="CLIP" />
-                  <Label fx:id="createFilterError" layoutX="266.0" layoutY="71.0" prefHeight="17.0" prefWidth="385.0" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" depthTest="DISABLE" layoutX="684.0" layoutY="37.0" mnemonicParsing="false" onAction="#filterRecords" prefHeight="25.0" prefWidth="72.0" text="Filter" textAlignment="CENTER" textOverrun="CLIP" />
+                  <Label fx:id="createFilterError" layoutX="493.0" layoutY="71.0" prefHeight="17.0" prefWidth="264.0" />
                </children>
                <VBox.margin>
                   <Insets left="10.0" right="10.0" top="10.0" />
