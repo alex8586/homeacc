@@ -92,7 +92,8 @@ public class BudgetRecordsRepositoryImpl implements BudgetRecordsRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<BudgetRecord> getBudgetRecordsByDateAndBudgetType(long groupId, long budgetTypeId, Date from, Date to) {
+	public List<BudgetRecord> getBudgetRecordsByDateAndBudgetType(long groupId, long budgetTypeId, Date from, Date to,
+			int monthNumber) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(BudgetRecord.class);
 		criteria.add(Restrictions.eq("groups.id", groupId));
 		criteria.add(Restrictions.eq("budgetType.id", budgetTypeId));
@@ -101,6 +102,14 @@ public class BudgetRecordsRepositoryImpl implements BudgetRecordsRepository {
 		}
 		if (to != null) {
 			criteria.add(Restrictions.le("created", to));
+		}
+		if (monthNumber != MonthEnum.UNDEFINED.getMonthNumber()) {
+			criteria.add(Restrictions.ge("created", DateUtils.getStartOfMonth(monthNumber)));
+			criteria.add(Restrictions.le("created", DateUtils.getEndOfMonth(monthNumber)));
+		}
+		if (from == null && to == null && monthNumber == 0) {
+			criteria.add(Restrictions.ge("created", DateUtils.getStartOfMonthByDate(new Date())));
+			criteria.add(Restrictions.le("created", DateUtils.getEndOfMonthByDate(new Date())));
 		}
 		return criteria.list();
 	}

@@ -101,9 +101,10 @@ public class BudgetRecordsServiceImpl implements BudgetRecordsService {
 
 	@Override
 	@Transactional
-	public List<BudgetRecordDTO> getBudgetRecordsByDateAndBudgetType(long groupId, long budgetTypeId, Date from, Date to) {
+	public List<BudgetRecordDTO> getBudgetRecordsByDateAndBudgetType(long groupId, long budgetTypeId, Date from,
+			Date to, int monthNumber) {
 		List<BudgetRecord> records = budgetRecordsRepository.getBudgetRecordsByDateAndBudgetType(groupId, budgetTypeId, from,
-				to);
+				to, monthNumber);
 		return Mapper.mapBudgetRecordsListToDtoList(records);
 	}
 

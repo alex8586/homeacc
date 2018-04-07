@@ -1,6 +1,7 @@
 package com.homeacc.controler;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.homeacc.appconst.AppFieldsConst;
 import com.homeacc.classifier.BudgetTypeEnum;
+import com.homeacc.classifier.MonthEnum;
 import com.homeacc.dto.BudgetRecordDTO;
 import com.homeacc.entity.BudgetType;
 import com.homeacc.service.BudgetRecordsService;
@@ -23,6 +25,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 
 @Component
 public class ChartControler extends ChangeRecordControler {
@@ -38,18 +41,28 @@ public class ChartControler extends ChangeRecordControler {
 	@FXML
 	private DatePicker dateTo;
 
+	@FXML
+	private ComboBox<MonthEnum> month;
+
+	@FXML
+	private Label info;
+
+	private ObservableList<MonthEnum> monthList = FXCollections.observableArrayList();
+
 	@Autowired
 	private BudgetRecordsService budgetRecordsService;
 
 	@FXML
 	public void initialize() {
-		loadBarChart(BudgetTypeEnum.EXPENSES, null, null);
+		loadBarChart(BudgetTypeEnum.EXPENSES, null, null, 0);
 		loadSelectionBudgetType();
+		loadMonth();
+		clearError(info);
 	}
 
-	public void loadBarChart(BudgetTypeEnum budgetType, Date from, Date to) {
+	public void loadBarChart(BudgetTypeEnum budgetType, Date from, Date to, int monthNumber) {
 		List<BudgetRecordDTO> records = budgetRecordsService
-				.getBudgetRecordsByDateAndBudgetType(groupId, budgetType.getId(), from, to);
+				.getBudgetRecordsByDateAndBudgetType(groupId, budgetType.getId(), from, to, monthNumber);
 
 		Map<String, BigDecimal> map = getRecordsForChart(records, budgetType);
 
@@ -75,12 +88,29 @@ public class ChartControler extends ChangeRecordControler {
 		selectBudgetType.setItems(types);
 	}
 
+	private void loadMonth() {
+		List<MonthEnum> months = Arrays.asList(MonthEnum.values());
+		monthList.addAll(months);
+		month.setItems(monthList);
+		month.getSelectionModel().select(0);
+	}
+
+	public Label getInfo() {
+		return info;
+	}
+
 	public void filterRecordsInBarChart() {
+		clearError(info);
 		String type = selectBudgetType.getSelectionModel().getSelectedItem();
 		Date from = dateFrom.getValue() == null ? null : DateUtils.localDateToDate(dateFrom.getValue());
 		Date to = dateTo.getValue() == null ? null : DateUtils.localDateToDate(dateTo.getValue());
+		int monthNumber = month.getSelectionModel().getSelectedItem().getMonthNumber();
 
-		loadBarChart(BudgetTypeEnum.valueOf(type), from, to);
+		if ((from != null || to != null) && monthNumber != 0) {
+			createError(info, "select search by dates or by whole month");
+			return;
+		}
+		loadBarChart(BudgetTypeEnum.valueOf(type), from, to, monthNumber);
 		dateFrom.setValue(null);
 		dateTo.setValue(null);
 	}

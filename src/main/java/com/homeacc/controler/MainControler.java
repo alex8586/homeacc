@@ -29,9 +29,10 @@ public class MainControler extends ChangeRecordControler {
 
 	public void reloadChart() {
 		if (recordsChanged) {
-			chartControler.loadBarChart(BudgetTypeEnum.EXPENSES, null, null);
+			chartControler.loadBarChart(BudgetTypeEnum.EXPENSES, null, null, 0);
 			recordsChanged = false;
 		}
+		clearError(chartControler.getInfo());
 	}
 
 	public void loadApplication(Stage stage, Scene scene, long groupId) throws Exception {

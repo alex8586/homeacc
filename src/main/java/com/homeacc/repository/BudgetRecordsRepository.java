@@ -16,5 +16,6 @@ public interface BudgetRecordsRepository {
 
 	List<BudgetRecord> filterBudgetRecords(BudgetRecordsCriteriaFilter criteria);
 
-	List<BudgetRecord> getBudgetRecordsByDateAndBudgetType(long groupId, long budgetTypeId, Date from, Date to);
+	List<BudgetRecord> getBudgetRecordsByDateAndBudgetType(long groupId, long budgetTypeId, Date from, Date to,
+			int monthNumber);
 }

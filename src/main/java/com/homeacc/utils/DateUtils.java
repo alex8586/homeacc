@@ -24,6 +24,13 @@ public class DateUtils {
 		return dateFormat.format(date).replaceAll("\\.", " ");
 	}
 
+	public static Date getStartOfMonthByDate(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int month = cal.get(Calendar.MONTH) + 1;
+		return getStartOfMonth(month);
+	}
+
 	public static Date getStartOfMonth(int month) {
 	    Calendar calendar = Calendar.getInstance();
 	    calendar.clear();
@@ -34,6 +41,13 @@ public class DateUtils {
 	    calendar.set(Calendar.MINUTE, 0);
 	    calendar.set(Calendar.SECOND, 0);
 	    return calendar.getTime();
+	}
+
+	public static Date getEndOfMonthByDate(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int month = cal.get(Calendar.MONTH) + 1;
+		return getEndOfMonth(month);
 	}
 
 	public static Date getEndOfMonth(int month) {

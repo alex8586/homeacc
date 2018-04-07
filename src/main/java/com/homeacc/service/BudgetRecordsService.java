@@ -23,6 +23,7 @@ public interface BudgetRecordsService {
 
 	List<BudgetRecordDTO> filterBudgetRecords(BudgetRecordsCriteriaFilter criteria);
 
-	List<BudgetRecordDTO> getBudgetRecordsByDateAndBudgetType(long groupId, long budgetTypeId, Date from, Date to);
+	List<BudgetRecordDTO> getBudgetRecordsByDateAndBudgetType(long groupId, long budgetTypeId, Date from, Date to,
+			int monthNumber);
 
 }
