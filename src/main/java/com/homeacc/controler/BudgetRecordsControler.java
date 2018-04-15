@@ -291,6 +291,9 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 			String description = txtDescription.getText() == null ? EMPTY_STRING : txtDescription.getText();
 			LocalDate date = recordDate.getValue();
 			BudgetType budgetType = cbxBudgetType.getSelectionModel().getSelectedItem();
+			if (budgetType == null) {
+				throw new ValidationException("all fields exept description must be filled");
+			}
 			String amount = txtRecordAmount.getText();
 
 			budgetRecordsService.saveOrUpdate(null, groupId, userName, categoryName, description,
