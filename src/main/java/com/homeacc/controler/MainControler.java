@@ -26,10 +26,13 @@ public class MainControler extends ChangeRecordControler {
 	private ChartControler chartControler;
 	@Autowired
 	private LoginControler loginControler;
+	@Autowired
+	private ReportControler reportControler;
 
-	public void reloadChart() {
+	public void reloadData() {
 		if (recordsChanged) {
 			chartControler.loadBarChart(BudgetTypeEnum.EXPENSES, null, null, 0);
+			reportControler.loadReport();
 			recordsChanged = false;
 		}
 		clearError(chartControler.getInfo());

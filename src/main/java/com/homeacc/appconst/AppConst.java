@@ -15,4 +15,9 @@ public class AppConst {
 	public static final String EMPTY_STRING = "";
 	public static final String TEXT_RED = "-fx-text-fill: red";
 	public static final String TEXT_BLUE = "-fx-text-fill: blue";
+
+	public static final String TITLE_FONT_SIZE = "-fx-font-size: 20;";
+	public static final String RECORDS_FONT = "-fx-font-size: 16;";
+	public static final String RECORDS_FONT_UNDERLINE = "-fx-font-size: 16; -fx-underline: true;";
+
 }
