@@ -25,7 +25,7 @@ public class Category implements java.io.Serializable {
 	private long id;
 	private Groups groups;
 	private String name;
-	private Set<BudgetRecord> incomes = new HashSet<BudgetRecord>(0);
+	private Set<BudgetRecord> budgetRecords = new HashSet<BudgetRecord>(0);
 
 	public Category() {
 	}
@@ -40,7 +40,7 @@ public class Category implements java.io.Serializable {
 		this.id = id;
 		this.groups = groups;
 		this.name = name;
-		this.incomes = budgetRecords;
+		this.budgetRecords = budgetRecords;
 	}
 
 	@Id
@@ -75,12 +75,12 @@ public class Category implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
-	public Set<BudgetRecord> getIncomes() {
-		return this.incomes;
+	public Set<BudgetRecord> getBudgetRecords() {
+		return this.budgetRecords;
 	}
 
-	public void setIncomes(Set<BudgetRecord> incomes) {
-		this.incomes = incomes;
+	public void setBudgetRecords(Set<BudgetRecord> budgetRecords) {
+		this.budgetRecords = budgetRecords;
 	}
 
 }
