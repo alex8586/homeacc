@@ -49,6 +49,10 @@ public class ReportControler extends ChangeRecordControler {
 		grid.setAlignment(Pos.CENTER);
 
 		Map<String, Map<String, BigDecimal>> map = reportManager.getReport(null, null, 0, groupId);
+		if (map.isEmpty()) {
+			root.getChildren().add(new Text("For this period records not found"));
+			return;
+		}
 		int row = 0;
 		Map<String, BigDecimal> incomes = map.get(BudgetTypeEnum.INCOME.name());
 		if (incomes != null && !incomes.isEmpty()) {
@@ -113,13 +117,17 @@ public class ReportControler extends ChangeRecordControler {
 
 	private void addBalance(GridPane grid, int row, Map<String, BigDecimal> incomes, Map<String, BigDecimal> expenses) {
 		BigDecimal income = BigDecimal.ZERO;
-		for(Map.Entry<String, BigDecimal> entry : incomes.entrySet()) {
-			income = income.add(entry.getValue());
+		if (incomes != null) {
+			for(Map.Entry<String, BigDecimal> entry : incomes.entrySet()) {
+				income = income.add(entry.getValue());
+			}
 		}
 
 		BigDecimal expense = BigDecimal.ZERO;
-		for(Map.Entry<String, BigDecimal> entry : expenses.entrySet()) {
-			expense = expense.add(entry.getValue());
+		if (expenses != null) {
+			for(Map.Entry<String, BigDecimal> entry : expenses.entrySet()) {
+				expense = expense.add(entry.getValue());
+			}
 		}
 
 		Text total = new Text("Total:");

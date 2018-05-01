@@ -25,7 +25,7 @@ public class ReportManagerImpl implements ReportManager {
 
 		for (ReportDTO dto : reports) {
 			if (!result.containsKey(dto.getBudgetType())) {
-				result.put(dto.getBudgetType(), new HashMap<>());
+				result.put(dto.getBudgetType(), new HashMap<String, BigDecimal>());
 			}
 			result.get(dto.getBudgetType()).put(dto.getCategoryName(), dto.getAmount());
 		}
