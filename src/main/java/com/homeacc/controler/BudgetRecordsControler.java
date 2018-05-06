@@ -289,6 +289,7 @@ public class BudgetRecordsControler extends ChangeRecordControler {
 			String userName = cbxUser.getSelectionModel().getSelectedItem().getName();
 			String categoryName = cbxCategory.getSelectionModel().getSelectedItem().getName();
 			String description = txtDescription.getText() == null ? EMPTY_STRING : txtDescription.getText();
+			BudgetRecordValidator.validateDescription(description);
 			LocalDate date = recordDate.getValue();
 			BudgetType budgetType = cbxBudgetType.getSelectionModel().getSelectedItem();
 			if (budgetType == null) {
