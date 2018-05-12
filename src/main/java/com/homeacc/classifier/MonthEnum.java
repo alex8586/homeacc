@@ -1,5 +1,8 @@
 package com.homeacc.classifier;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum MonthEnum {
 
 	UNDEFINED(0),
@@ -24,5 +27,34 @@ public enum MonthEnum {
 
 	public int getMonthNumber() {
 		return monthNumber;
+	}
+
+	private static MonthEnum getByNumber(int number) {
+		for (MonthEnum month : MonthEnum.values()) {
+			if (month.getMonthNumber() == number) {
+				return month;
+			}
+		}
+		throw new IllegalArgumentException("Month not found");
+	}
+
+	public static List<MonthEnum> getMonthsForOneYearInOrder(int number) {
+		number = number + 2;
+		List<MonthEnum> months = new ArrayList<>();
+		int count = 0;
+		while(count < 12) {
+			if (number < 13) {
+				months.add(getByNumber(number));
+				count++;
+				number++;
+			} else {
+				number = 1;
+				months.add(getByNumber(number));
+				count++;
+				number++;
+			}
+		}
+
+		return months;
 	}
 }

@@ -31,9 +31,14 @@
                     <fx:include fx:id="tabGraphics" source="charts.fxml" />
                 </content>
             </Tab>
-            <Tab fx:id="textReport" onSelectionChanged="#reloadData" text="Report">
+            <Tab fx:id="textReport" onSelectionChanged="#reloadData" text="Text report">
                 <content>
-                    <fx:include fx:id="tabReport" source="report.fxml" />
+                    <fx:include fx:id="textReport" source="report.fxml" />
+                </content>
+            </Tab>
+            <Tab fx:id="tableReport" onSelectionChanged="#reloadData" text="Table report">
+                <content>
+                    <fx:include fx:id="tableReport" source="table_report.fxml" />
                 </content>
             </Tab>
         </tabs>

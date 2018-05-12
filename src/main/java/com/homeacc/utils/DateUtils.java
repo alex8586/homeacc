@@ -59,4 +59,10 @@ public class DateUtils {
 	    calendar.set(Calendar.SECOND, -1);
 	    return calendar.getTime();
 	}
+
+	public static int getCurrentMonth() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		return calendar.get(Calendar.MONTH);
+	}
 }
