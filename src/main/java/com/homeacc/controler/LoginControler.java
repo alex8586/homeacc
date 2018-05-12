@@ -64,6 +64,8 @@ public class LoginControler extends ChangeRecordControler {
         this.scene = scene;
 
         primaryStage.setTitle(LOGIN_TITLE);
+        primaryStage.setMinWidth(960);
+        primaryStage.setMinHeight(710);
         primaryStage.setScene(scene);
         if (message != null) {
         	information.setText(message);
