@@ -27,7 +27,7 @@ public class TableReportRepositoryImpl implements TableReportRepository {
 			+ "left join budget_record br on months.month_num = to_number(to_char(br.created, 'MM')) "
 			+ "left join category c on br.category_id = c.id "
 			+ "where br.created < sysdate "
-			+ "and br.created > trunc(sysdate - interval '11'month, 'MM') "
+			+ "and br.created > add_months(trunc(sysdate), -11) "
 			+ "and br.group_id = :groupId "
 			+ "and br.budget_type_id = :budgetTypeId "
 			+ "group by months.month_num, c.name "
